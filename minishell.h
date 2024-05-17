@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 10:54:55 by jeakim            #+#    #+#             */
-/*   Updated: 2024/05/17 10:55:27 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/05/17 12:24:01 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,18 @@ typedef enum e_redirection {
 typedef struct s_redirect {
 	t_redirection redir_type; //ENUM {<, <<, >, >>} heredoc 프로세스 따서 따로 미리 처리하고 넘기기
 	char* file_name; ///tmp/heredoc1
-	s_redirect *next;
+	struct s_redirect *next;
 } t_redirect;
 
 typedef struct s_command {
 	 char*	argv; //ex) "ls -a -l" ls -> -a -> -l;
-	 s_command *next;
+	 struct s_command *next;
 } t_command;
 
 typedef struct s_command_list {
 	t_redirect *redir_list;
 	t_command *cmd;
-	s_command_list *next; //(다음파이프) ex){ < a << aa(tmp/heredoc1) < a < aaa < a ls > b < a | << qwe(tmp/heredoc2) cat > c } 파이프 전 -> 파이프 후
+	struct s_command_list *next; //(다음파이프) ex){ < a << aa(tmp/heredoc1) < a < aaa < a ls > b < a | << qwe(tmp/heredoc2) cat > c } 파이프 전 -> 파이프 후
 }	t_command_list;
 
 
