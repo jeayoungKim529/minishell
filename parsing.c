@@ -6,13 +6,15 @@
 #include <stdlib.h>
 
 #include "minishell.h"
+#include "parsing.h"
 
-void	add_front(t_tmp_list *list, char *token, int idx);
-void	add_rear(t_tmp_list *list, char *token, int idx);
-void	del_front(t_tmp_list *list);
-void	del_rear(t_tmp_list *list);
-void	print_list(t_tmp_list *list);
-void	token_split(char *line);
+
+
+void check_leaks(void)
+{
+ system ("leaks minishell");
+}
+
 
 
 void parsing(t_command_list	*list, char *line)
@@ -23,40 +25,15 @@ void parsing(t_command_list	*list, char *line)
 	token_list.size = 0;
 	char flag = '\0';
 	
-	token_split(line);
-	//"", '' 체크
-	// cmd_arr = ft_split(line, '|');
-	// while(*line)
-	// {
-	// 	if (flag != '\0')
-	// 	{
-	// 		int strlen;
-	// 		strlen = line - ft_strchr(line, flag);
-	// 		//  ft_strchr(line, flag)이 널인지 검사
-	// 		// line 부터 ft_strchr(line, flag) 까지 노드에 저장
-	// 		line + strlen;
-	// 	}
+	token_split(line, &token_list);
+	if (token_list.front != NULL)
+	{
+		print_list(&token_list);
+		clear_list(&token_list);
 
+	}
 
-	// }
-	// while (cmd_arr[i] != NULL)
-	// {
-	// 	char **cmd = ft_split(cmd_arr[i], ' ');
-	// 	int j=0;
-	// 	while(cmd[j])
-	// 	{
-	// 		printf("%s , ", cmd[j]);
-	// 		add_rear(&token_list, cmd[j], i);
-	// 		j++;
-	// 	}
-	// 	free(cmd_arr[i]);
-	// 	printf("\n");
-	// 	i++;
-	// }
-	// free(cmd_arr);
-
-	print_list(&token_list);
-
+    atexit(check_leaks);
 }
 
 int main(void)
@@ -79,7 +56,8 @@ int main(void)
 	/* add_history에 저장된 문자열은 up & down 방향키를 이용해 확인할수있다 */
         add_history(str);
 	/* 라인은 힙메모리에 저장되기때문에 다 사용한 메모리는 할당을 해제해줘야한다 */
-        free(str);
+        if (str != NULL)
+			free(str);
     }
     /* 함수종료 */
     return(0);

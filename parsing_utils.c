@@ -6,11 +6,12 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:26:23 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/05/17 16:11:21 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/05/17 21:16:53 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.c"
+#include "parsing.h"
 
 void print_list(t_tmp_list *list)
 {
@@ -18,36 +19,59 @@ void print_list(t_tmp_list *list)
 	head = list->front;
 	int i = 0;
 
-	while(i < list->size)
+	while(head != NULL)
 	{
-		int temp = head->idx;
-		printf("%s -> ",head->token);
-		if (head -> next != NULL)
-			head = head->next;
-		if (head->idx != temp || head -> next == NULL)
-			printf("\n");
-		i++;
+		printf(" \"%s\" ",head->token);
+		head = head->next;
 	}
 }
 
-char	*put_token(char const *str)
+void	clear_list(t_tmp_list *list)
 {
-	size_t	len;
-	size_t	i;
-	char	*str2;
+	t_tmp_node *head;
+	t_tmp_node *temp;
+	head = list->front;
+	int i = 0;
+
+	while(list->size > 0)
+	{
+		del_front(list);
+	}
+}
+int	get_cmd_length(char *str)
+{
+	int	len;
 
 	len = 0;
-	i = 0;
-	while (str[len] && str[len] != ' ' && str[len] != '|')
-		++len;
+	if (str[0] == '|' || str[0] == '>' || str[0] == '<')
+	{
+		if (str[0] == '>' && str[1] == '>' || str[0] == '<' && str[1] == '<')
+			len = 2;
+		else
+			len = 1;
+	}
+	else
+	{
+		while (str[len] && str[len] != ' ' && str[len] != '|' && str[len] != '>' && str[len] != '<')
+			++len;
+	}
+	return (len);
+}
+
+char	*put_token(char *str)
+{
+	int		len;
+	int		i;
+	char	*str2;
+
+	// if (str[0] == '\'' || str[0] == '\"')
+	len = get_cmd_length(str);
+	i = -1;
 	str2 = (char *)malloc(sizeof(char) * (len + 1));
 	if (!str2)
 		return (0);
-	while (i < len)
-	{
+	while (++i < len)
 		str2[i] = str[i];
-		++i;
-	}
 	str2[i] = '\0';
 	if (str2[0] == '\0')
 	{
@@ -57,28 +81,34 @@ char	*put_token(char const *str)
 	return (str2);
 }
 
-void	token_split(char *line)
+void quotes_check(char *line)
+{
+	int in_single_quote;
+	int in_double_quote;
+}
+
+void	token_split(char *line, t_tmp_list *tmp_list)
 {
 	//"" '' 짝수개인지 확인
 	// 리다이렉션 이후 파일이름 있는지
-	int i = 0;
-	char flag = '\0';
-
-	while (line[i])
+	char *cmdline;
+	
+	cmdline = 0;
+	while (*line)
 	{
-		if(flag == '\0')
-		{
-			while (line[i] && line[i] == ' ')
-				i++;
-
-			if (line[i] == '|' && line[i])
-				printf("pipe!\n");// pipe_check();
-			if (line[i])
+			while (*line && *line == ' ')
+				line++;
+			if (*line)
 			{
-				printf("token = |%s| \n",put_token(line + i));
-				i += ft_strlen(put_token(line + i));
+				cmdline = put_token(line);
+				if (cmdline != NULL)
+				{
+					add_rear(tmp_list, cmdline, 0);
+				}
+				line += (int)ft_strlen(cmdline);
+				if (!*line)
+					break;
 			}
-		}
-		i++;
 	}
+	free(cmdline);
 }

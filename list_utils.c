@@ -1,5 +1,6 @@
 
 #include "minishell.h"
+#include "parsing.h"
 
 void	add_front(t_tmp_list *list, char *token, int idx)
 {
@@ -24,14 +25,14 @@ void	add_front(t_tmp_list *list, char *token, int idx)
 	list->size++;
 }
 
-void	add_rear(t_tmp_list *list, char *token, int idx, t_token_type type)
+void	add_rear(t_tmp_list *list, char *token, int idx)
 {
 	t_tmp_node	*new_node;
 
 	new_node = (t_tmp_node *)malloc(sizeof(t_tmp_node));
 	new_node->token = token;
 	new_node->idx = idx;
-	new_node->type = type;
+	// new_node->type = type;
 
 	new_node->next = NULL;
 	new_node->prev = NULL;
@@ -58,7 +59,9 @@ void	del_front(t_tmp_list *list)
 		tmp = list->front;
 		list->front = list->front->next;
 		list->front->prev = NULL;
-		free(tmp);
+		free(tmp->token);
+		if (tmp != NULL)
+			free(tmp);
 	}
 	else
 		free(list->front);
