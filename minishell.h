@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 10:54:55 by jeakim            #+#    #+#             */
-/*   Updated: 2024/05/17 12:24:01 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/05/17 15:31:21 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,32 +15,32 @@
 # define MINISHELL_H
 
 #include "libft_src/libft.h"
-#include "parsing.h"
+// #include "parsing.h"
 #include "minishell_exec.h"
-
-#include <readline/readline.h>
-#include <readline/history.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
-// typedef enum e_token_type
-// {
-//     TOKEN_COMMAND,         // 명령어
-//     TOKEN_ARGUMENT,        // 명령어의 인자
-//     TOKEN_PIPE,            // 파이프 (|)
-//     TOKEN_REDIRECT_IN,     // 입력 리다이렉션 (<)
-//     TOKEN_REDIRECT_OUT,    // 출력 리다이렉션 (>)
-//     TOKEN_REDIRECT_APPEND, // 출력 리다이렉션 (>>)
-//     TOKEN_SEMICOLON,       // 세미콜론 (;)
-//     // TOKEN_AMPERSAND,       // 백그라운드 실행 (&)
-//     TOKEN_QUOTE,           // 작은따옴표 또는 큰따옴표 (' 또는 ")
-//     TOKEN_VARIABLE,        // 환경 변수 또는 특수 변수 ($)
-//     TOKEN_OPERATOR,        // 연산자 (&&, ||, >) 
-//     // 추가적인 토큰 타입들...
-//     TOKEN_ERROR            // 잘못된 토큰
-// } t_token_type;
+#include <readline/readline.h>
+#include <readline/history.h>
+
+typedef enum e_token_type
+{
+    TOKEN_COMMAND,         // 명령어
+    TOKEN_ARGUMENT,        // 명령어의 인자
+    TOKEN_PIPE,            // 파이프 (|)
+    TOKEN_REDIRECT_IN,     // 입력 리다이렉션 (<)
+    TOKEN_REDIRECT_OUT,    // 출력 리다이렉션 (>)
+    TOKEN_REDIRECT_APPEND, // 출력 리다이렉션 (>>)
+    TOKEN_SEMICOLON,       // 세미콜론 (;)
+    // TOKEN_AMPERSAND,       // 백그라운드 실행 (&)
+    TOKEN_QUOTE,           // 작은따옴표 또는 큰따옴표 (' 또는 ")
+    TOKEN_VARIABLE,        // 환경 변수 또는 특수 변수 ($)
+    TOKEN_OPERATOR,        // 연산자 (&&, ||, >) 
+    // 추가적인 토큰 타입들...
+    TOKEN_ERROR            // 잘못된 토큰
+} t_token_type;
 
 typedef enum e_redirection {
 	STDIN_REDIRECT,
@@ -66,5 +66,19 @@ typedef struct s_command_list {
 	struct s_command_list *next; //(다음파이프) ex){ < a << aa(tmp/heredoc1) < a < aaa < a ls > b < a | << qwe(tmp/heredoc2) cat > c } 파이프 전 -> 파이프 후
 }	t_command_list;
 
+typedef struct s_tmp_node {
+	char *token;
+	int idx;
+	t_token_type type;
+	struct s_tmp_node *next; 
+	struct s_tmp_node *prev; 
+
+}	t_tmp_node;
+
+typedef struct s_tmp_list {
+	struct s_tmp_node *front; 
+	struct s_tmp_node *rear; 
+	int	size;
+}	t_tmp_list;
 
 #endif

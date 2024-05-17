@@ -5,6 +5,59 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+#include "minishell.h"
+
+void	add_front(t_tmp_list *list, char *token, int idx);
+void	add_rear(t_tmp_list *list, char *token, int idx);
+void	del_front(t_tmp_list *list);
+void	del_rear(t_tmp_list *list);
+void	print_list(t_tmp_list *list);
+void	token_split(char *line);
+
+
+void parsing(t_command_list	*list, char *line)
+{
+	char** cmd_arr;
+	int i=0;
+	t_tmp_list token_list;
+	token_list.size = 0;
+	char flag = '\0';
+	
+	token_split(line);
+	//"", '' 체크
+	// cmd_arr = ft_split(line, '|');
+	// while(*line)
+	// {
+	// 	if (flag != '\0')
+	// 	{
+	// 		int strlen;
+	// 		strlen = line - ft_strchr(line, flag);
+	// 		//  ft_strchr(line, flag)이 널인지 검사
+	// 		// line 부터 ft_strchr(line, flag) 까지 노드에 저장
+	// 		line + strlen;
+	// 	}
+
+
+	// }
+	// while (cmd_arr[i] != NULL)
+	// {
+	// 	char **cmd = ft_split(cmd_arr[i], ' ');
+	// 	int j=0;
+	// 	while(cmd[j])
+	// 	{
+	// 		printf("%s , ", cmd[j]);
+	// 		add_rear(&token_list, cmd[j], i);
+	// 		j++;
+	// 	}
+	// 	free(cmd_arr[i]);
+	// 	printf("\n");
+	// 	i++;
+	// }
+	// free(cmd_arr);
+
+	print_list(&token_list);
+
+}
 
 int main(void)
 {
@@ -16,7 +69,11 @@ int main(void)
         /* readline함수가 호출되면 인자(prompt : )를 터미널에 출력하고 저장할 라인을 입력받는다 */
         str = readline("prompt : ");/* read함수는 저장한 문자열의 메모리주소를 반환한다 */
         if (str)/* 입력이 된다면 (주소가 존재한다면) */
+		{
+
             printf("%s\n", str);/* 주소안에 문자열을 출력해보자 */
+			parsing(0, str);
+		}
         else/* str = NULL 이라면 (EOF, cntl + D)*/
             break ;/* 반복문을 탈출해준다.*/
 	/* add_history에 저장된 문자열은 up & down 방향키를 이용해 확인할수있다 */
