@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:26:23 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/05/20 13:37:47 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/05/20 21:50:35 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ int	parse_quotes(char *str)
 	}
 	if (quote == '\"')
 	{
-		//환경변수 따로 처리해줄것
+		// if (ft_strchr(str, '$') != 0)
+
 		while (str[len] != '\"')
 			len ++;
 	}
@@ -116,6 +117,22 @@ void quotes_check(char *line)
 	int in_double_quote;
 }
 
+t_token_type set_token_type(char *str)
+{
+	if (*str == '|')
+		return (TOKEN_PIPE);
+	else if (ft_strncmp(str, "<", 2) == 0)
+		return (STDIN_REDIRECT);
+	else if (ft_strncmp(str, "<<", 2) == 0)
+		return (STDIN_APPEND);
+	else if (ft_strncmp(str, ">", 2) == 0)
+		return (STDOUT_REDIRECT);
+	else if (ft_strncmp(str, ">>", 2) == 0)
+		return (STDOUT_APPEND);
+	else
+		return (TOKEN_COMMAND);
+}
+
 void	token_split(char *line, t_token_list *tmp_list)
 {
 	//"" '' 짝수개인지 확인
@@ -132,7 +149,7 @@ void	token_split(char *line, t_token_list *tmp_list)
 				cmdline = put_token(line);
 				if (cmdline != NULL)
 				{
-					add_token_list(tmp_list, cmdline, 0);
+					add_token_list(tmp_list, cmdline, set_token_type(cmdline));
 					// free(cmdline);
 				}
 				line += (int)ft_strlen(cmdline);

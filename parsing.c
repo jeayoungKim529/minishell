@@ -14,23 +14,85 @@
 // {
 // 	system ("leaks minishell");
 // }
+// void	set_redirect_list(t_token_node *token_node, t_command_node *cmd_node)
+// {
+// 	if (token_node->token[0] == '>')
+// 	{
+// 		if (token_node->next == NULL)
+// 		{
+// 			printf("> error\n");
+// 			exit(1);
+// 		}
+// 		if (token_node->type == STDOUT_APPEND)
+// 		{
+// 			// >> 처리
+// 		}
+// 		add_token_list(cmd_node->redir_list, token_node->next->token, token_node->type);
+// 		token_node = token_node->next->next;
+// 		//파일 열어보기
+// 	}
+// 	else
+// 	{
+		
+// 	}
+// }
 
-make_command_list(t_token_list *token_list, t_command_list *cmd_list)
-{
-	int	i;
-	t_token_node	*node;
+// void set_quote (t_token_node *token_node, t_command_node *cmd_node, char *token)
+// {
+// 	int	start;
+// 	char	quote;
+// 	// char	*quote;
 
-	i = 0;
-	node = token_list->front;
-	while(i <= token_list->size)
-	{
-		if (node->token[0] == '|')
-		{
-			//다음 커맨드노
-		}
+// 	start = 0;
+// 	while (*token != NULL)
+// 	{
+// 		if (*token == '\"' || *token == '\'')
+// 			break;
+// 	}
+// 	quote = *token;
+// 	while (token != ft_strrchr(token, quote))
+// 	{
+		
+// 	}
+// }
 
-	}
-}
+// make_command_list(t_token_list *token_list, t_command_list *cmd_list)
+// {
+// 	int	i;
+// 	t_token_node	*node;
+// 	t_command_node    *cmd_node;
+
+// 	i = -1;
+// 	node = token_list->front;
+// 	cmd_node = cmd_list->front;
+// 	while(++i <= token_list->size)
+// 	{
+// 		if (node->token[0] == '|')
+// 			add_command_list(cmd_node);//다음 커맨드노드 생성 후 다음 노드로
+// 		else if (node->token == '>' || (node->next != NULL && node->token == '<'))
+// 		{
+// 			add_token_list(cmd_node->redir_list, node->next->token, set_token_type(ft_strchr(node->token, '>'))); 
+// 			node = node->next;
+// 			i++;
+// 			// < | TOKEN_VARIABLE
+// 			// | > 가능함
+// 		}
+// 		else
+// 		{
+// 			if (ft_strchr(node->token, '\"') != 0 || ft_strchr(node->token, '\''))
+// 			{
+// 				// 가장 바깥 따옴표 지우기
+// 				if (ft_strchr(node->token, '\"') != 0 || ft_strchr(node->token, '\'') != 0)
+// 					set_quote(node, cmd_node);
+// 				if (ft_strchr(node->token, '$') != 0 && node->type != TOKEN_SINGLE_QUOTE)
+// 					node->type = TOKEN_VARIABLE;
+
+// 			}
+// 			add_token_list(cmd_node->cmd, node->token, node->type);// 커맨드 저장 다음노드 , 따옴표 제거
+// 		}
+// 	}
+// 	// clear_list(&token_list);
+// }
 
 void parsing(t_command_list	*list, char *line)
 {
@@ -38,14 +100,16 @@ void parsing(t_command_list	*list, char *line)
 	t_token_list token_list;
 	t_command_list cmd_list;
 	token_list.size = 0;
+	cmd_list.size = 0;
 	char flag = '\0';
 	
 	token_split(line, &token_list);
 	if (token_list.size > 0)
 	{
 		print_list(&token_list);
-		// clear_list(&token_list);
+		clear_list(&token_list);
 	}
+	// make_command_list(&token_list, &cmd_list);
 
 
     // atexit(check_leaks);

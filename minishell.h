@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 10:54:55 by jeakim            #+#    #+#             */
-/*   Updated: 2024/05/20 13:31:01 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/05/20 21:23:57 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,13 @@ typedef enum e_token_type
 	STDIN_REDIRECT,
 	STDOUT_REDIRECT,
 	STDIN_APPEND,
-	STDOUT_APPEND
+	STDOUT_APPEND,
     // TOKEN_ARGUMENT,        // 명령어의 인자
     // TOKEN_SEMICOLON,       // 세미콜론 (;)
     // TOKEN_AMPERSAND,       // 백그라운드 실행 (&)
-    // TOKEN_QUOTE,           // 작은따옴표 또는 큰따옴표 (' 또는 ")
-    // TOKEN_VARIABLE,        // 환경 변수 또는 특수 변수 ($)
+    TOKEN_SINGLE_QUOTE,           // 작은따옴표 또는 큰따옴표 (' 또는 ")
+    TOKEN_DOUBLE_QUOTE,           // 작은따옴표 또는 큰따옴표 (' 또는 ")
+    TOKEN_VARIABLE,        // 환경 변수 또는 특수 변수 ($)
     // TOKEN_OPERATOR,        // 연산자 (&&, ||, >) 
     // 추가적인 토큰 타입들...
     // TOKEN_ERROR            // 잘못된 토큰
