@@ -10,30 +10,45 @@
 
 
 
-void check_leaks(void)
+// void check_leaks(void)
+// {
+// 	system ("leaks minishell");
+// }
+
+make_command_list(t_token_list *token_list, t_command_list *cmd_list)
 {
- system ("leaks minishell");
+	int	i;
+	t_token_node	*node;
+
+	i = 0;
+	node = token_list->front;
+	while(i <= token_list->size)
+	{
+		if (node->token[0] == '|')
+		{
+			//다음 커맨드노
+		}
+
+	}
 }
-
-
 
 void parsing(t_command_list	*list, char *line)
 {
-	char** cmd_arr;
-	int i=0;
-	t_tmp_list token_list;
+	// t_tmp_list token_list;
+	t_token_list token_list;
+	t_command_list cmd_list;
 	token_list.size = 0;
 	char flag = '\0';
 	
 	token_split(line, &token_list);
-	if (token_list.front != NULL)
+	if (token_list.size > 0)
 	{
 		print_list(&token_list);
-		clear_list(&token_list);
-
+		// clear_list(&token_list);
 	}
 
-    atexit(check_leaks);
+
+    // atexit(check_leaks);
 }
 
 int main(void)

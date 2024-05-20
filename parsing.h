@@ -17,12 +17,15 @@
 
 #include "minishell.h"
 
-void	add_front(t_tmp_list *list, char *token, int idx);
-void	add_rear(t_tmp_list *list, char *token, int idx);
-void	del_front(t_tmp_list *list);
-void	del_rear(t_tmp_list *list);
-void	print_list(t_tmp_list *list);
-void	token_split(char *line, t_tmp_list *tmp_list);
-void	clear_list(t_tmp_list *list);
+// void	add_front(t_token_list *list, char *token, int idx);
+// void	add_rear(t_token_list *list, char *token, int idx);
+// void	del_front(t_token_list *list);
+// void	del_rear(t_token_list *list);
+void	print_list(t_token_list *list);
+void	token_split(char *line, t_token_list *tmp_list);
+void	clear_list(t_token_list *list);
+void	add_token_list(t_token_list *list, char *token, t_token_type type);
+void	del_token_list(t_token_list *list);
+
 
 #endif

@@ -6,12 +6,12 @@
 #    By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/17 12:35:23 by jeakim            #+#    #+#              #
-#    Updated: 2024/05/17 15:29:36 by jimchoi          ###   ########.fr        #
+#    Updated: 2024/05/20 13:35:58 by jimchoi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = 
+CFLAGS =
 # -Wall -Werror -Wextra
 NAME = minishell
 LINKING_FLAGS =
@@ -34,7 +34,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	make -C $(LIBFT_DIR)
-	$(CC) -o $@ $(OBJS) $(LIBFT) $(LINKING_FLAGS) -lreadline
+	$(CC) -o $@ $(OBJS) $(LIBFT) $(LINKING_FLAGS) -lreadline  -fsanitize=address
 
 clean:
 	@rm -rf $(OBJS)

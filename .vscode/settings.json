@@ -13,6 +13,7 @@
 		"unordered_map": "c",
 		"vector": "c",
 		"stdlib.h": "c",
-		"readline.h": "c"
+		"readline.h": "c",
+		"parsing.h": "c"
 	}
 }
