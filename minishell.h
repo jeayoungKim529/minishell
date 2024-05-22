@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/17 10:54:55 by jeakim            #+#    #+#             */
-/*   Updated: 2024/05/22 13:56:15 by jeakim           ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/05/22 16:37:25 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 
 #ifndef MINISHELL_H
@@ -16,8 +18,8 @@
 
 #include "libft_src/libft.h"
 // #include "parsing.h"
-#include "minishell_exec.h"
-#include "minishell_exec_process.h"
+// #include "minishell_exec.h"
+// #include "minishell_exec_process.h"
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -78,7 +80,7 @@ typedef struct s_token_list {
 
 typedef struct s_command_node {
 	t_token_list *redir_list;
-	t_token_list *cmd;
+	t_token_list *cmd_list;
 	struct s_command_node *next; //(다음파이프) ex){ < a << aa(tmp/heredoc1) < a < aaa < a ls > b < a | << qwe(tmp/heredoc2) cat > c } 파이프 전 -> 파이프 후
 	struct s_command_node *prev; //(다음파이프) ex){ < a << aa(tmp/heredoc1) < a < aaa < a ls > b < a | << qwe(tmp/heredoc2) cat > c } 파이프 전 -> 파이프 후
 }	t_command_node;
@@ -89,19 +91,14 @@ typedef struct s_command_list {
 	int	size;
 }	t_command_list;
 
-typedef struct s_tmp_node {
-	char *token;
-	int idx;
-	t_token_type type;
-	struct s_tmp_node *next; 
-	struct s_tmp_node *prev; 
-
-}	t_tmp_node;
-
-typedef struct s_tmp_list {
-	struct s_tmp_node *front; 
-	struct s_tmp_node *rear; 
-	int	size;
-}	t_tmp_list;
+void readline_func(t_command_list *list);
+void	print_list(t_token_list *list);
+void	 print_command_list(t_command_list *list);
+void	token_split(char *line, t_token_list *tmp_list);
+void	clear_list(t_token_list *list);
+void	add_token_list(t_token_list *list, char *token, t_token_type type);
+void	del_token_list(t_token_list *list);
+void	add_command_list(t_command_list *list);
+void	del_command_list(t_command_list *list);
 
 #endif
