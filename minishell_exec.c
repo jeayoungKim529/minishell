@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:29:20 by jeakim            #+#    #+#             */
-/*   Updated: 2024/05/22 15:43:17 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/05/22 17:34:08 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	execute_commands(t_process *prcs, t_command_list *list)
 {
 	t_command_node	*cur;
 
+	printf("execute\n");
 	// if (!list)
 	// 	ft_error();
 	cur = list->front;
@@ -55,10 +56,10 @@ void	execute_commands(t_process *prcs, t_command_list *list)
 			execute_builtin(prcs);
 		else
 		{
-			init_prcs();
-			open_pipe();
-			set_redirection();
-			close_pipe();
+			// init_prcs();
+			// open_pipe();
+			// set_redirection();
+			// close_pipe();
 				//free(prcs->path);
 		}
 		free(prcs->cmd);
