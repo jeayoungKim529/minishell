@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:26:23 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/05/22 19:29:36 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/05/22 21:09:37 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,17 @@ char	*put_token(char *str)
 	
 	len = get_cmd_length(str);
 	i = -1;
-	str2 = (char *)malloc(sizeof(char) * (len + 1));
+ 	str2 = (char *)malloc(sizeof(char) * (len + 1));
 	if (!str2)
 		return (0);
 	while (++i < len)
 		str2[i] = str[i];
 	str2[i] = '\0';
-	if (str2[0] == '\0')
-	{
-		free(str2);
-		return (0);
-	}
+	// if (str2[0] == '\0')
+	// {
+	// 	free(str2);
+	// 	return (0);
+	// }
 	return (str2);
 }
 
@@ -111,27 +111,28 @@ t_token_type set_token_type(char *str)
 
 void	token_split(char *line, t_token_list *tmp_list)
 {
-	//"" '' 짝수개인지 확인
-	// 리다이렉션 이후 파일이름 있는지
 	char *cmdline;
 	
 	cmdline = 0;
 	while (*line)
 	{
-			while (*line && *line == ' ')
-				line++;
-			if (*line)
+
+		while (*line && *line == ' ')
+			line++;
+		if (*line)
+		{
+			cmdline = put_token(line);
+			if (cmdline != NULL)
 			{
-				cmdline = put_token(line);
-				if (cmdline != NULL)
-				{
-					add_token_list(tmp_list, cmdline, set_token_type(cmdline));
-					// free(cmdline);
-				}
+				add_token_list(tmp_list, cmdline, set_token_type(cmdline));
 				line += (int)ft_strlen(cmdline);
-				if (!*line)
-					break;
+					free(cmdline);
+					cmdline = 0;
 			}
+			if (!*line)
+				break;
+		}
 	}
-	// free(cmdline);
+	if (cmdline)
+		free(cmdline);
 }

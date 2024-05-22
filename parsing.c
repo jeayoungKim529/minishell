@@ -3,41 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:54:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/05/22 19:31:09 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/05/22 21:26:15 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 
-void free_command_list(t_command_list *command_list)
-{
-    t_command_node *curr;
-	t_command_node *next;
-	int i = 0;
 
-    curr = command_list->front;
-    while (command_list->size > 0)
-    {
-        next = curr->next;
-		// next->prev = 0;
-		command_list->front = next;
-        // t_token_list 구조체도 free해줘야 함
-        clear_list(curr->cmd_list);
-		free(curr->cmd_list);
-        clear_list(curr->redir_list);
-		free(curr->redir_list);
-		free(curr);
-		if (next != NULL)
-			curr = next;
-		command_list->size--;
-    }
-
-    // free(command_list);
-}
 
 
 
@@ -180,14 +156,14 @@ void parsing(t_command_list	*cmd_list, char *line)
 	{
 		printf( "token_list : ");
 		print_list(&token_list);
-		// clear_list(&token_list);
 	}
 	make_command_list(&token_list, cmd_list);
+		clear_list(&token_list);
 	if(cmd_list->size > 0)
 	{
 		printf( "cmd_list : ");
 		print_command_list(cmd_list);
-		// free_command_list(cmd_list);
+		free_command_list(cmd_list);
 	}
 	
 

@@ -18,9 +18,7 @@ void	add_token_list(t_token_list *list, char *token, t_token_type type)
 		printf("malloc error\n");
 		exit(1);
 	}
-	if (type != 9)
-		new_node->type = type;
-
+	new_node->type = type;
 	new_node->next = NULL;
 	new_node->prev = NULL; 
 	if (list->size == 0)
@@ -47,11 +45,14 @@ void	del_token_list(t_token_list *list)
 		list->front = list->front->next;
 		list->front->prev = NULL;
 		free(tmp->token);
-		if (tmp != NULL)
-			free(tmp);
+		// if (tmp != NULL)
+		free(tmp);
 	}
 	else
+	{
+		free(list->front->token);
 		free(list->front);
+	}
 	list->size--;
 }
 void	add_command_list(t_command_list *list)
@@ -91,12 +92,22 @@ void	del_command_list(t_command_list *list)
 		tmp = list->front;
 		list->front = list->front->next;
 		list->front->prev = NULL;
-		if (tmp != NULL)
-			free(tmp);
+		clear_list(tmp->cmd_list);
+		clear_list(tmp->redir_list);
+		free(tmp->cmd_list);
+		free(tmp->redir_list);
+		free(tmp);
 	}
 	else
+	{
+		clear_list(list->front->cmd_list);
+		clear_list(list->front->redir_list);
+		free(list->front->cmd_list);
+		free(list->front->redir_list);
 		free(list->front);
+	}
 	list->size--;
+
 }
 
 
@@ -150,10 +161,24 @@ void	clear_list(t_token_list *list)
 	t_token_node *head;
 	t_token_node *temp;
 	head = list->front;
-	int i = 0;
-
-	while(list->size > 0)
+	
+	while(list->size != 0)
 	{
 		del_token_list(list);
 	}
+}
+
+void free_command_list(t_command_list *command_list)
+{
+    t_command_node *curr;
+	t_command_node *next;
+	int i = 0;
+
+    curr = command_list->front;
+    while (command_list->size != 0)
+    {
+        del_command_list(command_list);
+    }
+
+    // free(command_list);
 }
