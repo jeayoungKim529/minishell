@@ -1,6 +1,6 @@
 
 #include "minishell.h"
-// #include "parsing.h"
+#include "parsing.h"
 
 void	add_token_list(t_token_list *list, char *token, t_token_type type)
 {
