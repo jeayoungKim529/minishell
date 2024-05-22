@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 10:54:55 by jeakim            #+#    #+#             */
-/*   Updated: 2024/05/20 21:23:57 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/05/22 13:56:15 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "libft_src/libft.h"
 // #include "parsing.h"
 #include "minishell_exec.h"
+#include "minishell_exec_process.h"
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
