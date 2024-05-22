@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:54:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/05/22 16:54:39 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/05/22 19:31:09 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,11 +157,8 @@ t_token_list *redir = malloc(sizeof(t_token_list));
 		}
 		else
 		{
-			if (cmd_node == NULL ||  node == NULL)
-			{
-				printf("Error\n");
-				exit(1);
-			}
+			// if (node->token[0] == '\"' || node->token[0] == '\'')
+			// 	set_quote(node, cmd_node, node->token);
 			
 			add_token_list(cmd_node->cmd_list, node->token, node->type);// 커맨드 저장 다음노드 , 따옴표 제거
 			node = node->next;

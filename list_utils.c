@@ -98,3 +98,62 @@ void	del_command_list(t_command_list *list)
 		free(list->front);
 	list->size--;
 }
+
+
+
+void print_command_list(t_command_list *list)
+{
+	t_command_node *head;
+    head = list->front;
+    int i = 0;
+
+        printf("total list size :%d\n\n", list->size);
+		printf("========================\n");
+    while(i < list->size)
+    {
+        printf("list[%d]\n", i);
+		printf("----------------------------------\n");
+		printf(" ㄴredir_list : ");
+		print_list(head->redir_list);
+		printf("----------------------------------\n");
+		printf("ㄴcmd_list : ");
+		print_list(head->cmd_list);
+		printf("----------------------------------\n");
+		printf("\n");
+        head = head->next;
+		i++;
+    }
+}
+
+
+void print_list(t_token_list *list)
+{
+	t_token_node *head;
+	head = list->front;
+	int i = 0;
+
+    printf("size = %d\n", list->size);
+	if (list->size == 0)
+		return ;
+	while(i < list->size)
+	{
+		printf(" |%s| ",head->token);
+		head = head->next;
+		printf("->");
+		i++;
+	}
+	printf("\n");
+}
+
+void	clear_list(t_token_list *list)
+{
+	t_token_node *head;
+	t_token_node *temp;
+	head = list->front;
+	int i = 0;
+
+	while(list->size > 0)
+	{
+		del_token_list(list);
+	}
+}
