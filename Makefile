@@ -11,7 +11,9 @@
 # **************************************************************************** #
 
 CC = cc
+
 CFLAGS = 
+
 # -Wall -Werror -Wextra
 NAME = minishell
 LINKING_FLAGS =
@@ -21,7 +23,10 @@ COMFILE_FLAGS =
 LIBFT_DIR = ./libft_src/
 LIBFT = -L$(LIBFT_DIR) -lft -I./libft_src
 
+
+
 SRCS = minishell.c\
+
 		minishell_envp.c
 
 OBJS = $(SRCS:.c=.o)
@@ -33,7 +38,9 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	make -C $(LIBFT_DIR)
+
 	$(CC) -o $@ $(OBJS) $(LIBFT) $(LINKING_FLAGS)
+
 
 clean:
 	@rm -rf $(OBJS)
