@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:29:00 by jeakim            #+#    #+#             */
-/*   Updated: 2024/05/22 14:04:10 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/05/22 17:17:36 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ char	*ft_envpfind(t_envp *env, char *key)
 			return (cur->value);
 		cur = cur->next;
 	}
+	return (NULL);
 }
 
 void	envp_func(t_process *prcs, char *envp[])
