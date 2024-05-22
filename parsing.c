@@ -42,26 +42,26 @@ void	set_redirect_list(t_token_node *token_node, t_command_node *cmd_node)
 	}
 }
 
-void set_quote (t_token_node *token_node, t_command_node *cmd_node, char *token)
-{
-	int	start;
-	char	quote;
-	// char	*quote;
+// void set_quote (t_token_node *token_node, t_command_node *cmd_node, char *token)
+// {
+// 	int	start;
+// 	char	quote;
+// 	// char	*quote;
 
-	start = 0;
-	while (*token != NULL)
-	{
-		if (*token == '\"' || *token == '\'')
-			break;
-	}
-	quote = *token;
-	while (token != ft_strrchr(token, quote))
-	{
+// 	start = 0;
+// 	while (*token != NULL)
+// 	{
+// 		if (*token == '\"' || *token == '\'')
+// 			break;
+// 	}
+// 	quote = *token;
+// 	while (token != ft_strrchr(token, quote))
+// 	{
 		
-	}
-}
+// 	}
+// }
 
-make_command_list(t_token_list *token_list, t_command_list *cmd_list)
+void make_command_list(t_token_list *token_list, t_command_list *cmd_list)
 {
 	int	i;
 	t_token_node	*node;
@@ -73,7 +73,12 @@ make_command_list(t_token_list *token_list, t_command_list *cmd_list)
 	while(++i <= token_list->size)
 	{
 		if (node->token[0] == '|')
-			add_command_list(cmd_node);//다음 커맨드노드 생성 후 다음 노드로
+		{
+			add_command_list(cmd_list);//다음 커맨드노드 생성 후 다음 노드로
+			cmd_node = cmd_list->rear;
+			node = node->next;
+
+		}
 		else if (node->token[0] == '>' || (node->next != NULL && node->token[0] == '<'))
 		{
 			set_redirect_list(node, cmd_node);
@@ -93,6 +98,7 @@ make_command_list(t_token_list *token_list, t_command_list *cmd_list)
 
 			// }
 			add_token_list(cmd_node->cmd, node->token, node->type);// 커맨드 저장 다음노드 , 따옴표 제거
+			node = node->next;
 		}
 	}
 	// clear_list(&token_list);
@@ -108,12 +114,16 @@ void parsing(t_command_list	*list, char *line)
 	char flag = '\0';
 	
 	token_split(line, &token_list);
-	if (token_list.size > 0)
+	// if (token_list.size > 0)
+	// {
+	// 	print_list(&token_list);
+	// 	clear_list(&token_list);
+	// }
+	make_command_list(&token_list, &cmd_list);
+	if(cmd_list.size > 0)
 	{
-		print_list(&token_list);
-		clear_list(&token_list);
+		print_command_list(&cmd_list);
 	}
-	// make_command_list(&token_list, &cmd_list);
 
 
     // atexit(check_leaks);

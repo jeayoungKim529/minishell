@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 10:54:55 by jeakim            #+#    #+#             */
-/*   Updated: 2024/05/20 21:23:57 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/05/22 11:47:40 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 #include "libft_src/libft.h"
 // #include "parsing.h"
-#include "minishell_exec.h"
+// #include "minishell_exec.h"
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>

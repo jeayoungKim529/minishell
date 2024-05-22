@@ -22,10 +22,13 @@
 // void	del_front(t_token_list *list);
 // void	del_rear(t_token_list *list);
 void	print_list(t_token_list *list);
+void	 print_command_list(t_command_list *list);
 void	token_split(char *line, t_token_list *tmp_list);
 void	clear_list(t_token_list *list);
 void	add_token_list(t_token_list *list, char *token, t_token_type type);
 void	del_token_list(t_token_list *list);
+void	add_command_list(t_command_list *list);
+void	del_command_list(t_command_list *list);
 
 
 #endif

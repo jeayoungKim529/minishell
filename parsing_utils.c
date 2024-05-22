@@ -6,12 +6,30 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:26:23 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/05/20 21:50:35 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/05/22 11:57:11 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.c"
 #include "parsing.h"
+
+void print_command_list(t_command_list *list)
+{
+	t_command_node *head;
+    head = list->front;
+    int i = 0;
+
+    while(i <= list->size)
+    {
+        printf("list[%d]\n", i);
+		printf("redir_list = ");
+		print_list(head->redir_list);
+		printf("cmd_list = ");
+		print_list(head->cmd);
+        head = head->next;
+		i++;
+    }
+}
 
 void print_list(t_token_list *list)
 {
