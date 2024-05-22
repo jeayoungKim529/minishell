@@ -6,7 +6,7 @@
 #    By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/17 12:35:23 by jeakim            #+#    #+#              #
-#    Updated: 2024/05/22 13:28:46 by jimchoi          ###   ########.fr        #
+#    Updated: 2024/05/22 16:41:07 by jimchoi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,10 +27,9 @@ ifdef DEBUG
 	COMFILE_FLAGS += -g3 -fsanitize=address
 endif
 
-SRCS = parsing.c parsing_utils.c list_utils.c
-#  minishell.c\
+SRCS = minishell.c parsing.c parsing_utils.c list_utils.c 
 
-		# minishell_envp.c
+# minishell_envp.c
 
 OBJS = $(SRCS:.c=.o)
 

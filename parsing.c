@@ -8,31 +8,31 @@
 #include "minishell.h"
 #include "parsing.h"
 
-// void free_command_list(t_command_list *command_list)
-// {
-//     t_command_node *curr;
-// 	t_command_node *next;
-// 	int i = 0;
+void free_command_list(t_command_list *command_list)
+{
+    t_command_node *curr;
+	t_command_node *next;
+	int i = 0;
 
-//     curr = command_list->front;
-//     while (command_list->size > 0)
-//     {
-//         next = curr->next;
-// 		// next->prev = 0;
-// 		command_list->front = next;
-//         // t_token_list 구조체도 free해줘야 함
-//         clear_list(curr->cmd_list);
-// 		free(curr->cmd_list);
-//         clear_list(curr->redir_list);
-// 		free(curr->redir_list);
-// 		free(curr);
-// 		if (next != NULL)
-// 			curr = next;
-// 		command_list->size--;
-//     }
+    curr = command_list->front;
+    while (command_list->size > 0)
+    {
+        next = curr->next;
+		// next->prev = 0;
+		command_list->front = next;
+        // t_token_list 구조체도 free해줘야 함
+        clear_list(curr->cmd_list);
+		free(curr->cmd_list);
+        clear_list(curr->redir_list);
+		free(curr->redir_list);
+		free(curr);
+		if (next != NULL)
+			curr = next;
+		command_list->size--;
+    }
 
-//     // free(command_list);
-// }
+    // free(command_list);
+}
 
 
 
@@ -165,12 +165,12 @@ t_token_list *redir = malloc(sizeof(t_token_list));
 	}
 }
 
-void parsing(t_command_list	*list, char *line)
+void parsing(t_command_list	*cmd_list, char *line)
 {
 	t_token_list token_list;
-	t_command_list cmd_list;
+	// t_command_list cmd_list;
 	token_list.size = 0;
-	cmd_list.size = 0;
+	cmd_list->size = 0;
 	char flag = '\0';
 	
 	token_split(line, &token_list);
@@ -180,12 +180,12 @@ void parsing(t_command_list	*list, char *line)
 		print_list(&token_list);
 		// clear_list(&token_list);
 	}
-	make_command_list(&token_list, &cmd_list);
-	if(cmd_list.size > 0)
+	make_command_list(&token_list, cmd_list);
+	if(cmd_list->size > 0)
 	{
 		printf( "cmd_list : ");
-		print_command_list(&cmd_list);
-		// free_command_list(&cmd_list);
+		print_command_list(cmd_list);
+		// free_command_list(cmd_list);
 	}
 	
 
@@ -193,7 +193,7 @@ void parsing(t_command_list	*list, char *line)
     atexit(check_leaks);
 }
 
-int main(void)
+void readline_func(t_command_list *list)
 {
 /* readline함수의 리턴값을 저장하기위해 임의로 포인터를 하나 선언한다 */
     char *str;
@@ -206,7 +206,7 @@ int main(void)
 		{
 
             printf("%s\n", str);/* 주소안에 문자열을 출력해보자 */
-			parsing(0, str);
+			parsing(list, str);
 		}
         else/* str = NULL 이라면 (EOF, cntl + D)*/
             break ;/* 반복문을 탈출해준다.*/
@@ -217,7 +217,7 @@ int main(void)
 			free(str);
     }
     /* 함수종료 */
-    return(0);
+    // return(0);
 }
 
 

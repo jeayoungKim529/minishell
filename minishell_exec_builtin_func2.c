@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:41:35 by jeakim            #+#    #+#             */
-/*   Updated: 2024/05/20 21:42:33 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/05/22 13:34:54 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	ft_echo(t_process *prcs)
 {
 	t_command	*cur;
 	int			flag;
+	int			i;
 
 	flag = 0;
 	cur = prcs->com_list->next;
@@ -44,16 +45,10 @@ void	ft_echo(t_process *prcs)
 		flag = 1;
 		i++;
 	}
+	i = 1;
 	while (i < prcs->n_com)
 	{
-		if (cur->TYPE == TOKEN_QUOTE)
-		{
-			int j;
-			j = -1;
-			while (++j < ft_strlen(cur->argv) && cur->argv[j] != '$')
-				printf(cur->argv[j]);
-			printf("%s", ft_envpfind(prcs->envp, cur->argv[0] + j));
-		}
+		printf("%s", cur->argv);
 		i++;
 	}
 	if (flag == 0)

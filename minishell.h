@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/17 10:54:55 by jeakim            #+#    #+#             */
-/*   Updated: 2024/05/22 16:16:14 by jimchoi          ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/05/22 16:37:25 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 
 
@@ -17,8 +18,8 @@
 
 #include "libft_src/libft.h"
 // #include "parsing.h"
-#include "minishell_exec.h"
-#include "minishell_exec_process.h"
+// #include "minishell_exec.h"
+// #include "minishell_exec_process.h"
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -90,5 +91,14 @@ typedef struct s_command_list {
 	int	size;
 }	t_command_list;
 
+void readline_func(t_command_list *list);
+void	print_list(t_token_list *list);
+void	 print_command_list(t_command_list *list);
+void	token_split(char *line, t_token_list *tmp_list);
+void	clear_list(t_token_list *list);
+void	add_token_list(t_token_list *list, char *token, t_token_type type);
+void	del_token_list(t_token_list *list);
+void	add_command_list(t_command_list *list);
+void	del_command_list(t_command_list *list);
 
 #endif
