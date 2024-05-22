@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 10:54:55 by jeakim            #+#    #+#             */
-/*   Updated: 2024/05/22 11:47:40 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/05/22 13:54:48 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef struct s_token_list {
 
 typedef struct s_command_node {
 	t_token_list *redir_list;
-	t_token_list *cmd;
+	t_token_list *cmd_list;
 	struct s_command_node *next; //(다음파이프) ex){ < a << aa(tmp/heredoc1) < a < aaa < a ls > b < a | << qwe(tmp/heredoc2) cat > c } 파이프 전 -> 파이프 후
 	struct s_command_node *prev; //(다음파이프) ex){ < a << aa(tmp/heredoc1) < a < aaa < a ls > b < a | << qwe(tmp/heredoc2) cat > c } 파이프 전 -> 파이프 후
 }	t_command_node;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:26:23 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/05/22 13:31:23 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/05/22 13:59:35 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,14 @@ void print_command_list(t_command_list *list)
     head = list->front;
     int i = 0;
 
+        printf("list size :%d\n", list->size);
     while(i < list->size)
     {
         printf("list[%d]\n", i);
 		printf("redir_list = ");
 		print_list(head->redir_list);
 		printf("cmd_list = ");
-		print_list(head->cmd);
+		print_list(head->cmd_list);
         head = head->next;
 		i++;
     }
@@ -46,6 +47,7 @@ void print_list(t_token_list *list)
 		head = head->next;
 		i++;
 	}
+	printf("\n");
 }
 
 void	clear_list(t_token_list *list)

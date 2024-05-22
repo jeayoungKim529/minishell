@@ -28,7 +28,7 @@ void	set_redirect_list(t_token_node *token_node, t_command_node *cmd_node)
 			// >> 처리
 		}
 		add_token_list(cmd_node->redir_list, token_node->next->token, token_node->type);
-		token_node = token_node->next->next;
+		// token_node = token_node->next->next;
 		//파일 열어보기
 	}
 	else
@@ -38,7 +38,7 @@ void	set_redirect_list(t_token_node *token_node, t_command_node *cmd_node)
 			// << 처리
 		}
 		add_token_list(cmd_node->redir_list, token_node->token, token_node->next->type);
-		token_node = token_node->next->next;
+		// token_node = token_node->next->next;
 	}
 }
 
@@ -61,41 +61,33 @@ void	set_redirect_list(t_token_node *token_node, t_command_node *cmd_node)
 // 	}
 // }
 
-void make_command_list(t_token_list *token_list, t_command_list *cmd_list)
+void make_command_list(t_token_list *token_list, t_command_list *cmdline)
 {
 	int	i;
 	t_token_node	*node;
-	//  = malloc(sizeof(t_token_node));
-	// if (node == NULL)
-	// {
-	// 	printf("malloc error\n");
-	// 	exit(1);
-	// }
-	t_command_node    *cmd_node = malloc(sizeof(t_command_node));
-	if (cmd_node == NULL)
-	{
-		printf("malloc error\n");
-		exit(1);
-	}
-
-	i = 0;
-
-	if (cmd_list == NULL || cmd_list->front == NULL || token_list == NULL || token_list->front == NULL) {
-    printf("Error: Invalid list\n");
-    exit(1);
-}
-
-	add_command_list(cmd_list);
-	node = token_list->front;
-	cmd_node = cmd_list->front;
-
+	t_command_node    *cmd_node;
 t_token_list *cmd = malloc(sizeof(t_token_list));
 t_token_list *redir = malloc(sizeof(t_token_list));
 
-	cmd_node->cmd = cmd;
+	i = 0;
+
+	if (cmdline == NULL || token_list == NULL || token_list->front == NULL) 
+	{
+    printf("Error: Invalid list\n");
+    exit(1);
+	}
+
+	printf("list size: %d\n", cmdline->size);
+	cmdline->size = 0;
+	add_command_list(cmdline);
+	printf("list size: %d\n", cmdline->size);
+	node = token_list->front;
+	cmd_node = cmdline->front;
+
+	cmd_node->cmd_list = cmd;
 	cmd_node->redir_list = redir;
 
-	cmd_node->cmd->size = 0;
+	cmd_node->cmd_list->size = 0;
 	cmd_node->redir_list->size = 0;
 	
 	if (token_list == NULL)
@@ -112,16 +104,23 @@ t_token_list *redir = malloc(sizeof(t_token_list));
 	{
 		if (node->token[0] == '|')
 		{
-			add_command_list(cmd_list);//다음 커맨드노드 생성 후 다음 노드로
-			cmd_node = cmd_list->rear;
+			add_command_list(cmdline);//다음 커맨드노드 생성 후 다음 노드로
+			cmd_node = cmd_node->next;
+			t_token_list *cmd2 = malloc(sizeof(t_token_list));
+			t_token_list *redir2 = malloc(sizeof(t_token_list));
+			cmd_node->cmd_list = cmd2;
+			cmd_node->redir_list = redir2;
+			cmd_node->redir_list->size = 0;
+			cmd_node->cmd_list->size = 0;
 			node = node->next;
 			i++;
 		}
-		else if (node->token[0] == '>' || (node->next != NULL && node->token[0] == '<'))
+		else if (node->token[0] == '>' || (node->next != NULL && node->next->token[0] == '<'))
 		{
 			set_redirect_list(node, cmd_node);
 			i++;
 			i++;
+			node = node->next->next;
 			// < | TOKEN_VARIABLE
 			// | > 가능함
 		}
@@ -133,7 +132,7 @@ t_token_list *redir = malloc(sizeof(t_token_list));
 				exit(1);
 			}
 			
-			add_token_list(cmd_node->cmd, node->token, node->type);// 커맨드 저장 다음노드 , 따옴표 제거
+			add_token_list(cmd_node->cmd_list, node->token, node->type);// 커맨드 저장 다음노드 , 따옴표 제거
 			node = node->next;
 			i++;
 		}
@@ -150,16 +149,20 @@ void parsing(t_command_list	*list, char *line)
 	char flag = '\0';
 	
 	token_split(line, &token_list);
-	// if (token_list.size > 0)
-	// {
-	// 	print_list(&token_list);
-	// 	clear_list(&token_list);
-	// }
+	if (token_list.size > 0)
+	{
+		printf( "token_list : ");
+		print_list(&token_list);
+		// clear_list(&token_list);
+	}
 	make_command_list(&token_list, &cmd_list);
 	if(cmd_list.size > 0)
 	{
+		printf( "cmd_list : ");
 		print_command_list(&cmd_list);
 	}
+	if (cmd_list.size == 0)
+		printf("왜지\n");
 
 
     // atexit(check_leaks);

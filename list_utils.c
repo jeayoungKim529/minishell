@@ -149,6 +149,7 @@ void	add_command_list(t_command_list *list)
 
 	new_node->next = NULL;
 	new_node->prev = NULL; 
+	// new_node->
 	if (list->size == 0)
 	{
 		list->front = new_node;
