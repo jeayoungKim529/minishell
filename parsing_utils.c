@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:26:23 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/05/22 13:59:35 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/05/22 15:24:39 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,24 @@ void print_command_list(t_command_list *list)
     head = list->front;
     int i = 0;
 
-        printf("list size :%d\n", list->size);
+        printf("total list size :%d\n\n", list->size);
+		printf("========================\n");
     while(i < list->size)
     {
         printf("list[%d]\n", i);
-		printf("redir_list = ");
+		printf("----------------------------------\n");
+		printf(" ㄴredir_list : ");
 		print_list(head->redir_list);
-		printf("cmd_list = ");
+		printf("----------------------------------\n");
+		printf("ㄴcmd_list : ");
 		print_list(head->cmd_list);
+		printf("----------------------------------\n");
+		printf("\n");
         head = head->next;
 		i++;
     }
 }
+
 
 void print_list(t_token_list *list)
 {
@@ -38,13 +44,14 @@ void print_list(t_token_list *list)
 	head = list->front;
 	int i = 0;
 
-    printf("list size = %d\n", list->size);
+    printf("size = %d\n", list->size);
 	if (list->size == 0)
 		return ;
 	while(i < list->size)
 	{
-		printf(" \"%s\" ",head->token);
+		printf(" |%s| ",head->token);
 		head = head->next;
+		printf("->");
 		i++;
 	}
 	printf("\n");

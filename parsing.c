@@ -8,12 +8,38 @@
 #include "minishell.h"
 #include "parsing.h"
 
-
-
-// void check_leaks(void)
+// void free_command_list(t_command_list *command_list)
 // {
-// 	system ("leaks minishell");
+//     t_command_node *curr;
+// 	t_command_node *next;
+// 	int i = 0;
+
+//     curr = command_list->front;
+//     while (command_list->size > 0)
+//     {
+//         next = curr->next;
+// 		// next->prev = 0;
+// 		command_list->front = next;
+//         // t_token_list 구조체도 free해줘야 함
+//         clear_list(curr->cmd_list);
+// 		free(curr->cmd_list);
+//         clear_list(curr->redir_list);
+// 		free(curr->redir_list);
+// 		free(curr);
+// 		if (next != NULL)
+// 			curr = next;
+// 		command_list->size--;
+//     }
+
+//     // free(command_list);
 // }
+
+
+
+void check_leaks(void)
+{
+	system ("leaks minishell");
+}
 void	set_redirect_list(t_token_node *token_node, t_command_node *cmd_node)
 {
 	if (token_node->token[0] == '>')
@@ -141,7 +167,6 @@ t_token_list *redir = malloc(sizeof(t_token_list));
 
 void parsing(t_command_list	*list, char *line)
 {
-	// t_tmp_list token_list;
 	t_token_list token_list;
 	t_command_list cmd_list;
 	token_list.size = 0;
@@ -160,12 +185,12 @@ void parsing(t_command_list	*list, char *line)
 	{
 		printf( "cmd_list : ");
 		print_command_list(&cmd_list);
+		// free_command_list(&cmd_list);
 	}
-	if (cmd_list.size == 0)
-		printf("왜지\n");
+	
 
 
-    // atexit(check_leaks);
+    atexit(check_leaks);
 }
 
 int main(void)

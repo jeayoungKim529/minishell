@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 10:54:55 by jeakim            #+#    #+#             */
-/*   Updated: 2024/05/22 13:54:48 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/05/22 16:16:14 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 
 #ifndef MINISHELL_H
@@ -16,7 +17,8 @@
 
 #include "libft_src/libft.h"
 // #include "parsing.h"
-// #include "minishell_exec.h"
+#include "minishell_exec.h"
+#include "minishell_exec_process.h"
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -88,19 +90,5 @@ typedef struct s_command_list {
 	int	size;
 }	t_command_list;
 
-typedef struct s_tmp_node {
-	char *token;
-	int idx;
-	t_token_type type;
-	struct s_tmp_node *next; 
-	struct s_tmp_node *prev; 
-
-}	t_tmp_node;
-
-typedef struct s_tmp_list {
-	struct s_tmp_node *front; 
-	struct s_tmp_node *rear; 
-	int	size;
-}	t_tmp_list;
 
 #endif
