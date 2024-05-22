@@ -6,12 +6,12 @@
 /*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:26:23 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/05/22 16:48:48 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/05/22 17:00:37 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-// #include "parsing.h"
+#include "parsing.h"
 
 void print_command_list(t_command_list *list)
 {

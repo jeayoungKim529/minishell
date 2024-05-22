@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/05/22 16:37:25 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/05/22 16:58:06 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,13 +92,13 @@ typedef struct s_command_list {
 }	t_command_list;
 
 void readline_func(t_command_list *list);
-void	print_list(t_token_list *list);
-void	 print_command_list(t_command_list *list);
-void	token_split(char *line, t_token_list *tmp_list);
-void	clear_list(t_token_list *list);
-void	add_token_list(t_token_list *list, char *token, t_token_type type);
-void	del_token_list(t_token_list *list);
-void	add_command_list(t_command_list *list);
-void	del_command_list(t_command_list *list);
+// void	print_list(t_token_list *list);
+// void	 print_command_list(t_command_list *list);
+// void	token_split(char *line, t_token_list *tmp_list);
+// void	clear_list(t_token_list *list);
+// void	add_token_list(t_token_list *list, char *token, t_token_type type);
+// void	del_token_list(t_token_list *list);
+// void	add_command_list(t_command_list *list);
+// void	del_command_list(t_command_list *list);
 
 #endif

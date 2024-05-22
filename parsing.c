@@ -1,9 +1,14 @@
-#include <signal.h>
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <unistd.h>
-#include <stdlib.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/22 16:54:36 by jimchoi           #+#    #+#             */
+/*   Updated: 2024/05/22 16:54:39 by jimchoi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
