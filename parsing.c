@@ -65,43 +65,79 @@ void make_command_list(t_token_list *token_list, t_command_list *cmd_list)
 {
 	int	i;
 	t_token_node	*node;
-	t_command_node    *cmd_node;
+	//  = malloc(sizeof(t_token_node));
+	// if (node == NULL)
+	// {
+	// 	printf("malloc error\n");
+	// 	exit(1);
+	// }
+	t_command_node    *cmd_node = malloc(sizeof(t_command_node));
+	if (cmd_node == NULL)
+	{
+		printf("malloc error\n");
+		exit(1);
+	}
 
-	i = -1;
+	i = 0;
+
+	if (cmd_list == NULL || cmd_list->front == NULL || token_list == NULL || token_list->front == NULL) {
+    printf("Error: Invalid list\n");
+    exit(1);
+}
+
+	add_command_list(cmd_list);
 	node = token_list->front;
 	cmd_node = cmd_list->front;
-	while(++i <= token_list->size)
+
+t_token_list *cmd = malloc(sizeof(t_token_list));
+t_token_list *redir = malloc(sizeof(t_token_list));
+
+	cmd_node->cmd = cmd;
+	cmd_node->redir_list = redir;
+
+	cmd_node->cmd->size = 0;
+	cmd_node->redir_list->size = 0;
+	
+	if (token_list == NULL)
+	{
+		printf("token_list is NULL\n");
+		exit(1);
+	}
+	if (token_list->size == 0)
+	{
+		printf("token_list size is 0\n");
+		exit(1);
+	}
+	while(i < token_list->size && node != NULL)
 	{
 		if (node->token[0] == '|')
 		{
 			add_command_list(cmd_list);//다음 커맨드노드 생성 후 다음 노드로
 			cmd_node = cmd_list->rear;
 			node = node->next;
-
+			i++;
 		}
 		else if (node->token[0] == '>' || (node->next != NULL && node->token[0] == '<'))
 		{
 			set_redirect_list(node, cmd_node);
+			i++;
 			i++;
 			// < | TOKEN_VARIABLE
 			// | > 가능함
 		}
 		else
 		{
-			// if (ft_strchr(node->token, '\"') != 0 || ft_strchr(node->token, '\''))
-			// {
-			// 	// 가장 바깥 따옴표 지우기
-			// 	if (ft_strchr(node->token, '\"') != 0 || ft_strchr(node->token, '\'') != 0)
-			// 		// set_quote(node, cmd_node);
-			// 	if (ft_strchr(node->token, '$') != 0 && node->type != TOKEN_SINGLE_QUOTE)
-			// 		node->type = TOKEN_VARIABLE;
-
-			// }
+			if (cmd_node == NULL ||  node == NULL)
+			{
+				printf("Error\n");
+				exit(1);
+			}
+			
 			add_token_list(cmd_node->cmd, node->token, node->type);// 커맨드 저장 다음노드 , 따옴표 제거
 			node = node->next;
+			i++;
 		}
 	}
-	// clear_list(&token_list);
 }
 
 void parsing(t_command_list	*list, char *line)

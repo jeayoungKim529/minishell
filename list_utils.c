@@ -89,7 +89,17 @@ void	add_token_list(t_token_list *list, char *token, t_token_type type)
 	t_token_node	*new_node;
 
 	new_node = (t_token_node *)malloc(sizeof(t_token_node));
-	new_node->token = token;
+	if (new_node == NULL)
+	{
+		printf("malloc error\n");
+		exit(1);
+	}
+	new_node->token = ft_strdup(token);
+	if(new_node->token == NULL)
+	{
+		printf("malloc error\n");
+		exit(1);
+	}
 	if (type != 9)
 		new_node->type = type;
 
@@ -131,6 +141,11 @@ void	add_command_list(t_command_list *list)
 	t_command_node	*new_node;
 
 	new_node = (t_command_node *)malloc(sizeof(t_command_node));
+	if (new_node == NULL)
+	{
+		printf("malloc error\n");
+		exit(1);
+	}
 
 	new_node->next = NULL;
 	new_node->prev = NULL; 
