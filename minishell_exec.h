@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:29:17 by jeakim            #+#    #+#             */
-/*   Updated: 2024/05/20 21:31:29 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/05/22 15:33:25 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define MINISHELL_EXEC_H
 
 #include "minishell.h"
-#include "minishell_exec_pipe.h"
 
 typedef struct s_envp{
 	char			*key;
@@ -34,17 +33,14 @@ void	execute_commands(t_process *prcs, t_command_list *list);
 //minishell_exec_redirection.c
 void	init_redirection();
 //minishell_exec_merge_command.c
-char	**merge_command(t_process *prcs, t_command *cmd);
+char	**merge_command(t_process *prcs, t_token_list *cmd_list);
+char	*check_envp(t_process *prcs, t_token_node *node);
 //minishell_exec_builtin_check.c
-int		check_builtin_command();
-int		check_option();
-int		check_option_n();
-int		check_path();
-int		check_arg();
+int		check_builtin_command(char **com);
 //minishell_exec_builtin.c
 int		execute_builtin(t_command *com);
 //minishell_exec_builtin_func1.c
-void	ft_env(t_process *prcs);
+void	ft_env(t_process *prcs, int flag);
 void	ft_export(t_process *prcs);
 void	ft_unset(t_process *prcs);
 //minishell_exec_builtin_func2.c
