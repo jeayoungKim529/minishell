@@ -12,17 +12,17 @@
 
 
 
-#ifndef PARSING_H
-# define PARSING_H
+#ifndef MINISHELL_PARSING_H
+# define MINISHELL_PARSING_H
 
-#include "minishell.h"
+#include "minishell_parsing.h"
 
 void free_command_list(t_command_list *command_list);
 
-void	set_redirect_list(t_token_node *token_node, t_command_node *cmd_node);
+int	set_redirect_list(t_token_node *token_node, t_command_node *cmd_node);
 void make_command_list(t_token_list *token_list, t_command_list *cmdline);
 void parsing(t_command_list	*cmd_list, char *line);
- 
+
 
 void	add_token_list(t_token_list *list, char *token, t_token_type type);
 void	del_token_list(t_token_list *list);
@@ -39,5 +39,9 @@ char	*put_token(char *str);
 void quotes_check(char *line);
 t_token_type set_token_type(char *str);
 void	token_split(char *line, t_token_list *tmp_list);
+
+int	is_white_space(char c);
+int	is_meta(t_token_type type);
+
 
 #endif

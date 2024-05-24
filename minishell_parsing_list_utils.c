@@ -1,6 +1,6 @@
 
 #include "minishell.h"
-#include "parsing.h"
+#include "minishell_parsing.h"
 
 void	add_token_list(t_token_list *list, char *token, t_token_type type)
 {
@@ -57,31 +57,60 @@ void	del_token_list(t_token_list *list)
 }
 void	add_command_list(t_command_list *list)
 {
-	t_command_node	*new_node;
+	t_command_node	*node = malloc(sizeof(t_command_node));
 
-	new_node = (t_command_node *)malloc(sizeof(t_command_node));
-	if (new_node == NULL)
+	t_token_list *cmd2 = malloc(sizeof(t_token_list));
+	t_token_list *redir2 = malloc(sizeof(t_token_list));
+
+	if (node == NULL)
 	{
 		printf("malloc error\n");
 		exit(1);
 	}
-
-	new_node->next = NULL;
-	new_node->prev = NULL; 
-	// new_node->
+	node->next = NULL;
+	node->prev = NULL; 
+	node->cmd_list = cmd2;
+	node->redir_list = redir2;
+	node->cmd_list->size = 0;
+	node->redir_list->size = 0;
 	if (list->size == 0)
 	{
-		list->front = new_node;
-		list->rear = new_node;
+		list->front = node;
+		list->rear = node;
 	}
 	else
 	{
-		list->rear->next = new_node;
-		new_node->prev = list->rear;
-		list->rear = new_node;
+		list->rear->next = node;
+		node->prev = list->rear;
+		list->rear = node;
 	}
 	list->size++;
 }
+// void	add_command_list(t_command_list *list, t_command_node *node)
+// {
+// 	// t_command_node	*new_node;
+
+// 	if (node == NULL)
+// 	{
+// 		printf("malloc error\n");
+// 		exit(1);
+// 	}
+// 	node->next = NULL;
+// 	if (list->size == 0)
+// 	{
+// 		node->next = NULL;
+// 		node->prev = NULL; 
+// 		list->front = node;
+// 		list->rear = node;
+// 	}
+// 	else
+// 	{
+// 		list->rear->next = node;
+// 		node->prev = list->rear;
+// 		list->rear = node;
+// 	}
+// 	list->size++;
+// }
 
 void	del_command_list(t_command_list *list)
 {

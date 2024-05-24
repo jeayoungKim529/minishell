@@ -16,7 +16,11 @@ ifdef DEBUG
 	COMFILE_FLAGS += -g3 -fsanitize=address
 endif
 
-SRCS = minishell.c parsing.c parsing_utils.c list_utils.c 
+SRCS = minishell.c \
+minishell_parsing_utils_1.c \
+ minishell_parsing_list_utils.c \
+  minishell_parsing_utils_2.c \
+  minishell_parsing_make_command.c 
 
 # minishell_envp.c
 

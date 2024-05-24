@@ -34,6 +34,7 @@ cat -> -e |
 
 /*
 readline으로 한 줄씩 읽기
+free(line);
 line = readline("minishell>");
 if (!line)
     break;
