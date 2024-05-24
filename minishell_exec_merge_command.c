@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:02:51 by jeakim            #+#    #+#             */
-/*   Updated: 2024/05/22 15:39:56 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/05/24 13:15:19 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*check_envp(t_process *prcs, t_token_node *token_node) //환경변수($) �
 	char	*s; //환경변수($) 전까지의 길이 담을 배열
 	char	*res; //환경변수로 치환하여 실제 리턴될 값
 
-	if (token_node->type == TOKEN_VARIABLE) //check_type : 환경 변수 여부
+	if (token_node->type != TOKEN_VARIABLE) //check_type : 환경 변수 여부
 		return (token_node->token);
 	cnt = 0;
 	while (token_node->token[cnt] && token_node->token[cnt] != '$') //환경변수($) 전까지 길이 체크
