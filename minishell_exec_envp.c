@@ -6,11 +6,25 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:29:00 by jeakim            #+#    #+#             */
-/*   Updated: 2024/05/22 17:17:36 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/05/24 11:43:40 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// void	print_envp(t_process *prcs)
+// {
+// 	t_envp	*cur;
+
+// 	printf("envp\n");
+// 	cur = prcs->envp;
+// 	printf("%s=%s\n", cur->key, cur->value);
+// 	while (cur)
+// 	{
+// 		printf("%s=%s\n", cur->key, cur->value);
+// 		cur = cur->next;
+// 	}
+// }
 
 void	ft_envpdel(t_envp *env, char *key)
 {
@@ -81,6 +95,22 @@ char	*ft_envpfind(t_envp *env, char *key)
 	return (NULL);
 }
 
+void	save_pwd(t_process *prcs)
+{
+	t_envp	*cur;
+
+	cur = prcs->envp;
+	while (cur)
+	{
+		if (strncmp(cur->key, "PWD", 4) == 0)
+			prcs->pwd = cur->value;
+		else if (strncmp(cur->key, "OLD_PWD", 8) == 0)
+			prcs->old_pwd = cur->value;
+		cur = cur->next;
+	}
+	printf("setting : pwd=%s, oldpwd=%s\n", prcs->pwd, prcs->old_pwd);
+}
+
 void	envp_func(t_process *prcs, char *envp[])
 {
 	int		i;
@@ -89,6 +119,7 @@ void	envp_func(t_process *prcs, char *envp[])
 	char	**p;
 
 	i = 0;
+	prcs->envp = NULL;
 	// if (!envp || !envp[0])
 	// 	ft_error();
 	while (envp && envp[i])
@@ -99,8 +130,12 @@ void	envp_func(t_process *prcs, char *envp[])
 		new = ft_envpnew(p[0], p[1]);
 		// if (!new)
 			// ft_error();
-		ft_envpadd(prcs->envp, new);
+		if (i == 0)
+			prcs->envp = new;
+		else
+			ft_envpadd(prcs->envp, new);
 		free(p);
 		i++;
 	}
+	save_pwd(prcs);
 }
