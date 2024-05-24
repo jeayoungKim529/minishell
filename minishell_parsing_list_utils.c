@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell_parsing_list_utils.c                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/24 19:40:02 by jimchoi           #+#    #+#             */
+/*   Updated: 2024/05/24 19:40:04 by jimchoi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 
 #include "minishell.h"
-#include "parsing.h"
+#include "minishell_parsing.h"
 
 void	add_token_list(t_token_list *list, char *token, t_token_type type)
 {
