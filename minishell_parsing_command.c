@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:48:40 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/05/27 17:16:39 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/05/27 18:49:22 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,15 @@ int	set_redirect_list(t_token_node *token_node, t_command_node *cmd_node)
 	add_token_list(cmd_node->redir_list, token_node->next->token, token_node->type);
 	return (2);
 }
-int	set_pipe(t_token_node *token_node, t_command_node *cmd_node, t_command_list *cmdline)
+int set_pipe(t_token_node *token_node, t_command_node **cmd_node, t_command_list *cmdline)
 {
-	if (token_node->prev != NULL && is_meta(token_node->prev->type))
+	if ((token_node->prev != NULL && is_meta(token_node->prev->type)) || token_node->next == NULL)
 	{
 		printf("syntax error near unexpected token |\n");
 		exit(1);
 	}
 	add_command_list(cmdline);
-	cmd_node = cmdline->rear;
+	*cmd_node = cmdline->rear;
 	return (1);
 }
 
@@ -66,7 +66,7 @@ void	make_command_list(t_token_list *token_list, t_command_list *cmdline)
 	while (i < token_list->size)
 	{
 		if (node->type == TOKEN_PIPE )
-			i += set_pipe(node, cmd_node, cmdline);
+			i += set_pipe(node, &cmd_node, cmdline);
 		else if (node->token[0] == '>' || node->token[0] == '<')
 		{
 			i += set_redirect_list(node, cmd_node);
