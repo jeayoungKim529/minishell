@@ -6,11 +6,13 @@
 /*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:23:07 by jeakim            #+#    #+#             */
-/*   Updated: 2024/05/22 16:38:13 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/05/27 18:54:45 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "minishell_parsing.h"
+
 
 // void  ft_error()
 // {

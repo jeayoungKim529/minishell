@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:39:58 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/05/27 17:42:26 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/05/27 18:54:37 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,7 @@ char	*put_token(char *str);
 void quotes_check(char *line);
 t_token_type set_token_type(char *str);
 void	token_split(char *line, t_token_list *tmp_list);
+void	readline_func(t_command_list *list);
+
 
 #endif
