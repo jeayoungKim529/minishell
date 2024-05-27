@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/05/22 17:35:44 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/05/27 18:51:25 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ typedef enum e_token_type
 {
     TOKEN_COMMAND,         // 명령어
     TOKEN_PIPE,            // 파이프 (|)
-	STDIN_REDIRECT,
-	STDOUT_REDIRECT,
-	STDIN_APPEND,
-	STDOUT_APPEND,
+	TOKEN_IN_REDIRECT, // 표준입력 리다이렉션 (<)
+	TOKEN_OUT_REDIRECT, // 표준출력 리다이렉션 (>)
+	TOKEN_IN_APPEND, // 표준입력 추가 (히어독)(<<)
+	TOKEN_OUT_APPEND, // 표준출력 추가(>>)
     // TOKEN_ARGUMENT,        // 명령어의 인자
     // TOKEN_SEMICOLON,       // 세미콜론 (;)
     // TOKEN_AMPERSAND,       // 백그라운드 실행 (&)
