@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:29:00 by jeakim            #+#    #+#             */
-/*   Updated: 2024/05/24 11:43:40 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/05/27 11:56:42 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,14 +101,17 @@ void	save_pwd(t_process *prcs)
 
 	cur = prcs->envp;
 	while (cur)
+		printf("command\n");
 	{
 		if (strncmp(cur->key, "PWD", 4) == 0)
-			prcs->pwd = cur->value;
+			prcs->senvp->pwd = cur->value;
 		else if (strncmp(cur->key, "OLD_PWD", 8) == 0)
-			prcs->old_pwd = cur->value;
+			prcs->senvp->old_pwd = cur->value;
+		else if (strncmp(cur->key, "HOME", 5) == 0)
+			prcs->senvp->home = cur->value;
 		cur = cur->next;
 	}
-	printf("setting : pwd=%s, oldpwd=%s\n", prcs->pwd, prcs->old_pwd);
+	printf("setting : pwd=%s, oldpwd=%s\n", prcs->senvp->pwd, prcs->senvp->old_pwd);
 }
 
 void	envp_func(t_process *prcs, char *envp[])

@@ -6,7 +6,7 @@
 #    By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/17 12:35:23 by jeakim            #+#    #+#              #
-#    Updated: 2024/05/22 17:20:47 by jeakim           ###   ########.fr        #
+#    Updated: 2024/05/24 11:52:53 by jeakim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ endif
 
 SRCS = minishell.c parsing.c parsing_utils.c list_utils.c \
 		minishell_exec.c minishell_exec_envp.c minishell_exec_merge_command.c \
-		minishell_exec_builtin.c minishell_exec_builtin_check.c minishell_exec_builtin_func1.c minishell_exec_builtin_func2.c
+		minishell_exec_builtin.c minishell_exec_builtin_utils.c minishell_exec_builtin_func1.c minishell_exec_builtin_func2.c
 
 # minishell_envp.c
 
