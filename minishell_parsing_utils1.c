@@ -6,12 +6,13 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:54:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/05/27 19:05:23 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/05/27 20:37:45 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_parsing.h"
+#include "minishell_exec.h"
 
 
 void check_leaks(void)
@@ -74,6 +75,7 @@ void readline_func(t_command_list *list, t_process *prcs)
 	/* 라인은 힙메모리에 저장되기때문에 다 사용한 메모리는 할당을 해제해줘야한다 */
         if (str != NULL)
 			free(str);
+		execute_commands(prcs, list);
     }
     /* 함수종료 */
     // return(0);

@@ -6,11 +6,12 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:33:35 by jeakim            #+#    #+#             */
-/*   Updated: 2024/05/24 20:57:02 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/05/27 20:49:11 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "minishell_exec.h"
 
 //ft_echo
 int	check_option(char *s)
@@ -52,7 +53,7 @@ void	change_pwd(t_process *prcs, char *key, char *value)
 		}
 	}
 	if (ft_strncmp(key, "OLDPWD", 7) == 0)
-		prcs->senvp->old_pwd = value;
+		prcs->senvp.oldpwd = value;
 	else if (ft_strncmp(key, "PWD", 4) == 0)
-		prcs->senvp->pwd = value;
+		prcs->senvp.pwd = value;
 }

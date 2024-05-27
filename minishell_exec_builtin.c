@@ -6,11 +6,12 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:33:54 by jeakim            #+#    #+#             */
-/*   Updated: 2024/05/24 11:52:13 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/05/27 20:32:51 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "minishell_exec.h"
 
 int	check_builtin_command(char **com)
 {

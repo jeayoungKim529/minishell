@@ -6,11 +6,12 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 19:05:20 by jeakim            #+#    #+#             */
-/*   Updated: 2024/05/17 19:13:27 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/05/27 20:33:04 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "minishell_exec.h"
 
 void	open_pipe(t_process *prcs)
 {
