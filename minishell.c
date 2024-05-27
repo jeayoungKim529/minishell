@@ -6,11 +6,13 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:23:07 by jeakim            #+#    #+#             */
-/*   Updated: 2024/05/22 17:45:48 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/05/27 19:03:25 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "minishell_parsing.h"
+
 
 // void  ft_error()
 // {
