@@ -6,15 +6,14 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:29:17 by jeakim            #+#    #+#             */
-/*   Updated: 2024/05/22 17:15:25 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/05/27 20:48:29 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_EXEC_H
 # define MINISHELL_EXEC_H
 
-#include "minishell.h"
-#include "minishell_exec_process.h"
+# include "minishell.h"
 
 typedef struct s_envp{
 	char			*key;
@@ -22,6 +21,12 @@ typedef struct s_envp{
 	struct s_envp	*before;
 	struct s_envp	*next;
 }	t_envp;
+
+typedef struct s_senvp{
+	char	*pwd;
+	char	*oldpwd;
+	char	*home;
+}	t_senvp;
 
 typedef struct s_inout{
 	int	in;
@@ -33,8 +38,8 @@ typedef struct s_process{
 	t_token_list	*token_list;
 	char			**cmd;
 	int				n_cmd;
-	// char			**envp;
 	t_envp			*envp;
+	t_senvp			senvp;
 	char			**path;
 	char			**path_x;
 	int				prevfd;
@@ -43,10 +48,15 @@ typedef struct s_process{
 	t_inout			io;
 }	t_process;
 
+//minishell_exec_free.c
+void	free_envp(t_process *prcs);
+void	free_command(t_process *prcs);
+void	free_path(t_process *prcs);
 //minishell_exec_init.c
 void	execute_command(t_process *prcs, t_command_list *list);
+void	init_redirection(t_process *prcs);
 //minishell_envp.c
-void	envp_func(t_envp *env, char *envp[]);
+void	envp_func(t_process *prcs, char *envp[]);
 t_envp	*ft_envpnew(char *key, char *value);
 void	ft_envpadd(t_envp *env, t_envp *new);
 void	ft_envpdel(t_envp *env, char *key);
@@ -58,10 +68,9 @@ void	init_redirection();
 //minishell_exec_merge_command.c
 char	**merge_command(t_process *prcs, t_token_list *cmd_list);
 char	*check_envp(t_process *prcs, t_token_node *node);
-//minishell_exec_builtin_check.c
-int		check_builtin_command(char **com);
 //minishell_exec_builtin.c
 int		execute_builtin(t_process *prcs);
+int		check_builtin_command(char **com);
 //minishell_exec_builtin_func1.c
 void	ft_env(t_process *prcs, int flag);
 void	ft_export(t_process *prcs);
@@ -71,5 +80,12 @@ void	ft_cd(t_process *prcs);
 void	ft_pwd(t_process *prcs);
 void	ft_echo(t_process *prcs);
 void	ft_exit(t_process *prcs);
+//minishell_exec_builtin_utilst.c
+int		check_option(char *s);
+void	change_pwd(t_process *prcs, char *key, char *value);
+char	*check_last(char *s);
+char	*change_dir(t_process *prcs, char *s);
+void	ft_error_exec(t_process *prcs, char *s);
+
 
 #endif

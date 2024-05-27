@@ -6,17 +6,17 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:43:22 by jeakim            #+#    #+#             */
-/*   Updated: 2024/05/22 19:28:41 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/05/27 20:38:37 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "minishell_exec.h"
 
 void	ft_env(t_process *prcs, int flag)
 {
 	t_envp	*cur;
 
-	printf("env\n");
 	cur = prcs->envp;
 	while (cur)
 	{
@@ -45,8 +45,8 @@ void	ft_export(t_process *prcs)
 			if (ft_isalpha(prcs->cmd[i][0]) == 1)
 				printf("bash: export: not a valid identifier\n");
 			tmp = ft_split(prcs->cmd[i], '=');
-			// if (!tmp)
-			// 	ft_error();
+			if (!tmp)
+				ft_error_exec(prcs, strerror(errno));
 			if (ft_envpfind(prcs->envp, tmp[0]) != NULL)
 			{
 				printf("bash: export: '%s': not a valid identifier\n", \

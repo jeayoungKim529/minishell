@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:39:58 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/05/27 18:54:37 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/05/27 20:29:56 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #ifndef MINISHELL_PARSING_H
 # define MINISHELL_PARSING_H
 
-#include "minishell.h"
+# include "minishell.h"
 
 void free_command_list(t_command_list *command_list);
 
@@ -41,7 +41,6 @@ char	*put_token(char *str);
 void quotes_check(char *line);
 t_token_type set_token_type(char *str);
 void	token_split(char *line, t_token_list *tmp_list);
-void	readline_func(t_command_list *list);
 
 
 #endif

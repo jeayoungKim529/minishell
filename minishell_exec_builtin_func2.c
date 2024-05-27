@@ -6,11 +6,12 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:41:35 by jeakim            #+#    #+#             */
-/*   Updated: 2024/05/24 20:57:10 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/05/27 20:48:59 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "minishell_exec.h"
 
 void	ft_cd(t_process *prcs)
 {
@@ -42,7 +43,7 @@ void	ft_pwd(t_process *prcs)
 		cur = cur->next;
 	}
 	if (flag == 0)
-		printf("%s\n", prcs->senvp->pwd);
+		printf("%s\n", prcs->senvp.pwd);
 }
 
 void	ft_echo(t_process *prcs)

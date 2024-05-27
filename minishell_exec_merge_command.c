@@ -6,11 +6,12 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:02:51 by jeakim            #+#    #+#             */
-/*   Updated: 2024/05/24 13:15:19 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/05/27 20:56:32 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "minishell_exec.h"
 
 char	*check_envp(t_process *prcs, t_token_node *token_node) //환경변수($) 치환
 {
@@ -39,7 +40,8 @@ char	**merge_command(t_process *prcs, t_token_list	*token_list) //연결리스�
 	char			**res; //이차원으로 명령어 저장할 배열
 	int				cnt;
 	int				i;
-
+	
+	printf("hello\n");
 	cnt = 0;
 	cur = token_list->front;
 	while (cur) //한 명령어에 총 몇개의 인자가 있는지 체크
