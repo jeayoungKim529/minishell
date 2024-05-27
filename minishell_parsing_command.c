@@ -1,0 +1,73 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell_parsing_command.c                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/27 12:48:40 by jimchoi           #+#    #+#             */
+/*   Updated: 2024/05/27 13:47:33 by jimchoi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
+#include "minishell.h"
+#include "minishell_parsing.h"
+
+int	is_meta(t_token_type type)
+{
+	if (type == TOKEN_PIPE || type == TOKEN_IN_APPEND 
+		|| type == TOKEN_OUT_APPEND || type == TOKEN_IN_REDIRECT 
+		|| type == TOKEN_OUT_REDIRECT)
+		return (1);
+	return (0);
+}
+
+int	set_redirect_list(t_token_node *token_node, t_command_node *cmd_node)
+{
+	// t_token_type type;
+	int count;
+
+	count = 1;
+	// type = token_node->type;
+	// if (is_meta(token_node->type))
+	// {
+	// 	printf("syntax error near unexpected token meta\n");
+	// 	exit(1);
+	// }
+	if (token_node->next == NULL || is_meta(token_node->next->type) )
+	{
+		printf("syntax error near unexpected token \n");
+		exit(1);
+	}
+	add_token_list(cmd_node->redir_list, token_node->next->token, token_node->type);
+	return (2);
+}
+void	make_command_list(t_token_list *token_list, t_command_list *cmdline)
+{
+	t_command_node	*cmd_node;
+	t_token_node	*node;
+	int				i;
+	
+	i = 0;
+	node = token_list->front;
+	add_command_list(cmdline);
+	cmd_node = cmdline->rear;
+	while (i < token_list->size)
+	{
+		if (node->type == TOKEN_PIPE)
+		{
+			i += add_command_list(cmdline);
+			cmd_node = cmdline->rear;
+		}
+		else if (node->token[0] == '>' || node->token[0] == '<')
+		{
+			i += set_redirect_list(node, cmd_node);
+			node = node->next;
+		}
+		else
+			i += add_token_list(cmd_node->cmd_list, node->token, node->type);
+		node = node->next;
+	}
+}
+

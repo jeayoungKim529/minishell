@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_utils2.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:26:23 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/05/24 19:39:53 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/05/27 13:16:15 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,14 @@ int	get_cmd_length(char *str)
 		else
 			len = 1;
 	}
-	else if (str[0] == '\"' || str[0] == '\'')
-		len = parse_quotes(str);
 	else
 	{
 		while (str[len] && str[len] != ' ' && str[len] != '|' && str[len] != '>' && str[len] != '<')
+		{
+			if (str[len] == '\"' || str[len] == '\'')
+				len += parse_quotes(str);		
 			len ++;
+		}
 	}
 	return (len);
 }
@@ -98,13 +100,13 @@ t_token_type set_token_type(char *str)
 	if (*str == '|')
 		return (TOKEN_PIPE);
 	else if (ft_strncmp(str, "<", 2) == 0)
-		return (STDIN_REDIRECT);
+		return (TOKEN_IN_REDIRECT);
 	else if (ft_strncmp(str, "<<", 2) == 0)
-		return (STDIN_APPEND);
+		return (TOKEN_IN_APPEND);
 	else if (ft_strncmp(str, ">", 2) == 0)
-		return (STDOUT_REDIRECT);
+		return (TOKEN_OUT_REDIRECT);
 	else if (ft_strncmp(str, ">>", 2) == 0)
-		return (STDOUT_APPEND);
+		return (TOKEN_OUT_APPEND);
 	else
 		return (TOKEN_COMMAND);
 }

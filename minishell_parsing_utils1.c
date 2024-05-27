@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_utils1.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:54:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/05/24 19:39:47 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/05/27 13:29:14 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,133 +14,9 @@
 #include "minishell_parsing.h"
 
 
-
-
-
 void check_leaks(void)
 {
 	system ("leaks minishell");
-}
-void	set_redirect_list(t_token_node *token_node, t_command_node *cmd_node)
-{
-	if (token_node->token[0] == '>')
-	{
-		if (token_node->next == NULL)
-		{
-			printf("> error\n");
-			exit(1);
-		}
-		if (token_node->type == STDOUT_APPEND)
-		{
-			// >> 처리
-		}
-		add_token_list(cmd_node->redir_list, token_node->next->token, token_node->type);
-		// token_node = token_node->next->next;
-		//파일 열어보기
-	}
-	else
-	{
-		if (token_node->next->type == STDIN_APPEND)
-		{
-			// << 처리
-		}
-		add_token_list(cmd_node->redir_list, token_node->token, token_node->next->type);
-		// token_node = token_node->next->next;
-	}
-}
-
-// void set_quote (t_token_node *token_node, t_command_node *cmd_node, char *token)
-// {
-// 	int	start;
-// 	char	quote;
-// 	// char	*quote;
-
-// 	start = 0;
-// 	while (*token != NULL)
-// 	{
-// 		if (*token == '\"' || *token == '\'')
-// 			break;
-// 	}
-// 	quote = *token;
-// 	while (token != ft_strrchr(token, quote))
-// 	{
-		
-// 	}
-// }
-
-void make_command_list(t_token_list *token_list, t_command_list *cmdline)
-{
-	int	i;
-	t_token_node	*node;
-	t_command_node    *cmd_node;
-t_token_list *cmd = malloc(sizeof(t_token_list));
-t_token_list *redir = malloc(sizeof(t_token_list));
-
-	i = 0;
-
-	if (cmdline == NULL || token_list == NULL || token_list->front == NULL) 
-	{
-    printf("Error: Invalid list\n");
-    exit(1);
-	}
-
-	printf("list size: %d\n", cmdline->size);
-	cmdline->size = 0;
-	add_command_list(cmdline);
-	printf("list size: %d\n", cmdline->size);
-	node = token_list->front;
-	cmd_node = cmdline->front;
-
-	cmd_node->cmd_list = cmd;
-	cmd_node->redir_list = redir;
-
-	cmd_node->cmd_list->size = 0;
-	cmd_node->redir_list->size = 0;
-	
-	if (token_list == NULL)
-	{
-		printf("token_list is NULL\n");
-		exit(1);
-	}
-	if (token_list->size == 0)
-	{
-		printf("token_list size is 0\n");
-		exit(1);
-	}
-	while(i < token_list->size && node != NULL)
-	{
-		if (node->token[0] == '|')
-		{
-			add_command_list(cmdline);//다음 커맨드노드 생성 후 다음 노드로
-			cmd_node = cmd_node->next;
-			t_token_list *cmd2 = malloc(sizeof(t_token_list));
-			t_token_list *redir2 = malloc(sizeof(t_token_list));
-			cmd_node->cmd_list = cmd2;
-			cmd_node->redir_list = redir2;
-			cmd_node->redir_list->size = 0;
-			cmd_node->cmd_list->size = 0;
-			node = node->next;
-			i++;
-		}
-		else if (node->token[0] == '>' || (node->next != NULL && node->next->token[0] == '<'))
-		{
-			set_redirect_list(node, cmd_node);
-			i++;
-			i++;
-			node = node->next->next;
-			// < | TOKEN_VARIABLE
-			// | > 가능함
-		}
-		else
-		{
-			// if (node->token[0] == '\"' || node->token[0] == '\'')
-			// 	set_quote(node, cmd_node, node->token);
-			
-			add_token_list(cmd_node->cmd_list, node->token, node->type);// 커맨드 저장 다음노드 , 따옴표 제거
-			node = node->next;
-			i++;
-		}
-	}
 }
 
 void parsing(t_command_list	*cmd_list, char *line)

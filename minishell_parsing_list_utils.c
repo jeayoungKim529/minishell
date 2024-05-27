@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_list_utils.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:40:02 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/05/24 19:40:04 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/05/27 13:30:05 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "minishell.h"
 #include "minishell_parsing.h"
 
-void	add_token_list(t_token_list *list, char *token, t_token_type type)
+int	add_token_list(t_token_list *list, char *token, t_token_type type)
 {
 	t_token_node	*new_node;
 
@@ -45,6 +45,7 @@ void	add_token_list(t_token_list *list, char *token, t_token_type type)
 		list->rear = new_node;
 	}
 	list->size++;
+	return (1);
 }
 
 void	del_token_list(t_token_list *list)
@@ -67,20 +68,26 @@ void	del_token_list(t_token_list *list)
 	}
 	list->size--;
 }
-void	add_command_list(t_command_list *list)
+int	add_command_list(t_command_list *list)
 {
 	t_command_node	*new_node;
+	t_token_list	*cmd_list;
+	t_token_list	*redir_list;
 
 	new_node = (t_command_node *)malloc(sizeof(t_command_node));
-	if (new_node == NULL)
+	cmd_list = (t_token_list *)malloc(sizeof(t_token_list));
+	redir_list = (t_token_list *)malloc(sizeof(t_token_list));
+	if (new_node == NULL || cmd_list == NULL || redir_list == NULL)
 	{
 		printf("malloc error\n");
 		exit(1);
 	}
-
 	new_node->next = NULL;
 	new_node->prev = NULL; 
-	// new_node->
+	new_node->cmd_list = cmd_list;
+	new_node->redir_list = redir_list;
+	cmd_list->size = 0;
+	redir_list->size = 0;
 	if (list->size == 0)
 	{
 		list->front = new_node;
@@ -93,6 +100,7 @@ void	add_command_list(t_command_list *list)
 		list->rear = new_node;
 	}
 	list->size++;
+	return (1);
 }
 
 void	del_command_list(t_command_list *list)
