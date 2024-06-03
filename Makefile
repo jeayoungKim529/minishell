@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+         #
+#    By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/17 12:35:23 by jeakim            #+#    #+#              #
-#    Updated: 2024/05/30 19:08:54 by jeakim           ###   ########.fr        #
+#    Updated: 2024/06/03 15:43:17 by jimchoi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRCS = minishell.c \
 		minishell_parsing_utils2.c\
 		minishell_parsing_list_utils.c\
 		minishell_parsing_command.c \
+		minishell_parsing_signal.c\
 		\
 		minishell_exec.c\
 		minishell_exec_envp.c \

@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/06/03 14:12:35 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/03 15:42:21 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <termios.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <errno.h>
 
 #include <readline/readline.h>
 #include <readline/history.h>

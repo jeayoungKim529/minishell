@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_utils1.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:54:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/05/27 20:37:45 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/03 15:26:54 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,28 +29,23 @@ void parsing(t_command_list	*cmd_list, char *line)
 	char flag = '\0';
 	
 	token_split(line, &token_list);
-	if (token_list.size > 0)
-	{
-		printf( "token_list : ");
-		print_list(&token_list);
-	}
+	// if (token_list.size > 0)
+	// {
+	// 	printf( "token_list : ");
+	// 	print_list(&token_list);
+	// }
 	make_command_list(&token_list, cmd_list);
 		clear_list(&token_list);
-	if (cmd_list->size > 0)
-	{
-		printf( "cmd_list : ");
-		print_command_list(cmd_list);
-	}
 	if(cmd_list->size > 0)
 	{
 		printf( "cmd_list : ");
 		print_command_list(cmd_list);
-		free_command_list(cmd_list);
+		// free_command_list(cmd_list);
 	}
 	
 
 
-    atexit(check_leaks);
+    // atexit(check_leaks);
 }
 
 void readline_func(t_command_list *list, t_process *prcs)
@@ -60,6 +55,7 @@ void readline_func(t_command_list *list, t_process *prcs)
 /* 무한루프를 돌리면서 readline();함수를 반복적으로 호출할 것이다 */
     while(1)
     {
+    
         /* readline함수가 호출되면 인자(prompt : )를 터미널에 출력하고 저장할 라인을 입력받는다 */
         str = readline("prompt : ");/* read함수는 저장한 문자열의 메모리주소를 반환한다 */
         if (str)/* 입력이 된다면 (주소가 존재한다면) */
