@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:23:07 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/03 16:00:50 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/03 18:31:32 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	main(int argc, char *argv[], char *envp[])
 
 	signal_func();
 
-	envp_func(&prcs, envp);
+	// envp_func(&prcs, envp);
 	readline_func(&list, &prcs);
 	print_signal_on();
 	signal(SIGQUIT, SIG_DFL);
