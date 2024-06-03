@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:29:17 by jeakim            #+#    #+#             */
-/*   Updated: 2024/05/27 20:48:29 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/05/30 20:22:20 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 # define MINISHELL_EXEC_H
 
 # include "minishell.h"
+
+# include <fcntl.h>
+# include <sys/types.h>
+# include <sys/stat.h>
 
 typedef struct s_envp{
 	char			*key;
@@ -48,13 +52,15 @@ typedef struct s_process{
 	t_inout			io;
 }	t_process;
 
+//minishell_exec.c
+void	ft_error_exec(t_process *prcs, char *s);
 //minishell_exec_free.c
 void	free_envp(t_process *prcs);
 void	free_command(t_process *prcs);
 void	free_path(t_process *prcs);
 //minishell_exec_init.c
 void	execute_command(t_process *prcs, t_command_list *list);
-void	init_redirection(t_process *prcs);
+void	init_prcs(t_process *prcs);
 //minishell_envp.c
 void	envp_func(t_process *prcs, char *envp[]);
 t_envp	*ft_envpnew(char *key, char *value);
@@ -63,8 +69,6 @@ void	ft_envpdel(t_envp *env, char *key);
 char	*ft_envpfind(t_envp *env, char *key);
 //minishell_exec.c
 void	execute_commands(t_process *prcs, t_command_list *list);
-//minishell_exec_redirection.c
-void	init_redirection();
 //minishell_exec_merge_command.c
 char	**merge_command(t_process *prcs, t_token_list *cmd_list);
 char	*check_envp(t_process *prcs, t_token_node *node);

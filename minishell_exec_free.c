@@ -6,12 +6,14 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 19:14:44 by jeakim            #+#    #+#             */
-/*   Updated: 2024/05/27 19:30:05 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/05/30 17:58:01 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_exec.h"
+
+//free_command_list(cmd_list);
 
 void	free_envp(t_process *prcs)
 {

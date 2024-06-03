@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:02:51 by jeakim            #+#    #+#             */
-/*   Updated: 2024/05/27 20:56:32 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/05/30 17:58:52 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +38,14 @@ char	**merge_command(t_process *prcs, t_token_list	*token_list) //연결리스�
 {
 	t_token_node	*cur;
 	char			**res; //이차원으로 명령어 저장할 배열
-	int				cnt;
 	int				i;
-	
-	printf("hello\n");
-	cnt = 0;
+
 	cur = token_list->front;
-	while (cur) //한 명령어에 총 몇개의 인자가 있는지 체크
-	{
-		cnt++;
-		cur = cur->next;
-	}
-	prcs->n_cmd = cnt; //한 명령어에 총 몇개의 인자가 있는지 저장
-	res = (char **)ft_calloc(sizeof(char *), cnt + 1);
+	prcs->n_cmd = token_list->size;
+	res = (char **)ft_calloc(sizeof(char *), prcs->n_cmd + 1);
 	cur = token_list->front;
 	i = 0;
-	while (cur && i < cnt)
+	while (cur && i < prcs->n_cmd)
 	{
 		res[i] = check_envp(prcs, cur); //환경 변수 치환해서 저장
 		i++;
