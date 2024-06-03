@@ -6,11 +6,12 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:43:22 by jeakim            #+#    #+#             */
-/*   Updated: 2024/05/22 15:51:18 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/05/27 20:38:37 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "minishell_exec.h"
 
 void	ft_env(t_process *prcs, int flag)
 {
@@ -20,7 +21,7 @@ void	ft_env(t_process *prcs, int flag)
 	while (cur)
 	{
 		if (flag == 1)
-			printf("declare -x");
+			printf("declare -x ");
 		if (cur->value)
 			printf("%s=%s\n", cur->key, cur->value);
 		else if (!cur->value && flag == 1)
@@ -31,7 +32,6 @@ void	ft_env(t_process *prcs, int flag)
 
 void	ft_export(t_process *prcs)
 {
-	t_envp	*new;
 	char	**tmp;
 	int		i;
 
@@ -39,17 +39,21 @@ void	ft_export(t_process *prcs)
 		ft_env(prcs, 1);
 	else
 	{
-		i = 1;
-		while (i < prcs->n_cmd)
+		i = 0;
+		while (++i < prcs->n_cmd)
 		{
 			if (ft_isalpha(prcs->cmd[i][0]) == 1)
-				printf("not a valid identifier\n");
+				printf("bash: export: not a valid identifier\n");
 			tmp = ft_split(prcs->cmd[i], '=');
-			// if (!tmp)
-			// 	ft_error();
-			new = ft_envpnew(tmp[0], tmp[1]);
-			ft_envpadd(prcs->envp, new);
-			i++;
+			if (!tmp)
+				ft_error_exec(prcs, strerror(errno));
+			if (ft_envpfind(prcs->envp, tmp[0]) != NULL)
+			{
+				printf("bash: export: '%s': not a valid identifier\n", \
+					ft_envpfind(prcs->envp, tmp[0]));
+				return ;
+			}
+			ft_envpadd(prcs->envp, ft_envpnew(tmp[0], tmp[1]));
 		}
 	}
 }

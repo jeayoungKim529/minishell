@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_utils1.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:54:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/05/27 17:12:28 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/05/27 20:37:45 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_parsing.h"
+#include "minishell_exec.h"
 
 
 void check_leaks(void)
@@ -52,7 +53,7 @@ void parsing(t_command_list	*cmd_list, char *line)
     atexit(check_leaks);
 }
 
-void readline_func(t_command_list *list)
+void readline_func(t_command_list *list, t_process *prcs)
 {
 /* readline함수의 리턴값을 저장하기위해 임의로 포인터를 하나 선언한다 */
     char *str;
@@ -74,6 +75,7 @@ void readline_func(t_command_list *list)
 	/* 라인은 힙메모리에 저장되기때문에 다 사용한 메모리는 할당을 해제해줘야한다 */
         if (str != NULL)
 			free(str);
+		execute_commands(prcs, list);
     }
     /* 함수종료 */
     // return(0);

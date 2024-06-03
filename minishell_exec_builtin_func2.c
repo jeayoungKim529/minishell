@@ -6,30 +6,44 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:41:35 by jeakim            #+#    #+#             */
-/*   Updated: 2024/05/22 17:33:05 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/05/27 20:48:59 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "minishell_exec.h"
 
-void	ft_cd()
+void	ft_cd(t_process *prcs)
 {
+	char	*old_pwd;
 
+	if (access(prcs->cmd[1], X_OK) != 0)
+		printf("bash: cd: %s: No such file or directory\n", prcs->cmd[1]);
+	old_pwd = getcwd(NULL, 0);
+	if (chdir(prcs->cmd[1]) == -1)
+		printf("bash: cd: %s: No such file or directory\n", prcs->cmd[1]);
+	change_pwd(prcs, "OLDPWD", old_pwd);
+	change_pwd(prcs, "PWD", getcwd(NULL, 0));
 }
 
 void	ft_pwd(t_process *prcs)
 {
 	t_envp	*cur;
+	int		flag;
 
 	cur = prcs->envp;
+	flag = 0;
 	while (cur)
 	{
 		if (ft_strncmp(cur->key, "PWD", 4) == 0){
 			printf("%s\n", cur->value);
+			flag = 1;
 			break ;
 		}
 		cur = cur->next;
 	}
+	if (flag == 0)
+		printf("%s\n", prcs->senvp.pwd);
 }
 
 void	ft_echo(t_process *prcs)
@@ -40,21 +54,20 @@ void	ft_echo(t_process *prcs)
 
 	flag = 0;
 	i = 1;
-	if (ft_strncmp(prcs->cmd[1], "-n", 2) == 0)
+	while (i < prcs->n_cmd)
 	{
-		j = 2;
-		while (j < ft_strlen(prcs->cmd[1]))
-			if (ft_strncmp(prcs->cmd[j], "n", 1))
-				j++;
-		if (j == ft_strlen(prcs->cmd[1]))
-		{
+		if (check_option(prcs->cmd[i]) == 0)
 			flag = 1;
-			i++;
-		}
+		else
+			break ;
+		i++;
 	}
 	while (i < prcs->n_cmd)
 	{
-		printf("%s", prcs->cmd[i]);
+		if (i == prcs->n_cmd - 1)
+			printf("%s", prcs->cmd[i]);
+		else
+			printf("%s ", prcs->cmd[i]);
 		i++;
 	}
 	if (flag == 0)
@@ -67,12 +80,15 @@ void	ft_exit(t_process *prcs)
 	int	flag;
 
 	if (prcs->n_cmd > 2)
+	{
 		printf("exit\nbash: exit: too many arguments\n");
+		return ;
+	}
 	i = 0;
 	flag = 0;
 	while (i < ft_strlen(prcs->cmd[1]))
 	{
-		if (ft_isalnum(prcs->cmd[1][i]) == 1)
+		if (ft_isalnum(prcs->cmd[1][i]) != 2)
 		{
 			flag = 1;
 			break ;
@@ -81,4 +97,6 @@ void	ft_exit(t_process *prcs)
 	}
 	if (flag == 1)
 		printf("exit\nbash: exit: %s: numeric argument required\n", prcs->cmd[1]);
+	// else
+	// 	ft_exit(prcs->cmd[1]);
 }

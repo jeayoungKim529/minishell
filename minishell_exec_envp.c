@@ -6,25 +6,26 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:29:00 by jeakim            #+#    #+#             */
-/*   Updated: 2024/05/24 11:43:40 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/05/27 20:49:37 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "minishell_exec.h"
 
-// void	print_envp(t_process *prcs)
-// {
-// 	t_envp	*cur;
+void	print_envp(t_process *prcs)
+{
+	t_envp	*cur;
 
-// 	printf("envp\n");
-// 	cur = prcs->envp;
-// 	printf("%s=%s\n", cur->key, cur->value);
-// 	while (cur)
-// 	{
-// 		printf("%s=%s\n", cur->key, cur->value);
-// 		cur = cur->next;
-// 	}
-// }
+	printf("envp\n");
+	cur = prcs->envp;
+	printf("%s=%s\n", cur->key, cur->value);
+	while (cur)
+	{
+		printf("%s=%s\n", cur->key, cur->value);
+		cur = cur->next;
+	}
+}
 
 void	ft_envpdel(t_envp *env, char *key)
 {
@@ -95,22 +96,30 @@ char	*ft_envpfind(t_envp *env, char *key)
 	return (NULL);
 }
 
+//pwd, oldpwd, home 변수를 prcs에 따로 저장해두기
 void	save_pwd(t_process *prcs)
 {
-	t_envp	*cur;
+	// t_envp	*cur;
 
-	cur = prcs->envp;
-	while (cur)
-	{
-		if (strncmp(cur->key, "PWD", 4) == 0)
-			prcs->pwd = cur->value;
-		else if (strncmp(cur->key, "OLD_PWD", 8) == 0)
-			prcs->old_pwd = cur->value;
-		cur = cur->next;
-	}
-	printf("setting : pwd=%s, oldpwd=%s\n", prcs->pwd, prcs->old_pwd);
+	// cur = prcs->envp;
+	// while (cur)
+	// {
+	// 	if (strncmp(cur->key, "PWD", 4) == 0)
+	// 		prcs->senvp->pwd = cur->value;
+	// 	else if (strncmp(cur->key, "OLD_PWD", 8) == 0)
+	// 		prcs->senvp->oldpwd = cur->value;
+	// 	else if (strncmp(cur->key, "HOME", 5) == 0)
+	// 		prcs->senvp->home = cur->value;
+	// 	cur = cur->next;
+	// }
+	// printf("setting : pwd=%s, oldpwd=%s\n", prcs->senvp->pwd, \
+	// 	prcs->senvp->oldpwd);
+	prcs->senvp.pwd = ft_envpfind(prcs->envp, "PWD");
+	prcs->senvp.oldpwd = ft_envpfind(prcs->envp, "OLDPWD");
+	prcs->senvp.home = ft_envpfind(prcs->envp, "HOME");
 }
 
+//main에서 받아온 envp를 prcs에 연결리스트로 저장
 void	envp_func(t_process *prcs, char *envp[])
 {
 	int		i;
@@ -120,16 +129,16 @@ void	envp_func(t_process *prcs, char *envp[])
 
 	i = 0;
 	prcs->envp = NULL;
-	// if (!envp || !envp[0])
-	// 	ft_error();
+	if (!envp || !envp[0])
+		ft_error_exec(prcs, strerror(errno));
 	while (envp && envp[i])
 	{
 		p = ft_split(envp[i], '=');
 		if (!p)
 			continue ;
 		new = ft_envpnew(p[0], p[1]);
-		// if (!new)
-			// ft_error();
+		if (!new)
+			ft_error_exec(prcs, strerror(errno));
 		if (i == 0)
 			prcs->envp = new;
 		else

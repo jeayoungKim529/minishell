@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+         #
+#    By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/17 12:35:23 by jeakim            #+#    #+#              #
-#    Updated: 2024/05/27 18:56:14 by jimchoi          ###   ########.fr        #
+#    Updated: 2024/05/27 20:46:49 by jeakim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,10 +32,16 @@ SRCS = minishell.c \
 		minishell_parsing_utils2.c\
 		minishell_parsing_list_utils.c\
 		minishell_parsing_command.c \
-		# minishell_exec.c minishell_exec_envp.c minishell_exec_merge_command.c \
-		# minishell_exec_builtin.c minishell_exec_builtin_check.c minishell_exec_builtin_func1.c minishell_exec_builtin_func2.c
-
-# minishell_envp.c
+		\
+		minishell_exec.c\
+		minishell_exec_envp.c \
+		minishell_exec_merge_command.c\
+		minishell_exec_init.c\
+		minishell_exec_builtin.c \
+		minishell_exec_builtin_func1.c\
+		minishell_exec_builtin_func2.c\
+		minishell_exec_builtin_utils.c\
+		minishell_exec_free.c
 
 OBJS = $(SRCS:.c=.o)
 
