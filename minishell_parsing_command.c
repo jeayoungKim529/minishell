@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:48:40 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/03 14:03:51 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/03 19:25:10 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,55 +22,55 @@ int	is_meta(t_token_type type)
 		return (1);
 	return (0);
 }
-size_t	ft_pipex_strlen(char *s)
-{
-	unsigned int	len;
+// size_t	ft_pipex_strlen(char *s)
+// {
+// 	unsigned int	len;
 
-	len = 0;
-	while (*s++ && *s != '\n')
-		len++;
-	return (len + 1);
-}
-void	set_redirect_heredoc(t_token_node *token_node, t_command_node *cmd_node)
-{
-	char	*end_text;
-	char	*str;
-	int		fd;
-	char	*heredoc_txt;
+// 	len = 0;
+// 	while (*s++ && *s != '\n')
+// 		len++;
+// 	return (len + 1);
+// }
+// void	set_redirect_heredoc(t_token_node *token_node, t_command_node *cmd_node)
+// {
+// 	char	*end_text;
+// 	char	*str;
+// 	int		fd;
+// 	char	*heredoc_txt;
 
-    heredoc_txt = ft_strjoin(token_node->next->token, ".txt");
-	fd = open(heredoc_txt, O_WRONLY | O_CREAT | O_TRUNC, 0666);
-	if (fd == -1)
-	{
-		printf("heredoc error\n");
-		exit(1);
-	} 
-
-	end_text = token_node->next->token;
-	if (ft_strchr(end_text, '\"') == 0)
-	{
-
-		while (1)
-		{
-			str = get_next_line(0);
-			if (!str)
-			{
-				printf("heredoc error\n");
-				exit(1);
-			}
-			if (ft_strncmp(str, end_text, ft_pipex_strlen(str)) == 0)
-				break ;
-			write(fd, str, ft_strlen(str));
-			free(str);
-		}
-	}
-	// else
-	// {
-
-	// }
-	add_token_list(cmd_node->redir_list, heredoc_txt, token_node->type);
-	close(fd);
-}
+//     heredoc_txt = ft_strjoin(token_node->next->token, ".txt");
+// 	fd = open(heredoc_txt, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+// 	if (fd == -1)
+// 	{
+// 		printf("heredoc error\n");
+// 		exit(1);
+// 	} 
+// 	// signal(SIGINT, handle_signal_heredoc);
+// 	end_text = token_node->next->token;
+// 	if (ft_strchr(end_text, '\"') == 0)
+// 	{
+// 		// 환경변수 치환하기
+// 		while (1)
+// 		{
+// 			str = get_next_line(0);
+// 			if (!str)
+// 			{
+// 				printf("heredoc error\n");
+// 				exit(1);
+// 			}
+// 			if (ft_strncmp(str, end_text, ft_pipex_strlen(str)) == 0)
+// 				break ;
+// 			write(fd, str, ft_strlen(str));
+// 			free(str);
+// 		}
+// 	}
+// 	// else
+// 	// {
+// 			// 환경변수 치환 안하기
+// 	// }
+// 	add_token_list(cmd_node->redir_list, heredoc_txt, token_node->type);
+// 	close(fd);
+// }
 
 int	set_redirect_list(t_token_node *token_node, t_command_node *cmd_node)
 {
@@ -82,10 +82,10 @@ int	set_redirect_list(t_token_node *token_node, t_command_node *cmd_node)
 		printf("syntax error near unexpected token \n");
 		exit(1);
 	}
-	if (token_node->type == TOKEN_IN_APPEND)
-	{
-		set_redirect_heredoc(token_node, cmd_node);
-	}
+	// if (token_node->type == TOKEN_IN_APPEND)
+	// {
+	// 	set_redirect_heredoc(token_node, cmd_node);
+	// }
 	else
 		add_token_list(cmd_node->redir_list, token_node->next->token, token_node->type);
 	return (2);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exec.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:29:17 by jeakim            #+#    #+#             */
-/*   Updated: 2024/05/30 20:22:20 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/03 15:42:30 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 
 # include "minishell.h"
 
-# include <fcntl.h>
-# include <sys/types.h>
-# include <sys/stat.h>
+// # include <fcntl.h> 
+// # include <sys/types.h>
+// # include <sys/stat.h>
+// # include <errno.h>
 
 typedef struct s_envp{
 	char			*key;

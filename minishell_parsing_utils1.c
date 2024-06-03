@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_utils1.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:54:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/05/27 20:37:45 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/03 20:59:17 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,137 @@ void check_leaks(void)
 {
 	system ("leaks minishell");
 }
+size_t	ft_pipex_strlen(char *s)
+{
+	unsigned int	len;
+
+	len = 0;
+	while (*s++ && *s != '\n')
+		len++;
+	return (len + 1);
+}
+
+
+
+void	set_redirect_heredoc(t_token_node **token_node, char *path)
+{
+
+	char	*str;
+	char	*end_text;
+	int		fd;
+	t_token_node *node;
+
+	node = *token_node;
+
+	// free(node->token);
+	// node->token = ft_strjoin("test","set");
+
+	// char	*heredoc_txt;
+	// node->token = "oooo";
+	if (path == NULL)
+	{
+		printf("ft_strjoin error\n");
+		exit (1);
+	}
+	fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+	if (fd == -1)
+	{
+		printf("heredoc error\n");
+		exit(1);
+	} 
+
+	end_text = node->token;
+	if (ft_strchr(end_text, '\"') == 0)
+	{
+		// 환경변수 치환하기
+		while (1)
+		{
+			str = get_next_line(0);
+			if (!str)
+			{
+				printf("heredoc error\n");
+				exit(1);
+			}
+			if (ft_strncmp(str, end_text, ft_pipex_strlen(str)) == 0)
+				break ;
+			write(fd, str, ft_strlen(str));
+			free(str);
+		}
+	}
+		// else
+	// {
+			// 환경변수 치환 안하기
+	// }
+	free (node->token);
+	end_text = 0;
+	node->token = path;
+	close(fd);
+}
+
+char *set_heredoc_path(t_token_node *node, char *i, char *j)
+{
+	char	*file_name;
+	char	*temp;
+	char	*path;
+
+	file_name = ft_strjoin(i, "-");
+	temp = ft_strjoin(file_name, j);
+	free(file_name);
+	file_name = 0;
+	file_name = ft_strjoin(temp, ".txt");
+	free(temp);
+	temp = 0;
+	path = ft_strjoin("./.temp/", file_name);
+	if (access(path, F_OK) == 0)
+	{
+		while (42)
+		{
+			if (access(path, F_OK) == -1)
+				break;
+			temp = ft_strjoin("-",file_name);
+			free(file_name);
+			file_name = temp;
+			temp = 0;
+			free(path);
+			path = ft_strjoin("./.temp/", file_name);
+		}
+	}
+	free(file_name);
+	file_name = 0;
+	free(i);
+	free(j);
+	return (path);
+}
+
+void set_heredoc(t_command_list *list)
+{
+	int	i;
+	int	j;
+	int	count;
+	t_command_node *node;
+	t_token_node *token;
+
+	i = -1;
+	count = 0;
+	node = list->front;
+	while (++i < list->size)
+	{
+		j = -1;
+		token = node->redir_list->front;
+		while (++j < node->redir_list->size)
+		{
+			if (token->type == TOKEN_IN_APPEND)
+			{
+				// printf("%s ",ft_strjoin(ft_itoa(i), ft_itoa(j)));
+				// printf("%s\n",token->token);
+				set_redirect_heredoc(&token, set_heredoc_path(token, ft_itoa(i), ft_itoa(j)));
+			}
+			token = token->next;
+		}
+		node = node->next;
+	}
+
+}
 
 void parsing(t_command_list	*cmd_list, char *line)
 {
@@ -29,28 +160,22 @@ void parsing(t_command_list	*cmd_list, char *line)
 	char flag = '\0';
 	
 	token_split(line, &token_list);
-	if (token_list.size > 0)
-	{
-		printf( "token_list : ");
-		print_list(&token_list);
-	}
+	// if (token_list.size > 0)
+	// {
+	// 	printf( "token_list : ");
+	// 	print_list(&token_list);
+	// }
 	make_command_list(&token_list, cmd_list);
 		clear_list(&token_list);
-	if (cmd_list->size > 0)
-	{
-		printf( "cmd_list : ");
-		print_command_list(cmd_list);
-	}
+	set_heredoc(cmd_list);
 	if(cmd_list->size > 0)
 	{
 		printf( "cmd_list : ");
 		print_command_list(cmd_list);
 		free_command_list(cmd_list);
 	}
-	
 
 
-    atexit(check_leaks);
 }
 
 void readline_func(t_command_list *list, t_process *prcs)
@@ -60,6 +185,7 @@ void readline_func(t_command_list *list, t_process *prcs)
 /* 무한루프를 돌리면서 readline();함수를 반복적으로 호출할 것이다 */
     while(1)
     {
+    
         /* readline함수가 호출되면 인자(prompt : )를 터미널에 출력하고 저장할 라인을 입력받는다 */
         str = readline("prompt : ");/* read함수는 저장한 문자열의 메모리주소를 반환한다 */
         if (str)/* 입력이 된다면 (주소가 존재한다면) */
@@ -75,10 +201,11 @@ void readline_func(t_command_list *list, t_process *prcs)
 	/* 라인은 힙메모리에 저장되기때문에 다 사용한 메모리는 할당을 해제해줘야한다 */
         if (str != NULL)
 			free(str);
-		execute_commands(prcs, list);
+		// execute_commands(prcs, list);
     }
     /* 함수종료 */
     // return(0);
+    atexit(check_leaks);
 }
 
 
