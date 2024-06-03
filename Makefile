@@ -6,7 +6,7 @@
 #    By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/17 12:35:23 by jeakim            #+#    #+#              #
-#    Updated: 2024/05/27 20:46:49 by jeakim           ###   ########.fr        #
+#    Updated: 2024/05/30 19:08:54 by jeakim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ SRCS = minishell.c \
 		minishell_exec_builtin_func1.c\
 		minishell_exec_builtin_func2.c\
 		minishell_exec_builtin_utils.c\
+		minishell_exec_redirection.c\
 		minishell_exec_free.c
 
 OBJS = $(SRCS:.c=.o)
