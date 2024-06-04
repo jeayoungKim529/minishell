@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:53:13 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/03 17:00:04 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/04 18:39:33 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,18 @@ void signal_func(void)
 
 
 
-// void handle_signal_heredoc(int signal)
-// {
-// 	write(1, "\n", 1);
-// 	exit(1);
-// }
+
+void handle_signal_heredoc(int signal)
+{
+	(void)signal;
+	write(1, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
+void heredoc_signal_func(void) // 물어보기
+{
+	print_signal_off();
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, handle_signal_heredoc);
+}
