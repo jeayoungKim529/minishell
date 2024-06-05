@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:39:58 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/04 18:32:12 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/05 13:52:21 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,12 @@ void	print_signal_on(void);
 void	handle_signal(int signal);
 void	handle_signal_heredoc(int signal);
 void	heredoc_signal_func(void);
-
-
+void signal_off(void);
+void signal_on(void);
+void builtin_signal_func(void);
+void handle_signal_builtin(int signal);
+void handle_signal_exec(int signal);
+void exec_signal_func(void);
 void	signal_func(void);
 
 

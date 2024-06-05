@@ -6,11 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:23:07 by jeakim            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/06/03 21:00:08 by jeakim           ###   ########.fr       */
-=======
-/*   Updated: 2024/06/03 18:31:32 by jimchoi          ###   ########.fr       */
->>>>>>> 5abfd5c89ddd6a2074c2e826d8fa227193d2dd35
+/*   Updated: 2024/06/05 13:52:15 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +38,10 @@ int	main(int argc, char *argv[], char *envp[])
 	t_process		prcs;
 	char			*line;
 
-	signal_func();
+	// signal_func();
+	builtin_signal_func();
 
-	// envp_func(&prcs, envp);
+	envp_func(&prcs, envp);
 	readline_func(&list, &prcs);
 	print_signal_on();
 	signal(SIGQUIT, SIG_DFL);

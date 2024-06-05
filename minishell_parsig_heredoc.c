@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:40:07 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/04 18:43:55 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/05 12:13:34 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ size_t	ft_pipex_strlen(char *s)
 	unsigned int	len;
 
 	len = 0;
+	if (s == NULL) // 임시
+		return (0); // 임시
 	while (*s++ && *s != '\n')
 		len++;
 	return (len + 1);
@@ -81,6 +83,8 @@ char *set_heredoc_path(t_token_node *node, char *i, char *j, char *temp)
 	return (path);
 }
 
+#include <stdio.h>
+
 void	set_heredoc_file(t_token_node **token_node, char *path)
 {
 	t_token_node	*node;
@@ -98,7 +102,13 @@ void	set_heredoc_file(t_token_node **token_node, char *path)
 		printf("heredoc error\n");
 		exit(1);
 	}
-	heredoc_readline(fd, node->token);
+	int heredoc_fd;
+	int status;
+	heredoc_fd = fork();
+	if (heredoc_fd == 0)
+		heredoc_readline(fd, node->token);
+	printf("exit code = %d\n",wait(&status)); // 주석 지우고 exit 코드 설정하기
+	printf("exit code = %d\n",WEXITSTATUS(status));
 	free (node->token);
 	node->token = path;
 	close(fd);
@@ -107,22 +117,22 @@ void	set_heredoc_file(t_token_node **token_node, char *path)
 void	heredoc_readline(int fd, char *end_text)
 {
 	char	*str;
+	extern int sig;
 
-// heredoc_signal_func();
+	heredoc_signal_func();
 	while (1)
 	{
-		str = readline("heredoc>");
-		if (!str) // 에러함수로 대체
-		{
-			printf("heredoc error\n");
-			exit(1);
-		}
-		if (ft_strncmp(str, end_text, ft_pipex_strlen(str)) == 0)
+		str = readline("> ");
+		if (ft_strncmp(str, end_text, ft_pipex_strlen(str)) == 0 || !str)
 			break ;
+		if (sig == 1)
+			break;
 		write (fd, str, ft_strlen(str));
 		if (str != NULL)
 			free (str);
 	}
-	free(str);
+	if (str)
+		free(str);
 	signal_func();
+	exit(0);
 }

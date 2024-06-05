@@ -6,7 +6,7 @@
 #    By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/17 12:35:23 by jeakim            #+#    #+#              #
-#    Updated: 2024/06/04 18:08:11 by jimchoi          ###   ########.fr        #
+#    Updated: 2024/06/05 10:22:40 by jimchoi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,7 @@ LIBFT_DIR = ./libft_src/
 LIBFT = -L$(LIBFT_DIR) -lft -I./libft_src
 
 ifdef DEBUG
-	COMFILE_FLAGS += -g3 
-#-fsanitize=address
+	COMFILE_FLAGS += -g3 -fsanitize=address
 endif
 
 SRCS = minishell.c \
