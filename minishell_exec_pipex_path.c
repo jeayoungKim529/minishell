@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:21:13 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/03 15:26:10 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/05 18:29:35 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ char	*check_path(t_process *prcs)
 
 	ch = 0;
 	i = -1;
+	if (access(prcs->cmd[0], X_OK) == 0)
+		return (prcs->cmd[0]);
 	while (prcs->path && prcs->path[++i] && ch == 0)
 	{
 		path_p = ft_strjoin(prcs->path[i], "/");

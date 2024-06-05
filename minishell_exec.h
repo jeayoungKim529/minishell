@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:29:17 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/05 17:21:25 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/05 19:13:17 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ char	*change_dir(t_process *prcs, char *s);
 void	ft_error_exec(t_process *prcs, char *s);
 //minishell_exec_redirection.c
 void	set_redirection(t_process *prcs, t_token_list *list);
+void	set_single_redirection(t_process *prcs);
 //minishell_exec_pipex_open.c
 void	first_command(t_process *prcs);
 void	last_command(t_process *prcs);

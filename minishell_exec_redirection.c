@@ -6,12 +6,26 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:08:24 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/05 16:42:11 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/05 19:12:28 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_exec.h"
+
+void	set_single_redirection(t_process *prcs)
+{
+	if (prcs->file.in != -1)
+		if (dup2(prcs->file.in, 0) == -1) // 입력 파일이 있는 경우
+			ft_error_exec(prcs, strerror(errno));
+	if (prcs->file.out != -1)
+	{
+		prcs->prevfd = dup(1);
+		if (dup2(prcs->file.out, 1) == -1) // 출력 파일이 있는 경우
+			ft_error_exec(prcs, strerror(errno));
+		close(prcs->file.out);
+	}
+}
 
 void	set_redirection_read(t_process *prcs, t_token_node *cur)
 {
