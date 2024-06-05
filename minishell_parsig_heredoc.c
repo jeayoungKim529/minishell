@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsig_heredoc.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:40:07 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/05 14:18:19 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/05 15:51:09 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,32 +82,26 @@ char *set_heredoc_path(t_token_node *node, char *i, char *j, char *temp)
 	return (path);
 }
 
-#include <stdio.h>
 
 void	set_heredoc_file(t_token_node **token_node, char *path)
 {
 	t_token_node	*node;
 	int				fd;
+	int				status;
+	int				heredoc_fd;
 
 	node = *token_node;
 	if (path == NULL)// 에러함수로 대체
-	{
-		printf("ft_strjoin error\n");
-		exit (1);
-	}
+		ft_error_parse(1, "heredoc path error");
 	fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	if (fd == -1)// 에러함수로 대체
-	{
-		printf("heredoc error\n");
-		exit(1);
-	}
-	int heredoc_fd;
-	int status;
+		ft_error_parse(1, "heredoc error");
+	signal_off();
 	heredoc_fd = fork();
 	if (heredoc_fd == 0)
 		heredoc_readline(fd, node->token);
-	printf("exit code = %d\n",wait(&status)); // 주석 지우고 exit 코드 설정하기
-	printf("exit code = %d\n",WEXITSTATUS(status));
+	wait(&status);
+	// TODO 히어독 종료 코드 설정
 	free (node->token);
 	node->token = path;
 	close(fd);
@@ -124,14 +118,13 @@ void	heredoc_readline(int fd, char *end_text)
 		str = readline("> ");
 		if (ft_strncmp(str, end_text, ft_pipex_strlen(str)) == 0 || !str)
 			break ;
-		if (sig == 1)
-			break;
+		write (fd, "\n", 1);
 		write (fd, str, ft_strlen(str));
 		if (str != NULL)
 			free (str);
 	}
 	if (str)
 		free(str);
-	signal_func();
+	builtin_signal_func();
 	exit(0);
 }

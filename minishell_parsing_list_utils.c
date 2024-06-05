@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:40:02 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/04 18:18:59 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/05 15:19:14 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,10 @@ int	add_token_list(t_token_list *list, char *token, t_token_type type)
 
 	new_node = (t_token_node *)malloc(sizeof(t_token_node));
 	if (new_node == NULL)
-	{
-		printf("malloc error\n");
-		exit(1);
-	}
+		ft_error_parse(1, "malloc error");
 	new_node->token = ft_strdup(token);
 	if(new_node->token == NULL)
-	{
-		printf("malloc error\n");
-		exit(1);
-	}
+		ft_error_parse(1, "malloc error");
 	new_node->type = type;
 	new_node->next = NULL;
 	new_node->prev = NULL; 
@@ -78,10 +72,8 @@ int	add_command_list(t_command_list *list)
 	cmd_list = (t_token_list *)malloc(sizeof(t_token_list));
 	redir_list = (t_token_list *)malloc(sizeof(t_token_list));
 	if (new_node == NULL || cmd_list == NULL || redir_list == NULL)
-	{
-		printf("malloc error\n");
-		exit(1);
-	}
+		ft_error_parse(1, "malloc error");
+
 	new_node->next = NULL;
 	new_node->prev = NULL; 
 	new_node->cmd_list = cmd_list;

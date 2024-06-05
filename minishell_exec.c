@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exec.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:29:20 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/05 15:45:22 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/05 15:51:33 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	execute_single(t_process *prcs)
 		if (prcs->file.out != -1)
 			if (dup2(prcs->file.out, 1) == -1)
 				ft_error_exec(prcs, strerror(errno));
-		signal_on();
+		exec_signal_func();
 		run_process(prcs);
 	}
 	if (wait(&status) == -1)
@@ -65,7 +65,6 @@ void	execute_multi(t_process *prcs, int i)
 	close(prcs->prevfd);
 	prcs->prevfd = prcs->fd[0];
 }
-// void signal_off(void);
 
 void	execute_commands(t_process *prcs, t_command_list *list)
 {
