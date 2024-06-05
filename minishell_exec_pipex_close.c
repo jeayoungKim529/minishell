@@ -6,12 +6,13 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:03:09 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/05 19:14:51 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/05 19:51:07 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_exec.h"
+#include "minishell_parsing.h"
 
 //cenvp;
 //unlink(heredoc)
@@ -49,4 +50,5 @@ void	finish_commands(t_process *prcs, t_command_list *list, int flag)
 {
 	execute_wait(prcs, list, flag);
 	ft_unlink(prcs, list);
+	builtin_signal_func();
 }

@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 19:05:20 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/05 17:01:13 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/05 20:57:55 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	run_process(t_process *prcs)
 void	other_command(t_process *prcs, int i)
 {
 	char	*path;
-	
+
 	if (prcs->file.in == -1) //입력 파일이 없는 경우, prevfd 가져오기
 	{
 		if (dup2(prcs->prevfd, 0) == -1)
@@ -44,11 +44,11 @@ void	other_command(t_process *prcs, int i)
 			if (dup2(prcs->fd[1], 1) == -1)
 				ft_error_exec(prcs, strerror(errno));
 	}
-	else
+	else //출력 파일이 있는 경우
 	{
-		if (dup2(prcs->prevfd, 1) == -1)
+		if (dup2(prcs->file.out, 1) == -1)
 			ft_error_exec(prcs, strerror(errno));
-		if (dup2(prcs->file.out, 1) == -1) // 출력 파일이 있는 경우
+		if (dup2(prcs->fd[1], 1) == -1)
 			ft_error_exec(prcs, strerror(errno));
 		close(prcs->file.out);
 	}
@@ -56,7 +56,5 @@ void	other_command(t_process *prcs, int i)
 	close(prcs->fd[1]);
 	close(prcs->prevfd);
 	run_process(prcs);
-	if (dup2(1, prcs->prevfd) == -1)
-		ft_error_exec(prcs, strerror(errno));
 	exit(1);
 }
