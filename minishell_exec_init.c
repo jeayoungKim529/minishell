@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 17:44:42 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/05 14:00:20 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/05 14:10:31 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,6 @@ void	init_redirection(t_process *prcs, t_token_list *list)
 void	init_prcs(t_process *prcs, t_command_list *list)
 {
 	init_path(prcs);
-	//init_redirection(prcs, list->front->redir_list);
+	init_redirection(prcs, list->front->redir_list);
 	init_exec_envp(prcs);
 }
