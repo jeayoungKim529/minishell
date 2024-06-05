@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:53:13 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/05 15:35:23 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/05 17:20:34 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ void	handle_signal(int signal)
 {
 
 	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	// rl_on_new_line();
+	// rl_replace_line("", 0);
+	// rl_redisplay();
 	
 }
 
@@ -79,28 +79,30 @@ print_signal_on();
 void handle_signal_heredoc(int signal)
 {
 	(void)signal;
-	builtin_signal_func(); 
+	// builtin_signal_func(); 
 	exit(1);
 }
 void heredoc_signal_func(void) // 물어보기
 {
 	(void)signal;
+	signal(SIGQUIT, SIG_IGN); // ctrl + \ 막아놓음
 	signal(SIGINT, handle_signal_heredoc);
 }
 
-// execve 함수일때
+// execve 함수를 실행할 때
 void handle_signal_exec(int signal)
 {
 	(void)signal;
 	// write(1, "\n", 1);
 	write(1, "dho", 3);
-	revert_signal();
+	// revert_signal();
 	exit(1);
 }
 void exec_signal_func(void)
 {
 	(void)signal;
 	print_signal_on();
+	signal(SIGQUIT, SIG_IGN); // ctrl + \ 막아놓음
 	signal(SIGINT, handle_signal_exec);
 }
 

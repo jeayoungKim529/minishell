@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exec_pipex_close.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:03:09 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/05 17:48:22 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/05 18:13:54 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_unlink(t_process *prcs, t_command_list *list)
 {
 	t_token_node	*cur;
 
-	if (!list || list->size <= 0)
+	if (!list || list->front->redir_list->size <= 0)
 		return ;
 	cur = list->front->redir_list->front;
 	while (cur)

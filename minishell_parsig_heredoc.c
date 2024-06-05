@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:40:07 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/05 15:51:09 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/05 18:06:02 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,15 +92,20 @@ void	set_heredoc_file(t_token_node **token_node, char *path)
 
 	node = *token_node;
 	if (path == NULL)// 에러함수로 대체
-		ft_error_parse(1, "heredoc path error");
+		ft_error_parse(2, "heredoc path error");
 	fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	if (fd == -1)// 에러함수로 대체
-		ft_error_parse(1, "heredoc error");
-	signal_off();
+		ft_error_parse(2, "heredoc error");
+
 	heredoc_fd = fork();
+	// printf("heredoc_fd: %d\n",heredoc_fd);
+	if (heredoc_fd != 0)
+		signal_off();
 	if (heredoc_fd == 0)
 		heredoc_readline(fd, node->token);
 	wait(&status);
+	// printf("whodo\n");
+	builtin_signal_func(); 
 	// TODO 히어독 종료 코드 설정
 	free (node->token);
 	node->token = path;
@@ -125,6 +130,6 @@ void	heredoc_readline(int fd, char *end_text)
 	}
 	if (str)
 		free(str);
-	builtin_signal_func();
+	// builtin_signal_func();
 	exit(0);
 }

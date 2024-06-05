@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exec.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:29:20 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/05 17:17:49 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/05 18:07:44 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	execute_single(t_process *prcs, int i)
 	prcs->pid = fork();
 	if (prcs->pid == -1)
 		ft_error_exec(prcs, strerror(errno));
+	if (prcs->pid != 0)
+		signal_off();
 	if (prcs->pid == 0)
 	{
 		if (prcs->file.in != -1)

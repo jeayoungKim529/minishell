@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:26:23 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/05 15:17:40 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/05 17:04:19 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ int	parse_quotes(char *str)
 	quote = str[0];
 	str++;
 	if (ft_strchr(str, quote) == 0)
+	{
 		ft_error_parse(1, "quote error");
+		return (-1);
+	}
 	if (quote == '\"')
 	{
 		while (str[len] != '\"')
@@ -53,7 +56,13 @@ int	get_cmd_length(char *str)
 		while (str[len] && str[len] != ' ' && str[len] != '|' && str[len] != '>' && str[len] != '<')
 		{
 			if (str[len] == '\"' || str[len] == '\'')
+			{
+				if (parse_quotes(str) == -1)
+				{
+					return -1;
+				}
 				len += parse_quotes(str);		
+			}
 			len ++;
 		}
 	}
@@ -68,6 +77,10 @@ char	*put_token(char *str)
 
 	
 	len = get_cmd_length(str);
+	if (len == -1)
+	{
+		return (0);
+	}
 	i = -1;
  	str2 = (char *)malloc(sizeof(char) * (len + 1));
 	if (!str2)
@@ -105,7 +118,7 @@ t_token_type set_token_type(char *str)
 		return (TOKEN_COMMAND);
 }
 
-void	token_split(char *line, t_token_list *tmp_list)
+int	token_split(char *line, t_token_list *tmp_list)
 {
 	char *cmdline;
 	
@@ -125,10 +138,15 @@ void	token_split(char *line, t_token_list *tmp_list)
 					free(cmdline);
 					cmdline = 0;
 			}
+			else
+			{
+				return (1);
+			}
 			if (!*line)
 				break;
 		}
 	}
 	if (cmdline)
 		free(cmdline);
+	return (0);
 }

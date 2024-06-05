@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:40:02 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/05 15:19:14 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/05 17:58:00 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ int	add_token_list(t_token_list *list, char *token, t_token_type type)
 
 	new_node = (t_token_node *)malloc(sizeof(t_token_node));
 	if (new_node == NULL)
-		ft_error_parse(1, "malloc error");
+		ft_error_parse(2, "malloc error");
 	new_node->token = ft_strdup(token);
 	if(new_node->token == NULL)
-		ft_error_parse(1, "malloc error");
+		ft_error_parse(2, "malloc error");
 	new_node->type = type;
 	new_node->next = NULL;
 	new_node->prev = NULL; 
@@ -72,7 +72,7 @@ int	add_command_list(t_command_list *list)
 	cmd_list = (t_token_list *)malloc(sizeof(t_token_list));
 	redir_list = (t_token_list *)malloc(sizeof(t_token_list));
 	if (new_node == NULL || cmd_list == NULL || redir_list == NULL)
-		ft_error_parse(1, "malloc error");
+		ft_error_parse(2, "malloc error");
 
 	new_node->next = NULL;
 	new_node->prev = NULL; 
@@ -131,6 +131,12 @@ void print_command_list(t_command_list *list)
     int i = 0;
 
         printf("total list size :%d\n\n", list->size);
+		// if (head == NULL)
+		// 	return;
+		// if (head->cmd_list == 0 || head->redir_list == 0)
+		// 	return ;
+		// if (head->cmd_list->size == 0 || head->redir_list->size == 0)
+		// 	return ;
 		printf("========================\n");
     while(i < list->size)
     {
