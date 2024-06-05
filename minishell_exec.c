@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exec.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:29:20 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/05 18:07:44 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/05 19:15:11 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,7 @@ void	execute_multi(t_process *prcs, int i)
 	if (prcs->pid == -1)
 		ft_error_exec(prcs, strerror(errno));
 	else if (prcs->pid == 0)
-	{
 		other_command(prcs, i);
-	}
 	close(prcs->fd[1]);
 	close(prcs->prevfd);
 	prcs->prevfd = prcs->fd[0];
