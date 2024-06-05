@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:39:58 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/05 16:56:54 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/05 17:57:04 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void free_command_list(t_command_list *command_list);
 int	set_redirect_list(t_token_node *token_node, t_command_node *cmd_node);
 int	set_pipe(t_token_node *token_node, t_command_node **cmd_node, t_command_list *cmdline);
 
-void make_command_list(t_token_list *token_list, t_command_list *cmdline);
+int make_command_list(t_token_list *token_list, t_command_list *cmdline);
 int parsing(t_command_list	*cmd_list, char *line);
 
 

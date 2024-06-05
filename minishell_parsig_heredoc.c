@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:40:07 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/05 16:19:21 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/05 18:06:02 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,10 @@ void	set_heredoc_file(t_token_node **token_node, char *path)
 
 	node = *token_node;
 	if (path == NULL)// 에러함수로 대체
-		ft_error_parse(1, "heredoc path error");
+		ft_error_parse(2, "heredoc path error");
 	fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	if (fd == -1)// 에러함수로 대체
-		ft_error_parse(1, "heredoc error");
+		ft_error_parse(2, "heredoc error");
 
 	heredoc_fd = fork();
 	// printf("heredoc_fd: %d\n",heredoc_fd);

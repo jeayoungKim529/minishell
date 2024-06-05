@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exec.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:29:17 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/05 15:51:36 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/05 17:21:25 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_process{
 	t_token_list	*token_list;
 	char			**cmd; //free
 	int				n_cmd;
+	int				t_cmd;
 	t_envp			*envp;
 	t_senvp			senvp;
 	char			**exec_envp;
@@ -64,7 +65,7 @@ void	free_exec_envp(t_process *prcs);
 void	free_second_char(char **s);
 //minishell_exec_init.c
 void	execute_command(t_process *prcs, t_command_list *list);
-void	init_prcs(t_process *prcs, t_command_list *list);
+void	init_prcs(t_process *prcs, t_command_list *list, t_command_node	*cur);
 //minishell_envp.c
 void	envp_func(t_process *prcs, char *envp[]);
 void	save_pwd(t_process *prcs);
@@ -76,7 +77,7 @@ void	ft_envpdel(t_envp *env, char *key);
 char	*ft_envpfind(t_envp *env, char *key);
 //minishell_exec.c
 void	execute_commands(t_process *prcs, t_command_list *list);
-void	execute_single(t_process *prcs);
+void	execute_single(t_process *prcs, int i);
 void	execute_multi(t_process *prcs, int i);
 //minishell_exec_merge_command.c
 char	**merge_command(t_process *prcs, t_token_list *cmd_list);
@@ -104,8 +105,12 @@ void	set_redirection(t_process *prcs, t_token_list *list);
 //minishell_exec_pipex_open.c
 void	first_command(t_process *prcs);
 void	last_command(t_process *prcs);
-void	other_command(t_process *prcs);
+void	other_command(t_process *prcs, int i);
 void	run_process(t_process *prcs);
+//minishell_exec_pipex_close.c
+void	finish_commands(t_process *prcs, t_command_list *list, int flag);
+void	ft_unlink(t_process *prcs, t_command_list *list);
+void	execute_wait(t_process *prcs, t_command_list *list, int flag);
 //minishell_exec_pipex_path.c
 char	*check_path(t_process *prcs);
 char	*make_basic_path(t_process *prcs);

@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:54:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/05 17:19:47 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/05 18:11:03 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,16 @@ int	parsing(t_command_list	*cmd_list, char *line)
 	
 	if (token_split(line, &token_list))
 	{
+		clear_list(&token_list);
 		return (1);
 	}
 	// 	print_list(&token_list);
-	make_command_list(&token_list, cmd_list);
+	if (make_command_list(&token_list, cmd_list))
+	{
+		clear_list(&token_list);
+		free_command_list(cmd_list);
+		return (1);
+	}
 	if (cmd_list->front->cmd_list->size == 0 && \
 	cmd_list->front->redir_list->size == 0)
 	{
@@ -44,8 +50,8 @@ int	parsing(t_command_list	*cmd_list, char *line)
         cmd_list = NULL;
 	}
 
-	clear_list(&token_list);
 
+	clear_list(&token_list);
 	if(cmd_list != NULL)
 	set_heredoc(cmd_list);
 
@@ -71,13 +77,12 @@ void readline_func(t_command_list *list, t_process *prcs)
 		}
         else/* str = NULL 이라면 (EOF, cntl + D)*/
             break ;/* 반복문을 탈출해준다.*/
-        add_history(str);
-		// if (list)
-		// print_command_list(list);
+		add_history(str);
+						// print_command_list(list);
 		execute_commands(prcs, list);
 		free(str);
     }
     /* 함수종료 */
     // return(0);
-    // atexit(check_leaks);
+    atexit(check_leaks);
 }

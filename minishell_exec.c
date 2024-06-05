@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:29:20 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/05 16:24:47 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/05 18:07:44 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,11 @@
 #include "minishell_exec.h"
 #include "minishell_parsing.h"
 
-void	execute_wait(t_process *prcs, t_command_list *list, int flag)
+void	execute_single(t_process *prcs, int i)
 {
-	int	i;
-
-	i = 0;
-	while (flag == 0 && i < list->size)
-	{
-		if (wait(&prcs->status) == -1)
-			exit(EXIT_FAILURE);
-		i++;
-	}
-}
-
-void	execute_single(t_process *prcs)
-{
-	int		status;
 	char	*path;
 
+	signal_off();
 	prcs->pid = fork();
 	if (prcs->pid == -1)
 		ft_error_exec(prcs, strerror(errno));
@@ -40,14 +27,22 @@ void	execute_single(t_process *prcs)
 	if (prcs->pid == 0)
 	{
 		if (prcs->file.in != -1)
-			if (dup2(prcs->file.in, 0) == -1)
+			if (dup2(prcs->file.in, 0) == -1) // 입력 파일이 있는 경우
 				ft_error_exec(prcs, strerror(errno));
 		if (prcs->file.out != -1)
-			if (dup2(prcs->file.out, 1) == -1)
+		{
+			if (dup2(prcs->prevfd, 1) == -1)
 				ft_error_exec(prcs, strerror(errno));
+			if (dup2(prcs->file.out, 1) == -1) // 출력 파일이 있는 경우
+				ft_error_exec(prcs, strerror(errno));
+			close(prcs->file.out);
+		}
 		exec_signal_func();
 		run_process(prcs);
+		if (dup2(1, prcs->prevfd) == -1)
+			ft_error_exec(prcs, strerror(errno));
 	}
+	builtin_signal_func();
 }
 
 void	execute_multi(t_process *prcs, int i)
@@ -61,7 +56,7 @@ void	execute_multi(t_process *prcs, int i)
 		ft_error_exec(prcs, strerror(errno));
 	else if (prcs->pid == 0)
 	{
-		other_command(prcs);
+		other_command(prcs, i);
 	}
 	close(prcs->fd[1]);
 	close(prcs->prevfd);
@@ -80,32 +75,19 @@ void	execute_commands(t_process *prcs, t_command_list *list)
 	flag = 0;
 	while (cur && list->size > 0 && list->front->cmd_list->size > 0)
 	{
-		init_prcs(prcs, list);
-		prcs->cmd = merge_command(prcs, cur->cmd_list);
+		init_prcs(prcs, list, cur);
 		if (list->size == 1 && check_builtin_command(prcs->cmd) == 1)
 		{
 			execute_builtin(prcs);
 			flag = 1;
 		}
 		else if (list->size == 1)
-		{
-			signal_off();
-			execute_single(prcs);
-			builtin_signal_func();
-		}
+			execute_single(prcs, ++i);
 		else
 			execute_multi(prcs, ++i);
+
 		free_command(prcs);
 		cur = cur->next;
 	}
-	//execute_wait(prcs, list, flag);
-	int status;
-	i = 0;
-	while (flag == 0 && i < list->size)
-	{
-		if (wait(&status) == -1)
-			exit(EXIT_FAILURE);
-		i++;
-	}
-	builtin_signal_func();
+	finish_commands(prcs, list, flag);
 }
