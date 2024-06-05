@@ -6,14 +6,12 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 19:14:44 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/03 20:19:07 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/05 13:53:05 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_exec.h"
-
-//free_command_list(cmd_list);
 
 void	free_envp(t_process *prcs)
 {
@@ -34,7 +32,9 @@ void	free_command(t_process *prcs)
 	int	i;
 
 	i = 0;
-	while (prcs->cmd && prcs->cmd[i])
+	if (!prcs || !prcs->cmd)
+		return ;
+	while (prcs->cmd[i] != NULL)
 	{
 		free(prcs->cmd[i]);
 		i++;
