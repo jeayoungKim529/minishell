@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exec_redirection.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:08:24 by jeakim            #+#    #+#             */
 /*   Updated: 2024/06/03 15:10:14 by jeakim           ###   ########.fr       */

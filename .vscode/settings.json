@@ -17,6 +17,8 @@
 	"parsing.h": "c",
 	"minishell_exec.h": "c",
 	"minishell.h": "c",
-	"minishell_parsing.h": "c"
+	"minishell_parsing.h": "c",
+	"sstream": "c",
+	"__node_handle": "c"
 }
 }

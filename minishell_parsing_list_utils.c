@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_list_utils.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:40:02 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/05/27 13:30:05 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/04 18:18:59 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,12 +163,14 @@ void print_list(t_token_list *list)
 	head = list->front;
 	int i = 0;
 
+
     printf("size = %d\n", list->size);
 	if (list->size == 0)
 		return ;
 	while(i < list->size)
 	{
 		printf(" |%s| ",head->token);
+		printf("type :%u ",head->type);
 		head = head->next;
 		printf("->");
 		i++;
