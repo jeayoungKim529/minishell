@@ -38,6 +38,7 @@ SRCS = minishell.c \
 		\
 		minishell_exec.c\
 		minishell_exec_envp.c \
+		minishell_exec_envp_utils.c\
 		minishell_exec_merge_command.c\
 		minishell_exec_init.c\
 		minishell_exec_builtin.c \
@@ -45,6 +46,9 @@ SRCS = minishell.c \
 		minishell_exec_builtin_func2.c\
 		minishell_exec_builtin_utils.c\
 		minishell_exec_redirection.c\
+		minishell_exec_pipex_open.c\
+		minishell_exec_pipex_path.c\
+		minishell_exec_pipex_close.c\
 		minishell_exec_free.c
 
 OBJS = $(SRCS:.c=.o)

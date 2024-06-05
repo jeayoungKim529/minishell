@@ -6,12 +6,25 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:08:24 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/03 14:23:05 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/03 15:10:14 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_exec.h"
+
+void	set_redirection_read(t_process *prcs, t_token_list *list)
+{
+	t_token_node	*cur;
+	int				fd;
+
+	cur = list->front;
+	while (cur)
+	{
+
+		cur = cur->next;
+	}
+}
 
 void	set_redirection(t_process *prcs, t_token_list *list)
 {
