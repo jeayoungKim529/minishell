@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:39:58 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/03 16:15:56 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/04 18:32:12 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,16 @@ void	print_signal_off(void);
 void	print_signal_on(void);
 void	handle_signal(int signal);
 void	handle_signal_heredoc(int signal);
+void	heredoc_signal_func(void);
+
 
 void	signal_func(void);
+
+
+void	set_heredoc(t_command_list *list);
+char	*set_heredoc_path(t_token_node *node, char *i, char *j, char *temp);
+void	set_heredoc_file(t_token_node **token_node, char *path);
+void	heredoc_readline(int fd, char *end_text);
 
 
 #endif
