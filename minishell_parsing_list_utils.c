@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:40:02 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/05 15:19:14 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/05 16:44:45 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,12 @@ void print_command_list(t_command_list *list)
     int i = 0;
 
         printf("total list size :%d\n\n", list->size);
+		// if (head == NULL)
+		// 	return;
+		// if (head->cmd_list == 0 || head->redir_list == 0)
+		// 	return ;
+		// if (head->cmd_list->size == 0 || head->redir_list->size == 0)
+		// 	return ;
 		printf("========================\n");
     while(i < list->size)
     {

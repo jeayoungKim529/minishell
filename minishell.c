@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:23:07 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/05 15:51:45 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/05 17:18:04 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,11 @@ void	ft_error_parse(int status, char *s)
     ft_putstr_fd("\n", 2);
     // revert_signal();
     // exit(status);
+		// write(1, "\n", 1);
+	// rl_on_new_line();
+	// rl_replace_line("", 0);
+	// rl_redisplay();
+	// exit(status);
 }
 
 int	main(int argc, char *argv[], char *envp[])
