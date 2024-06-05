@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:48:40 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/05 17:56:29 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/05 21:52:22 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,10 @@ int	make_command_list(t_token_list *token_list, t_command_list *cmdline)
 	t_command_node	*cmd_node;
 	t_token_node	*node;
 	int				i;
+	int	count;
 	
 	i = 0;
+	count = 0;
 	node = token_list->front;
 	if (token_list->size == 1 && node->type == TOKEN_PIPE)
 	{
@@ -71,15 +73,17 @@ int	make_command_list(t_token_list *token_list, t_command_list *cmdline)
 	{
 		if (node->type == TOKEN_PIPE )
 		{
-			if (set_pipe(node, &cmd_node, cmdline) == -1)
+			count = set_pipe(node, &cmd_node, cmdline);
+			if (count == -1)
 				return (1);
-			i += set_pipe(node, &cmd_node, cmdline);
+			i += count;
 		}
 		else if (node->token[0] == '>' || node->token[0] == '<')
 		{
-			if (set_redirect_list(node, cmd_node) == -1)
+			count = set_redirect_list(node, cmd_node);
+			if (count == -1)
 				return (1);
-			i += set_redirect_list(node, cmd_node);
+			i += count;
 			node = node->next;
 		}
 		else

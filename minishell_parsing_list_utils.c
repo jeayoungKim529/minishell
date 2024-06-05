@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:40:02 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/05 17:58:00 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/05 21:48:16 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,16 @@ void	del_token_list(t_token_list *list)
 		list->front = list->front->next;
 		list->front->prev = NULL;
 		free(tmp->token);
-		// if (tmp != NULL)
+		tmp->token = NULL;
 		free(tmp);
+		tmp = NULL;
 	}
 	else
 	{
 		free(list->front->token);
+		list->front->token = NULL;
 		free(list->front);
+		list->front = NULL;
 	}
 	list->size--;
 }
@@ -68,9 +71,9 @@ int	add_command_list(t_command_list *list)
 	t_token_list	*cmd_list;
 	t_token_list	*redir_list;
 
-	new_node = (t_command_node *)malloc(sizeof(t_command_node));
-	cmd_list = (t_token_list *)malloc(sizeof(t_token_list));
-	redir_list = (t_token_list *)malloc(sizeof(t_token_list));
+	new_node = (t_command_node *)ft_calloc(sizeof(t_command_node), 1);
+	cmd_list = (t_token_list *)ft_calloc(sizeof(t_token_list), 1);
+	redir_list = (t_token_list *)ft_calloc(sizeof(t_token_list), 1);
 	if (new_node == NULL || cmd_list == NULL || redir_list == NULL)
 		ft_error_parse(2, "malloc error");
 
@@ -107,16 +110,22 @@ void	del_command_list(t_command_list *list)
 		clear_list(tmp->cmd_list);
 		clear_list(tmp->redir_list);
 		free(tmp->cmd_list);
+		tmp->cmd_list = NULL;
 		free(tmp->redir_list);
+		tmp->redir_list = NULL;
 		free(tmp);
+		tmp = NULL;
 	}
 	else
 	{
 		clear_list(list->front->cmd_list);
 		clear_list(list->front->redir_list);
 		free(list->front->cmd_list);
+		list->front->cmd_list = NULL;
 		free(list->front->redir_list);
+		list->front->redir_list = NULL;
 		free(list->front);
+		list->front = NULL;
 	}
 	list->size--;
 
