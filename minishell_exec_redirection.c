@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exec_redirection.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:08:24 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/05 13:47:36 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/05 14:04:17 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ void	set_redirection(t_process *prcs, t_token_list *list)
 			set_redirection_read(prcs, cur);
 		else if (cur->type == TOKEN_IN_REDIRECT || TOKEN_IN_APPEND)
 			set_redirection_write(prcs, cur);
-		if (fd < 0)
-			ft_error_exec(prcs, strerror(errno));
+		// if (fd < 0)
+		// 	ft_error_exec(prcs, strerror(errno));
 		cur = cur->next;
 	}
 	printf("2 - in : %d, out : %d\n", prcs->file.in, prcs->file.out);
