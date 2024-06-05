@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_utils1.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:54:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/05 13:50:09 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/05 14:25:28 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void parsing(t_command_list	*cmd_list, char *line)
 	{
 	set_heredoc(cmd_list);
 		// printf( "cmd_list : ");
-		// print_command_list(cmd_list);
+		print_command_list(cmd_list);
 		// free_command_list(cmd_list);
 	}
 
