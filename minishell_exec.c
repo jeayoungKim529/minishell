@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:29:20 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/05 19:15:11 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/05 20:39:13 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	execute_single(t_process *prcs, int i)
 {
 	char	*path;
 
-	signal_off();
 	prcs->pid = fork();
 	if (prcs->pid == -1)
 		ft_error_exec(prcs, strerror(errno));
@@ -42,20 +41,22 @@ void	execute_single(t_process *prcs, int i)
 		if (dup2(1, prcs->prevfd) == -1)
 			ft_error_exec(prcs, strerror(errno));
 	}
-	builtin_signal_func();
 }
 
 void	execute_multi(t_process *prcs, int i)
 {
-	int	status;
-
 	if (pipe(prcs->fd) == -1)
 		ft_error_exec(prcs, strerror(errno));
 	prcs->pid = fork();
 	if (prcs->pid == -1)
 		ft_error_exec(prcs, strerror(errno));
+	if (prcs->pid != 0)
+		signal_off();
 	else if (prcs->pid == 0)
+	{
+		exec_signal_func();
 		other_command(prcs, i);
+	}
 	close(prcs->fd[1]);
 	close(prcs->prevfd);
 	prcs->prevfd = prcs->fd[0];
@@ -83,7 +84,6 @@ void	execute_commands(t_process *prcs, t_command_list *list)
 			execute_single(prcs, ++i);
 		else
 			execute_multi(prcs, ++i);
-
 		free_command(prcs);
 		cur = cur->next;
 	}
