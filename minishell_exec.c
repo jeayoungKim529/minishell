@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exec.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:29:20 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/05 10:10:20 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/05 13:38:29 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,22 @@
 
 void	execute_single(t_process *prcs)
 {
-	int	status;
+	int		status;
+	char	*path;
 
 	prcs->pid = fork();
 	if (prcs->pid == -1)
 		ft_error_exec(prcs, strerror(errno));
 	if (prcs->pid == 0)
+	{
+		if (prcs->file.in != -1)
+			if (dup2(prcs->file.in, 0) == -1)
+				ft_error_exec(prcs, strerror(errno));
+		if (prcs->file.out != -1)
+			if (dup2(prcs->file.out, 1) == -1)
+				ft_error_exec(prcs, strerror(errno));
 		run_process(prcs);
+	}
 	if (wait(&status) == -1)
 		exit(EXIT_FAILURE);
 }
@@ -35,14 +44,10 @@ void	execute_multi(t_process *prcs, int i)
 	if (prcs->pid == -1)
 		ft_error_exec(prcs, strerror(errno));
 	else if (prcs->pid == 0)
-	{
-		if (i == 0)
-			first_command(prcs);
-		else if (i == prcs->n_cmd - 1)
-			last_command(prcs);
-		else
-			other_command(prcs);
-	}
+		other_command(prcs);
+	close(prcs->fd[1]);
+	close(prcs->prevfd);
+	prcs->prevfd = prcs->fd[0];
 }
 
 void	execute_commands(t_process *prcs, t_command_list *list)
@@ -53,7 +58,7 @@ void	execute_commands(t_process *prcs, t_command_list *list)
 	cur = list->front;
 	i = -1;
 	prcs->prevfd = dup(0);
-	while (cur)
+	while (cur && list->size > 0)
 	{
 		init_prcs(prcs, list);
 		prcs->cmd = merge_command(prcs, cur->cmd_list);
@@ -63,9 +68,6 @@ void	execute_commands(t_process *prcs, t_command_list *list)
 			execute_single(prcs);
 		else //pipe
 			execute_multi(prcs, ++i);
-		close(prcs->fd[1]);
-		close(prcs->prevfd);
-		prcs->prevfd = prcs->fd[0];
 		free_command(prcs);
 		cur = cur->next;
 	}

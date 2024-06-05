@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 17:44:42 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/05 10:13:15 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/05 11:46:49 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,11 @@ void	init_path(t_process *prcs)
 
 void	init_redirection(t_process *prcs, t_token_list *list)
 {
-	t_token_node	*cur;
-
-	cur = list->front;
-	while (cur)
-	{
-		cur = cur->next;
-	}
+	prcs->file.in = -1;
+	prcs->file.out = -1;
+	if (list->size > 0)
+		set_redirection(prcs, list);
+	// printf("1 - in : %d, out : %d\n", prcs->file.in, prcs->file.out);
 }
 
 void	init_prcs(t_process *prcs, t_command_list *list)
