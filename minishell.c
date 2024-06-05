@@ -6,7 +6,11 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:23:07 by jeakim            #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2024/06/03 21:00:08 by jeakim           ###   ########.fr       */
+=======
 /*   Updated: 2024/06/03 18:31:32 by jimchoi          ###   ########.fr       */
+>>>>>>> 5abfd5c89ddd6a2074c2e826d8fa227193d2dd35
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +29,8 @@ void	ft_error_exec(t_process *prcs, char *s)
 		free_path(prcs);
 	if (prcs->envp)
 		free_envp(prcs);
+	if (prcs->exec_envp)
+		free_exec_envp(prcs);
 	ft_putstr_fd(s, 2);
 	ft_putstr_fd("\n", 2);
 	exit(1);
