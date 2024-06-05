@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:29:20 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/05 10:10:20 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/05 13:52:11 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ void	execute_single(t_process *prcs)
 	if (prcs->pid == -1)
 		ft_error_exec(prcs, strerror(errno));
 	if (prcs->pid == 0)
+	{
+		signal_on();
 		run_process(prcs);
+	}
 	if (wait(&status) == -1)
 		exit(EXIT_FAILURE);
 }
@@ -44,6 +47,7 @@ void	execute_multi(t_process *prcs, int i)
 			other_command(prcs);
 	}
 }
+void signal_off(void);
 
 void	execute_commands(t_process *prcs, t_command_list *list)
 {
@@ -60,12 +64,16 @@ void	execute_commands(t_process *prcs, t_command_list *list)
 		if (list->size == 1 && check_builtin_command(prcs->cmd) == 1)
 			execute_builtin(prcs);
 		else if (list->size == 1)
+		{
+			signal_off();
 			execute_single(prcs);
+			builtin_signal_func();
+		}
 		else //pipe
 			execute_multi(prcs, ++i);
-		close(prcs->fd[1]);
-		close(prcs->prevfd);
-		prcs->prevfd = prcs->fd[0];
+		// close(prcs->fd[1]);
+		// close(prcs->prevfd);
+		// prcs->prevfd = prcs->fd[0];
 		free_command(prcs);
 		cur = cur->next;
 	}
