@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:54:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/05 21:55:17 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/05 22:01:36 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void readline_func(t_command_list *list, t_process *prcs)
 		add_history(str);
 						// print_command_list(list);
 		// if (list->)
-		// execute_commands(prcs, list);
+		execute_commands(prcs, list);
 		free(str);
     }
     /* 함수종료 */

@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:40:07 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/05 21:57:27 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/05 22:01:27 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void set_heredoc(t_command_list *list)
 		{
 			if (token->type == TOKEN_IN_APPEND)
 			{
-		printf("heredoc\n");
 				set_heredoc_file(&token, set_heredoc_path(token, ft_itoa(i), ft_itoa(j), 0));
 			} 
 			token = token->next;
