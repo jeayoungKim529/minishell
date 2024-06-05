@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsig_heredoc.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:40:07 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/05 19:43:05 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/05 21:57:27 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void set_heredoc(t_command_list *list)
 		{
 			if (token->type == TOKEN_IN_APPEND)
 			{
+		printf("heredoc\n");
 				set_heredoc_file(&token, set_heredoc_path(token, ft_itoa(i), ft_itoa(j), 0));
 			} 
 			token = token->next;
@@ -115,7 +116,6 @@ void	set_heredoc_file(t_token_node **token_node, char *path)
 void	heredoc_readline(int fd, char *end_text)
 {
 	char	*str;
-	extern int sig;
 
 	heredoc_signal_func();
 	while (1)
