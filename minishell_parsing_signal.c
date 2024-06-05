@@ -6,22 +6,19 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:53:13 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/05 14:11:34 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/05 15:35:23 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-// #include "minishell_parsing.h"
+#include "minishell_parsing.h"
 
 
-void	eof_handler(void)
+void	revert_signal(void)
 {
-	struct termios term;
-
-	if (tcgetattr(1, &term) != 0)
-		return;
-	term.c_lflag &= ~(ICANON | ECHO);
-	tcsetattr(1, 0, &term);
+	print_signal_on();
+	signal(SIGQUIT, SIG_DFL);
+	signal(SIGINT, SIG_DFL);
 
 }
 
@@ -65,8 +62,8 @@ void signal_func(void)
 
 void signal_off(void)
 {
-	// signal(SIGQUIT, SIG_IGN);
-	// signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, SIG_IGN);
 	print_signal_off();
 
 }
@@ -82,25 +79,28 @@ print_signal_on();
 void handle_signal_heredoc(int signal)
 {
 	(void)signal;
-	// write(1, "\n", 1);
+	builtin_signal_func(); 
 	exit(1);
 }
 void heredoc_signal_func(void) // 물어보기
 {
+	(void)signal;
 	signal(SIGINT, handle_signal_heredoc);
 }
-
 
 // execve 함수일때
 void handle_signal_exec(int signal)
 {
 	(void)signal;
 	// write(1, "\n", 1);
+	write(1, "dho", 3);
+	revert_signal();
 	exit(1);
 }
 void exec_signal_func(void)
 {
-	signal_on();
+	(void)signal;
+	print_signal_on();
 	signal(SIGINT, handle_signal_exec);
 }
 
@@ -116,7 +116,7 @@ void handle_signal_builtin(int signal)
 }
 void builtin_signal_func(void) 
 {
-	write(1, "\n", 1);
+	// write(1, "\n", 1);
 	print_signal_off();
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, handle_signal_builtin);

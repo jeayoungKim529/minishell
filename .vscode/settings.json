@@ -19,6 +19,7 @@
 	"minishell.h": "c",
 	"minishell_parsing.h": "c",
 	"sstream": "c",
-	"__node_handle": "c"
+	"__node_handle": "c",
+	"__locale": "c"
 }
 }

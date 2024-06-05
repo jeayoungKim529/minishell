@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:23:07 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/05 14:24:26 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/05 15:51:45 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,16 @@ void	ft_error_exec(t_process *prcs, char *s)
 		free_exec_envp(prcs);
 	ft_putstr_fd(s, 2);
 	ft_putstr_fd("\n", 2);
+	revert_signal();
 	exit(1);
+}
+
+void	ft_error_parse(int status, char *s)
+{
+	ft_putstr_fd(s, 2);
+    ft_putstr_fd("\n", 2);
+    // revert_signal();
+    // exit(status);
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -38,14 +47,11 @@ int	main(int argc, char *argv[], char *envp[])
 	t_process		prcs;
 	char			*line;
 
-	// signal_func();
 	builtin_signal_func();
 
 	envp_func(&prcs, envp);
 	readline_func(&list, &prcs);
-	print_signal_on();
-	signal(SIGQUIT, SIG_DFL);
-	signal(SIGINT, SIG_DFL);
+revert_signal();
 
 	exit(0);
 }

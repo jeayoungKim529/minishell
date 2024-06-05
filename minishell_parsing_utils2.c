@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:26:23 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/04 17:23:16 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/05 15:17:40 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,7 @@ int	parse_quotes(char *str)
 	quote = str[0];
 	str++;
 	if (ft_strchr(str, quote) == 0)
-	{
-		printf("quote error\n str[0] = %s\n", ft_strchr(str, str[0]));
-		exit(1);
-	}
+		ft_error_parse(1, "quote error");
 	if (quote == '\"')
 	{
 		while (str[len] != '\"')
