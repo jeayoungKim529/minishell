@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 19:14:44 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/05 13:53:05 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/05 14:24:22 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	free_command(t_process *prcs)
 		i++;
 	}
 	free(prcs->cmd);
+	prcs->cmd = NULL;
 }
 
 void	free_path(t_process *prcs)
