@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:41:35 by jeakim            #+#    #+#             */
-/*   Updated: 2024/05/27 20:48:59 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/03 19:43:35 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	ft_cd(t_process *prcs)
 {
 	char	*old_pwd;
 
-	if (access(prcs->cmd[1], X_OK) != 0)
-		printf("bash: cd: %s: No such file or directory\n", prcs->cmd[1]);
+	// if (access(prcs->cmd[1], X_OK) != 0)
+	// 	printf("bash: cd: %s: No such file or directory\n", prcs->cmd[1]);
 	old_pwd = getcwd(NULL, 0);
 	if (chdir(prcs->cmd[1]) == -1)
 		printf("bash: cd: %s: No such file or directory\n", prcs->cmd[1]);
@@ -77,26 +77,26 @@ void	ft_echo(t_process *prcs)
 void	ft_exit(t_process *prcs)
 {
 	int	i;
-	int	flag;
 
+	if (prcs->cmd[1] && prcs->cmd[1][0] && ft_isalnum(prcs->cmd[1][0]) != 2)
+	{
+		printf("exit\nbash: exit: %s: numeric argument required\n", prcs->cmd[1]);
+		ft_error_exec(prcs, NULL);
+	}
 	if (prcs->n_cmd > 2)
 	{
 		printf("exit\nbash: exit: too many arguments\n");
 		return ;
 	}
 	i = 0;
-	flag = 0;
 	while (i < ft_strlen(prcs->cmd[1]))
 	{
 		if (ft_isalnum(prcs->cmd[1][i]) != 2)
 		{
-			flag = 1;
-			break ;
+			printf("exit\nbash: exit: %s: numeric argument required\n", prcs->cmd[1]);
+			ft_error_exec(prcs, NULL);
 		}
 		i++;
 	}
-	if (flag == 1)
-		printf("exit\nbash: exit: %s: numeric argument required\n", prcs->cmd[1]);
-	// else
-	// 	ft_exit(prcs->cmd[1]);
+	ft_error_exec(prcs, NULL);
 }

@@ -6,49 +6,82 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 19:05:20 by jeakim            #+#    #+#             */
-/*   Updated: 2024/05/30 19:07:37 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/03 19:34:58 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_exec.h"
 
-void	open_pipe(t_process *prcs)
+
+void	first_command(t_process *prcs)
 {
-	if (pipe(prcs->fd) == -1)
-		ft_error();
-	prcs->pid = fork();
-	if (prcs->pid == -1)
-		ft_error();
-	// else if (prcs->pid == 0)
-	// 	execute_command(prcs);
+	// if (prcs->file.in > 0)
+	// 	prcs->file.in = open("temp.txt", O_RDONLY);
+	// else
+	// 	prcs->file.in = open(prcs->argv[1], O_RDONLY);
+	if (prcs->file.in == -1)
+		ft_error_exec(prcs, strerror(errno));
+	if (dup2(prcs->file.in, 0) == -1)
+		ft_error_exec(prcs, strerror(errno));
+	if (dup2(prcs->fd[1], 1) == -1)
+		ft_error_exec(prcs, strerror(errno));
+	close(prcs->fd[0]);
+	close(prcs->fd[1]);
+	close(prcs->prevfd);
+	close(prcs->file.in);
+	run_process(prcs);
+	exit(1);
 }
 
-// void	open_pipe(t_info *info)
-// {
-// 	int	i;
+void	last_command(t_process *prcs)
+{
+	// if (strncmp(prcs->argv[1], "here_doc", 9) == 0)
+	// 	prcs->file.out = open(prcs->argv[prcs->argc - 1], O_WRONLY | O_CREAT, \
+	// 	0666);
+	// else
+	// 	prcs->file.out = open(prcs->argv[prcs->argc - 1], \
+	// 	O_WRONLY | O_CREAT | O_TRUNC, 0666);
+	if (prcs->file.out == -1)
+		ft_error_exec(prcs, strerror(errno));
+	if (dup2(prcs->file.out, 1) == -1)
+		ft_error_exec(prcs, strerror(errno));
+	if (dup2(prcs->prevfd, 0) == -1)
+		ft_error_exec(prcs, strerror(errno));
+	close(prcs->fd[1]);
+	close(prcs->fd[0]);
+	close(prcs->prevfd);
+	close(prcs->file.out);
+	run_process(prcs);
+	exit(1);
+}
 
-// 	i = -1;
-// 	info->prevfd = dup(0);
-// 	while (++i < info->command_num)
-// 	{
-// 		if (pipe(info->fd) == -1)
-// 			ft_error(info, strerror(errno));
-// 		info->pid = fork();
-// 		if (info->pid == -1)
-// 			ft_error(info, strerror(errno));
-// 		else if (info->pid == 0)
-// 		{
-// 			if (i == 0)
-// 				first_command(info);
-// 			else if (i == info->command_num - 1)
-// 				last_command(info);
-// 			else
-// 				other_command(info, i);
-// 		}
-// 		close(info->fd[1]);
-// 		close(info->prevfd);
-// 		info->prevfd = info->fd[0];
-// 	}
-// 	close(info->fd[0]);
-// }
+void	other_command(t_process *prcs)
+{
+	char	*path;
+
+	if (dup2(prcs->prevfd, 0) == -1)
+		ft_error_exec(prcs, strerror(errno));
+	if (dup2(prcs->fd[1], 1) == -1)
+		ft_error_exec(prcs, strerror(errno));
+	close(prcs->fd[0]);
+	close(prcs->fd[1]);
+	close(prcs->prevfd);
+	run_process(prcs);
+	exit(1);
+}
+
+void	run_process(t_process *prcs)
+{
+	char	*path;
+
+	path = check_path(prcs);
+	if (check_builtin_command(prcs->cmd) == 1)
+		execute_builtin(prcs);
+	else if (execve(path, prcs->cmd, prcs->exec_envp) == -1)
+	{
+		free(path);
+		ft_error_exec(prcs, strerror(errno));
+	}
+	free_exec_envp(prcs);
+}

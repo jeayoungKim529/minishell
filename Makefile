@@ -6,7 +6,7 @@
 #    By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/17 12:35:23 by jeakim            #+#    #+#              #
-#    Updated: 2024/05/30 19:08:54 by jeakim           ###   ########.fr        #
+#    Updated: 2024/06/03 17:28:50 by jeakim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SRCS = minishell.c \
 		\
 		minishell_exec.c\
 		minishell_exec_envp.c \
+		minishell_exec_envp_utils.c\
 		minishell_exec_merge_command.c\
 		minishell_exec_init.c\
 		minishell_exec_builtin.c \
@@ -42,6 +43,9 @@ SRCS = minishell.c \
 		minishell_exec_builtin_func2.c\
 		minishell_exec_builtin_utils.c\
 		minishell_exec_redirection.c\
+		minishell_exec_pipex_open.c\
+		minishell_exec_pipex_path.c\
+		minishell_exec_pipex_close.c\
 		minishell_exec_free.c
 
 OBJS = $(SRCS:.c=.o)

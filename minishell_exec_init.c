@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 17:44:42 by jeakim            #+#    #+#             */
-/*   Updated: 2024/05/30 19:08:02 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/05 10:13:15 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,20 @@ void	init_path(t_process *prcs)
 		ft_error_exec(prcs, strerror(errno));
 }
 
-void	init_prcs(t_process *prcs)
+void	init_redirection(t_process *prcs, t_token_list *list)
 {
-	//prcs->io.in = -1;
+	t_token_node	*cur;
+
+	cur = list->front;
+	while (cur)
+	{
+		cur = cur->next;
+	}
+}
+
+void	init_prcs(t_process *prcs, t_command_list *list)
+{
 	init_path(prcs);
+	init_redirection(prcs, list->front->redir_list);
+	init_exec_envp(prcs);
 }

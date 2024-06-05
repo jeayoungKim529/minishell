@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 19:14:44 by jeakim            #+#    #+#             */
-/*   Updated: 2024/05/30 17:58:01 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/03 20:19:07 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,37 @@ void	free_path(t_process *prcs)
 		while (prcs->path_x[++i])
 			free(prcs->path_x[i]);
 		free(prcs->path_x);
+	}
+}
+
+void	free_exec_envp(t_process *prcs)
+{
+	int	i;
+
+	i = 0;
+	if (prcs->exec_envp)
+	{
+		while (prcs->exec_envp[i])
+		{
+			free(prcs->exec_envp[i]);
+			i++;
+		}
+		free(prcs->exec_envp);
+	}
+}
+
+void	free_second_char(char **s)
+{
+	int	i;
+
+	i = 0;
+	if (s)
+	{
+		while (s[i])
+		{
+			free(s[i]);
+			i++;
+		}
+		free(s);
 	}
 }
