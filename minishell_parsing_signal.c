@@ -6,12 +6,24 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:53:13 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/04 18:39:33 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/05 13:52:08 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 // #include "minishell_parsing.h"
+
+
+void	eof_handler(void)
+{
+	struct termios term;
+
+	if (tcgetattr(1, &term) != 0)
+		return;
+	term.c_lflag &= ~(ICANON | ECHO);
+	tcsetattr(1, 0, &term);
+
+}
 
 void	print_signal_off(void)
 {
@@ -34,6 +46,7 @@ void	print_signal_on(void)
 }
 void	handle_signal(int signal)
 {
+
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
@@ -44,25 +57,67 @@ void	handle_signal(int signal)
 
 void signal_func(void)
 {
+	write(1, "\n", 1);
 	print_signal_off();
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, handle_signal);
 }
 
+void signal_off(void)
+{
+	// signal(SIGQUIT, SIG_IGN);
+	// signal(SIGINT, SIG_IGN);
+	print_signal_off();
 
+}
+void signal_on(void)
+{
+print_signal_on();
 
+	// signal(SIGQUIT, SIG_IGN);
+	// signal(SIGINT, SIG_DFL);
+}
 
+// 히어독일때
 void handle_signal_heredoc(int signal)
 {
 	(void)signal;
+	// write(1, "\n", 1);
+	exit(1);
+}
+void heredoc_signal_func(void) // 물어보기
+{
+	signal(SIGINT, handle_signal_heredoc);
+}
+
+
+// execve 함수일때
+void handle_signal_exec(int signal)
+{
+	(void)signal;
+	// write(1, "\n", 1);
+	exit(1);
+}
+void exec_signal_func(void)
+{
+	signal_on();
+	signal(SIGINT, handle_signal_exec);
+}
+
+
+
+// builtin ㅎㅏㅁ수이거나 그냥 prompt일 때
+void handle_signal_builtin(int signal)
+{
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
 }
-void heredoc_signal_func(void) // 물어보기
+void builtin_signal_func(void) 
 {
+	write(1, "\n", 1);
 	print_signal_off();
 	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, handle_signal_heredoc);
+	signal(SIGINT, handle_signal_builtin);
 }
