@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 17:44:42 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/05 15:39:54 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/05 16:51:54 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,16 @@ void	init_redirection(t_process *prcs, t_token_list *list)
 {
 	prcs->file.in = -1;
 	prcs->file.out = -1;
-	if (list->size > 0)
+	if (list && list->size > 0)
 		set_redirection(prcs, list);
 	// printf("1 - in : %d, out : %d\n", prcs->file.in, prcs->file.out);
 }
 
-void	init_prcs(t_process *prcs, t_command_list *list)
+void	init_prcs(t_process *prcs, t_command_list *list, t_command_node *cur)
 {
+	prcs->t_cmd = list->front->cmd_list->size;
 	init_path(prcs);
 	init_redirection(prcs, list->front->redir_list);
 	init_exec_envp(prcs);
+	prcs->cmd = merge_command(prcs, cur->cmd_list);
 }

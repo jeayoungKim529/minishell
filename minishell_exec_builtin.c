@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:33:54 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/05 15:27:43 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/05 17:49:49 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,17 @@ int	check_builtin_command(char **com)
 
 int	execute_builtin(t_process *prcs)
 {
+	if (prcs->file.in != -1)
+		if (dup2(prcs->file.in, 0) == -1) // 입력 파일이 있는 경우
+			ft_error_exec(prcs, strerror(errno));
+	if (prcs->file.out != -1)
+	{
+		if (dup2(prcs->prevfd, 1) == -1)
+			ft_error_exec(prcs, strerror(errno));
+		if (dup2(prcs->file.out, 1) == -1) // 출력 파일이 있는 경우
+			ft_error_exec(prcs, strerror(errno));
+		close(prcs->file.out);
+	}
 	if (ft_strncmp("cd", prcs->cmd[0], 3) == 0)
 		ft_cd(prcs);
 	else if (ft_strncmp("pwd", prcs->cmd[0], 4) == 0)
@@ -48,5 +59,7 @@ int	execute_builtin(t_process *prcs)
 		ft_unset(prcs);
 	else if (ft_strncmp("exit", prcs->cmd[0], 5) == 0)
 		ft_exit(prcs);
+	if (dup2(1, prcs->prevfd) == -1)
+			ft_error_exec(prcs, strerror(errno));
 	return (-1);
 }
