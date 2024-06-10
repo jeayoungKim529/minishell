@@ -6,12 +6,22 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:33:54 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/10 12:13:54 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/10 15:07:24 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_exec.h"
+
+void	ft_error_builtin(char *s, int n)
+{
+	g_status = n;
+	ft_putstr_fd(s, 2);
+	ft_putstr_fd("\n", 2);
+	// 	printf("bash: export: '%s': not a valid identifier\n", \
+	// 		ft_envpfind(prcs->envp, tmp[0]));
+	// 	return ;
+}
 
 int	check_builtin_command(char **com)
 {
@@ -50,6 +60,6 @@ int	execute_builtin(t_process *prcs)
 	else if (ft_strncmp("exit", prcs->cmd[0], 5) == 0)
 		ft_exit(prcs);
 	if (dup2(prcs->prevfd, 1) == -1)
-		ft_error_exec(prcs, strerror(errno));
+		ft_error_exec(prcs, strerror(errno), 0);
 	return (-1);
 }
