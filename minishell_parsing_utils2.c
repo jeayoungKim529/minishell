@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:26:23 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/05 17:04:19 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/05 21:51:22 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,9 @@ int	parse_quotes(char *str)
 int	get_cmd_length(char *str)
 {
 	int	len;
+	int	count;
+	
+	count = 0;
 
 	len = 0;
 	if (str[0] == '|' || str[0] == '>' || str[0] == '<')
@@ -57,11 +60,12 @@ int	get_cmd_length(char *str)
 		{
 			if (str[len] == '\"' || str[len] == '\'')
 			{
-				if (parse_quotes(str) == -1)
+				count = parse_quotes(str);
+				if (count == -1)
 				{
-					return -1;
+					return (-1);
 				}
-				len += parse_quotes(str);		
+				len += count;		
 			}
 			len ++;
 		}
