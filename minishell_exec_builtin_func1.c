@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:43:22 by jeakim            #+#    #+#             */
-/*   Updated: 2024/05/27 20:38:37 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/10 15:34:25 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,22 @@ void	ft_export(t_process *prcs)
 		i = 0;
 		while (++i < prcs->n_cmd)
 		{
-			if (ft_isalpha(prcs->cmd[i][0]) == 1)
-				printf("bash: export: not a valid identifier\n");
-			tmp = ft_split(prcs->cmd[i], '=');
-			if (!tmp)
-				ft_error_exec(prcs, strerror(errno));
-			if (ft_envpfind(prcs->envp, tmp[0]) != NULL)
+			if (ft_isalpha(prcs->cmd[i][0]) == 0)
 			{
-				printf("bash: export: '%s': not a valid identifier\n", \
-					ft_envpfind(prcs->envp, tmp[0]));
+				ft_error_builtin("bash: export: not a valid identifier", 1);
 				return ;
 			}
-			ft_envpadd(prcs->envp, ft_envpnew(tmp[0], tmp[1]));
+			tmp = ft_split(prcs->cmd[i], '=');
+			if (!tmp)
+				ft_error_exec(prcs, strerror(errno), 0);
+			if (ft_envpfind(prcs->envp, tmp[0]) != NULL && tmp[1] != NULL)
+			{
+				free(ft_envpfind(prcs->envp, tmp[0])->value);
+				ft_envpfind(prcs->envp, tmp[0])->value = ft_strdup(tmp[1]);
+			}
+			else if (ft_envpfind(prcs->envp, tmp[0]) == NULL)
+				ft_envpadd(prcs->envp, ft_envpnew(tmp[0], tmp[1]));
+			free_second_char(tmp);
 		}
 	}
 }
