@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/06/05 18:10:12 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/10 14:15:17 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 
 #include <readline/readline.h>
 #include <readline/history.h>
+
+extern int	g_status;
 
 typedef enum e_token_type
 {
