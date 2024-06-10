@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:54:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/10 12:25:29 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/10 14:16:40 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void readline_func(t_command_list *list, t_process *prcs, int *status)
 		add_history(str);
 						// print_command_list(list);
 		// if (list->)
-		execute_commands(prcs, list, status);
+		execute_commands(prcs, list);
 		free(str);
     }
     /* 함수종료 */
