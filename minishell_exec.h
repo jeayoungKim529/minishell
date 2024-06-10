@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:29:17 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/05 19:13:17 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/10 12:05:04 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	free_path(t_process *prcs);
 void	free_exec_envp(t_process *prcs);
 void	free_second_char(char **s);
 //minishell_exec_init.c
-void	execute_command(t_process *prcs, t_command_list *list);
+void	execute_command(t_process *prcs, t_command_list *list, int status);
 void	init_prcs(t_process *prcs, t_command_list *list, t_command_node	*cur);
 //minishell_envp.c
 void	envp_func(t_process *prcs, char *envp[]);
@@ -109,9 +109,11 @@ void	last_command(t_process *prcs);
 void	other_command(t_process *prcs, int i);
 void	run_process(t_process *prcs);
 //minishell_exec_pipex_close.c
-void	finish_commands(t_process *prcs, t_command_list *list, int flag);
+void	finish_commands(t_process *prcs, t_command_list *list, int flag, \
+	int status);
 void	ft_unlink(t_process *prcs, t_command_list *list);
-void	execute_wait(t_process *prcs, t_command_list *list, int flag);
+void	execute_wait(t_process *prcs, t_command_list *list, int flag, \
+	int status);
 //minishell_exec_pipex_path.c
 char	*check_path(t_process *prcs);
 char	*make_basic_path(t_process *prcs);

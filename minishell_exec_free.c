@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 19:14:44 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/05 14:24:22 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/05 22:10:40 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	free_envp(t_process *prcs)
 	while (cur)
 	{
 		next = cur->next;
+		free(cur->key);
+		free(cur->value);
 		free(cur);
 		cur = next;
 	}
