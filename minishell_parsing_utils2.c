@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:26:23 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/05 21:51:22 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/10 14:52:51 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	get_cmd_length(char *str)
 	}
 	else
 	{
-		while (str[len] && str[len] != ' ' && str[len] != '|' && str[len] != '>' && str[len] != '<')
+		while (str[len] && str[len] != ' '&& str[len] != '|' && str[len] != '>' && str[len] != '<')
 		{
 			if (str[len] == '\"' || str[len] == '\'')
 			{

@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:40:07 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/05 22:01:27 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/10 12:24:52 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,18 +112,35 @@ void	set_heredoc_file(t_token_node **token_node, char *path)
 	close(fd);
 }
 
-void	heredoc_readline(int fd, char *end_text)
+char	*expand_env(char *str, int check)
+{
+	if (check == 0)
+		return (str);
+
+}
+
+char	*check_end_text(char * token)
+{
+	
+}
+
+void	heredoc_readline(int fd, char *token)
 {
 	char	*str;
+	int		check;
+	char	*end_text;
 
+
+	check = 0;
+	
 	heredoc_signal_func();
 	while (1)
 	{
 		str = readline("> ");
-		if (ft_strncmp(str, end_text, ft_pipex_strlen(str)) == 0 || !str)
+		if (ft_strncmp(str, token, ft_pipex_strlen(str)) == 0 || !str)
 			break ;
 		write (fd, "\n", 1);
-		write (fd, str, ft_strlen(str));
+		write (fd, expand_env(str, check), ft_strlen(str));
 		if (str != NULL)
 			free (str);
 	}
