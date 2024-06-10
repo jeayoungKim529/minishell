@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:29:17 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/10 12:05:04 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/10 12:24:42 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	ft_envpadd(t_envp *env, t_envp *new);
 void	ft_envpdel(t_envp *env, char *key);
 char	*ft_envpfind(t_envp *env, char *key);
 //minishell_exec.c
-void	execute_commands(t_process *prcs, t_command_list *list);
+void	execute_commands(t_process *prcs, t_command_list *list, int *status);
 void	execute_single(t_process *prcs, int i);
 void	execute_multi(t_process *prcs, int i);
 //minishell_exec_merge_command.c
@@ -110,10 +110,10 @@ void	other_command(t_process *prcs, int i);
 void	run_process(t_process *prcs);
 //minishell_exec_pipex_close.c
 void	finish_commands(t_process *prcs, t_command_list *list, int flag, \
-	int status);
+	int *status);
 void	ft_unlink(t_process *prcs, t_command_list *list);
 void	execute_wait(t_process *prcs, t_command_list *list, int flag, \
-	int status);
+	int *status);
 //minishell_exec_pipex_path.c
 char	*check_path(t_process *prcs);
 char	*make_basic_path(t_process *prcs);

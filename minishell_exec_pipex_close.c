@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exec_pipex_close.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:03:09 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/10 12:05:19 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/10 12:25:53 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@
 //unlink(heredoc)
 
 void	execute_wait(t_process *prcs, t_command_list *list, int flag, \
-	int status)
+	int *status)
 {
 	int	i;
 
 	i = 0;
 	while (flag == 0 && i < list->size && list->front->cmd_list->size > 0)
 	{
-		if (wait(&status) == -1)
+		if (wait(status) == -1)
 			exit(EXIT_FAILURE);
 		i++;
 	}
@@ -48,7 +48,7 @@ void	ft_unlink(t_process *prcs, t_command_list *list)
 }
 
 void	finish_commands(t_process *prcs, t_command_list *list, int flag, \
-	int status)
+	int *status)
 {
 	execute_wait(prcs, list, flag, status);
 	ft_unlink(prcs, list);

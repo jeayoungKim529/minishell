@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:29:20 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/10 12:03:49 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/10 12:23:51 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	execute_multi(t_process *prcs, int i)
 	prcs->prevfd = prcs->fd[0];
 }
 
-void	execute_commands(t_process *prcs, t_command_list *list, int status)
+void	execute_commands(t_process *prcs, t_command_list *list, int *status)
 {
 	t_command_node	*cur;
 	int				i;
