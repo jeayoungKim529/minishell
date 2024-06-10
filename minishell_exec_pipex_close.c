@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:03:09 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/05 19:51:07 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/10 12:05:19 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 //cenvp;
 //unlink(heredoc)
 
-void	execute_wait(t_process *prcs, t_command_list *list, int flag)
+void	execute_wait(t_process *prcs, t_command_list *list, int flag, \
+	int status)
 {
-	int	status;
 	int	i;
 
 	i = 0;
@@ -46,9 +46,10 @@ void	ft_unlink(t_process *prcs, t_command_list *list)
 	}
 }
 
-void	finish_commands(t_process *prcs, t_command_list *list, int flag)
+void	finish_commands(t_process *prcs, t_command_list *list, int flag, \
+	int status)
 {
-	execute_wait(prcs, list, flag);
+	execute_wait(prcs, list, flag, status);
 	ft_unlink(prcs, list);
 	builtin_signal_func();
 }

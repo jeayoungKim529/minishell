@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:33:54 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/05 20:06:05 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/05 21:23:26 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	check_builtin_command(char **com)
 int	execute_builtin(t_process *prcs)
 {
 	set_single_redirection(prcs);
+	printf("builtin\n");
 	if (ft_strncmp("cd", prcs->cmd[0], 3) == 0)
 		ft_cd(prcs);
 	else if (ft_strncmp("pwd", prcs->cmd[0], 4) == 0)
