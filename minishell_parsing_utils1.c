@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:54:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/10 12:02:14 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/10 12:16:11 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void check_leaks(void)
 }
 
 
-int sig;
 
 int	parsing(t_command_list	*cmd_list, char *line)
 {
@@ -29,26 +28,29 @@ int	parsing(t_command_list	*cmd_list, char *line)
 
 	token_list.size = 0;
 	cmd_list->size = 0;
-	char flag = '\0';
 	
+    if (!cmd_list)
+	{
+		free_command_list(cmd_list);
+	}
 	if (token_split(line, &token_list))
 	{
 		clear_list(&token_list);
 		return (1);
 	}
-	// 	print_list(&token_list);
+		// print_list(&token_list);
 	if (make_command_list(&token_list, cmd_list))
 	{
 		clear_list(&token_list);
 		free_command_list(cmd_list);
 		return (1);
 	}
-	if (cmd_list->front->cmd_list->size == 0 && \
-	cmd_list->front->redir_list->size == 0)
-	{
-		free_command_list(cmd_list);
-        cmd_list = NULL;
-	}
+	// if (cmd_list->front->cmd_list->size == 0 && \
+	// cmd_list->front->redir_list->size == 0)
+	// {
+	// 	free_command_list(cmd_list);
+    //     cmd_list = NULL;
+	// }
 
 
 	clear_list(&token_list);
@@ -58,7 +60,7 @@ int	parsing(t_command_list	*cmd_list, char *line)
 	return (0);
 }
 
-void readline_func(t_command_list *list, t_process *prcs, int status)
+void readline_func(t_command_list *list, t_process *prcs)
 {
     char *str;
 	int fd;
@@ -79,7 +81,8 @@ void readline_func(t_command_list *list, t_process *prcs, int status)
             break ;/* 반복문을 탈출해준다.*/
 		add_history(str);
 						// print_command_list(list);
-		execute_commands(prcs, list, status);
+		// if (list->)
+		execute_commands(prcs, list);
 		free(str);
     }
     /* 함수종료 */
