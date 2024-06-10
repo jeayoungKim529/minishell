@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_quotes.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 12:29:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/10 17:51:11 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/10 18:31:05 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,18 @@ static char	*put_words(char sep, char const *str)
 	}
 	str2[i] = '\0';
 	return (str2);
+}
+
+int	make_quotes_word(char ***result, char *s)
+{
+	int check;
+	int len;
+
+	check = 0;
+	if (s[0] == '\"')
+		check = 1;
+	len = parse_quotes(s);
+	
 }
 
 char	**make_result(char **result, char *s, int size)
