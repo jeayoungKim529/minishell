@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:23:07 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/05 17:58:18 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/10 12:03:19 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "minishell_parsing.h"
 #include "minishell_exec.h"
 
-void	readline_func(t_command_list *list, t_process *prcs);
+void	readline_func(t_command_list *list, t_process *prcs, int status);
 
 
 void	ft_error_exec(t_process *prcs, char *s)
@@ -53,12 +53,14 @@ int	main(int argc, char *argv[], char *envp[])
 	t_command_list	list;
 	t_process		prcs;
 	char			*line;
+	static int		status;
 
 	builtin_signal_func();
 
 	envp_func(&prcs, envp);
-	readline_func(&list, &prcs);
-revert_signal();
+	readline_func(&list, &prcs, status);
+	free_envp(&prcs);
+	revert_signal();
 
 	exit(0);
 }
