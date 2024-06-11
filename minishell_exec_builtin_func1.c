@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:43:22 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/10 15:34:25 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/11 16:44:52 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,15 @@ void	ft_env(t_process *prcs, int flag)
 {
 	t_envp	*cur;
 
-	cur = prcs->envp;
+	cur = prcs->envp->next;
 	while (cur)
 	{
 		if (flag == 1)
 			printf("declare -x ");
-		if (cur->value)
+		if (cur->value && flag == 1)
 			printf("%s=%s\n", cur->key, cur->value);
+		else if (cur->value)
+			printf("%s=\"%s\"\n", cur->key, cur->value);
 		else if (!cur->value && flag == 1)
 			printf("%s\n", cur->key);
 		cur = cur->next;
@@ -47,7 +49,7 @@ void	ft_export(t_process *prcs)
 				ft_error_builtin("bash: export: not a valid identifier", 1);
 				return ;
 			}
-			tmp = ft_split(prcs->cmd[i], '=');
+			tmp = ft_exec_split(prcs->cmd[i], '=');
 			if (!tmp)
 				ft_error_exec(prcs, strerror(errno), 0);
 			if (ft_envpfind(prcs->envp, tmp[0]) != NULL && tmp[1] != NULL)

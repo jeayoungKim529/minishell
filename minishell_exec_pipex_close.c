@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:03:09 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/10 14:18:23 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/10 20:15:21 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,15 @@
 void	execute_wait(t_process *prcs, t_command_list *list, int flag)
 {
 	int	i;
+	int	status;
 
+	status = 0;
 	i = 0;
 	while (flag == 0 && i < list->size && list->front->cmd_list->size > 0)
 	{
-		if (wait(&g_status) == -1)
+		if (wait(&status) == -1) 
 			exit(EXIT_FAILURE);
+			//
 		i++;
 	}
 }
