@@ -6,18 +6,18 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:33:54 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/10 15:07:24 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/11 20:52:03 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_exec.h"
 
-void	ft_error_builtin(char *s, int n)
+int	ft_error_builtin(char *s, int n)
 {
-	g_status = n;
 	ft_putstr_fd(s, 2);
 	ft_putstr_fd("\n", 2);
+	return (-1);
 	// 	printf("bash: export: '%s': not a valid identifier\n", \
 	// 		ft_envpfind(prcs->envp, tmp[0]));
 	// 	return ;
@@ -25,19 +25,19 @@ void	ft_error_builtin(char *s, int n)
 
 int	check_builtin_command(char **com)
 {
-	if (strncmp("cd", com[0], 3) == 0)
+	if (ft_strncmp("cd", com[0], 3) == 0)
 		return (1);
-	else if (strncmp("pwd", com[0], 4) == 0)
+	else if (ft_strncmp("pwd", com[0], 4) == 0)
 		return (1);
-	else if (strncmp("echo", com[0], 5) == 0)
+	else if (ft_strncmp("echo", com[0], 5) == 0)
 		return (1);
-	else if (strncmp("env", com[0], 4) == 0)
+	else if (ft_strncmp("env", com[0], 4) == 0)
 		return (1);
-	else if (strncmp("export", com[0], 7) == 0)
+	else if (ft_strncmp("export", com[0], 7) == 0)
 		return (1);
-	else if (strncmp("unset", com[0], 6) == 0)
+	else if (ft_strncmp("unset", com[0], 6) == 0)
 		return (1);
-	else if (strncmp("exit", com[0], 5) == 0)
+	else if (ft_strncmp("exit", com[0], 5) == 0)
 		return (1);
 	return (0);
 }

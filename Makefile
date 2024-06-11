@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+         #
+#    By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/17 12:35:23 by jeakim            #+#    #+#              #
-#    Updated: 2024/06/05 10:22:40 by jimchoi          ###   ########.fr        #
+#    Updated: 2024/06/10 20:25:48 by jeakim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 
-CFLAGS = 
+CFLAGS = -g #-fsanitize=address
 
 # -Wall -Werror -Wextra
 NAME = minishell
@@ -36,6 +36,7 @@ SRCS = minishell.c \
 		minishell_parsig_heredoc.c\
 		\
 		minishell_exec.c\
+		minishell_exec_split.c\
 		minishell_exec_envp.c \
 		minishell_exec_envp_utils.c\
 		minishell_exec_merge_command.c\

@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:41:35 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/10 15:43:30 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/11 19:58:29 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,17 @@ void	ft_echo(t_process *prcs)
 	}
 	while (i < prcs->n_cmd)
 	{
-		if (i == prcs->n_cmd - 1)
-			printf("%s", prcs->cmd[i]);
+		if (i == prcs->n_cmd - 1 && flag == 1)
+			write(1, prcs->cmd[i], ft_strlen(prcs->cmd[i]));
+			// printf("%s", prcs->cmd[i]);
+		else if (i == prcs->n_cmd - 1 && flag == 0)
+			write(1, prcs->cmd[i], ft_strlen(prcs->cmd[i]));
+			// printf("%s\n", prcs->cmd[i]);
 		else
-			printf("%s ", prcs->cmd[i]);
+			write(1, prcs->cmd[i], ft_strlen(prcs->cmd[i]));
+			// printf("%s ", prcs->cmd[i]);
 		i++;
 	}
-	if (flag == 0)
-		printf("\n");
 }
 
 void	ft_exit(t_process *prcs)
@@ -72,7 +75,8 @@ void	ft_exit(t_process *prcs)
 	if (prcs->cmd[1] && prcs->cmd[1][0] && ft_isalnum(prcs->cmd[1][0]) != 2)
 	{
 		printf("exit\nbash: exit: %s: numeric argument required", prcs->cmd[1]);
-		ft_error_exec(prcs, NULL, 0);
+		prcs->envp->status = 1;
+		exit(255);
 	}
 	if (prcs->n_cmd > 2)
 	{

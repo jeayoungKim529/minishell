@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:33:35 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/10 14:56:42 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/10 16:33:41 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,4 @@ void	change_pwd(t_process *prcs, char *key, char *value)
 		prcs->senvp.pwd = value;
 }
 
-
+////////////////

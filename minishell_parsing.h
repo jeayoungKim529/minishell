@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:39:58 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/05 17:57:04 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/10 16:23:42 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	set_redirect_list(t_token_node *token_node, t_command_node *cmd_node);
 int	set_pipe(t_token_node *token_node, t_command_node **cmd_node, t_command_list *cmdline);
 
 int make_command_list(t_token_list *token_list, t_command_list *cmdline);
-int parsing(t_command_list	*cmd_list, char *line);
+// int parsing(t_command_list	*cmd_list, char *line, t_process *prcs);
 
 
 int	add_token_list(t_token_list *list, char *token, t_token_type type);

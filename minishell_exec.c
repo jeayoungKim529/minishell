@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:29:20 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/10 14:49:09 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/11 20:30:57 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	execute_single(t_process *prcs, int i)
 				ft_error_exec(prcs, strerror(errno), 0);
 		if (prcs->file.out != -1)
 		{
-			if (dup2(prcs->prevfd, 1) == -1)
-				ft_error_exec(prcs, strerror(errno), 0);
+			// if (dup2(prcs->prevfd, 1) == -1)
+			// 	ft_error_exec(prcs, strerror(errno), 0);
 			if (dup2(prcs->file.out, 1) == -1) // 출력 파일이 있는 경우
 				ft_error_exec(prcs, strerror(errno), 0);
 			close(prcs->file.out);
@@ -69,23 +69,26 @@ void	execute_commands(t_process *prcs, t_command_list *list)
 	int				flag;
 
 	cur = list->front;
-	i = -1;
-	prcs->prevfd = dup(0);
+	i = 0;
+	prcs->prevfd = dup(prcs->std_fd[0]);
 	flag = 0;
+	printf("run\n");
 	while (cur && list->size > 0 && list->front->cmd_list->size > 0)
 	{
-		init_prcs(prcs, list, cur);
+		if (init_prcs(prcs, list, cur) == -1)
+			return (free_command(prcs));
 		if (list->size == 1 && check_builtin_command(prcs->cmd) == 1)
 		{
 			execute_builtin(prcs);
 			flag = 1;
 		}
 		else if (list->size == 1)
-			execute_single(prcs, ++i);
+			execute_single(prcs, i);
 		else
-			execute_multi(prcs, ++i);
+			execute_multi(prcs, i);
 		free_command(prcs);
 		cur = cur->next;
+		i++;
 	}
 	finish_commands(prcs, list, flag);
 }
