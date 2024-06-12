@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:03:09 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/10 20:15:21 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/12 14:39:02 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	ft_unlink(t_process *prcs, t_command_list *list)
 void	finish_commands(t_process *prcs, t_command_list *list, int flag)
 {
 	execute_wait(prcs, list, flag);
+	free_path(prcs);
 	ft_unlink(prcs, list);
 	builtin_signal_func();
 }
