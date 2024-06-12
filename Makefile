@@ -6,13 +6,13 @@
 #    By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/17 12:35:23 by jeakim            #+#    #+#              #
-#    Updated: 2024/06/05 10:22:40 by jimchoi          ###   ########.fr        #
+#    Updated: 2024/06/12 16:47:53 by jimchoi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 
-CFLAGS = 
+CFLAGS = -g #-fsanitize=address
 
 # -Wall -Werror -Wextra
 NAME = minishell
@@ -33,9 +33,13 @@ SRCS = minishell.c \
 		minishell_parsing_list_utils.c\
 		minishell_parsing_command.c \
 		minishell_parsing_signal.c\
-		minishell_parsig_heredoc.c\
+		minishell_parsing_heredoc.c\
+		minishell_parsing_quotes.c\
+		minishell_parsing_quotes_utils.c\
+		minishell_parsing_env.c\
 		\
 		minishell_exec.c\
+		minishell_exec_split.c\
 		minishell_exec_envp.c \
 		minishell_exec_envp_utils.c\
 		minishell_exec_merge_command.c\

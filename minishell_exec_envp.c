@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:29:00 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/10 15:40:45 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/11 19:10:31 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,22 @@
 //pwd, oldpwd, home 변수를 prcs에 따로 저장해두기
 void	save_pwd(t_process *prcs)
 {
-	prcs->senvp.pwd = ft_strdup(ft_envpfind(prcs->envp, "PWD")->value);
-	prcs->senvp.oldpwd = ft_strdup(ft_envpfind(prcs->envp, "OLDPWD")->value);
-	prcs->senvp.home = ft_strdup(ft_envpfind(prcs->envp, "HOME")->value);
+	t_envp	*cur;
+
+	prcs->senvp.pwd = NULL;
+	prcs->senvp.oldpwd = NULL;
+	prcs->senvp.home = NULL;
+	cur = ft_envpfind(prcs->envp, "PWD");
+	if (cur)
+		prcs->senvp.pwd = ft_strdup(cur->value);
+	else
+		prcs->senvp.pwd = getcwd(NULL, 0);
+	cur = ft_envpfind(prcs->envp, "OLDPWD");
+	if (cur)
+		prcs->senvp.oldpwd = ft_strdup(cur->value);
+	cur = ft_envpfind(prcs->envp, "HOME");
+	if (cur)
+		prcs->senvp.home = ft_strdup(cur->value);
 }
 
 void	init_exec_envp(t_process *prcs)
@@ -34,7 +47,7 @@ void	init_exec_envp(t_process *prcs)
 		num++;
 		cur = cur->next;
 	}
-	prcs->exec_envp = (char **)ft_calloc(sizeof(char *), num + 1);
+	prcs->exec_envp = (char **)ft_calloc(sizeof(char *), num);
 	if (!prcs->exec_envp)
 		ft_error_exec(prcs, strerror(errno), 0);
 	num = 0;
@@ -49,6 +62,16 @@ void	init_exec_envp(t_process *prcs)
 	}
 }
 
+void	init_status_envp(t_process *prcs)
+{
+	t_envp	*new;
+
+	new = ft_envpnew("?", NULL);
+	if (!new)
+		ft_error_exec(prcs, strerror(errno), 0);
+	prcs->envp = new;
+}
+
 //main에서 받아온 envp를 prcs에 연결리스트로 저장
 void	envp_func(t_process *prcs, char *envp[])
 {
@@ -59,8 +82,10 @@ void	envp_func(t_process *prcs, char *envp[])
 
 	i = 0;
 	prcs->envp = NULL;
-	if (!envp || !envp[0])
-		ft_error_exec(prcs, strerror(errno), 0);
+	prcs->cmd = NULL;
+	if (!envp || !*envp)
+		return (ft_error_exec(prcs, strerror(errno), 0));
+	init_status_envp(prcs);
 	while (envp && envp[i])
 	{
 		p = ft_split(envp[i], '=');
@@ -69,12 +94,10 @@ void	envp_func(t_process *prcs, char *envp[])
 		new = ft_envpnew(p[0], p[1]);
 		if (!new)
 			ft_error_exec(prcs, strerror(errno), 0);
-		if (i == 0)
-			prcs->envp = new;
-		else
 			ft_envpadd(prcs->envp, new);
 		free_second_char(p);
 		i++;
 	}
 	save_pwd(prcs);
+	init_exec_envp(prcs);
 }

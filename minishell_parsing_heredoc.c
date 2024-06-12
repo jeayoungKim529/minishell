@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_parsig_heredoc.c                         :+:      :+:    :+:   */
+/*   minishell_parsing_heredoc.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:40:07 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/10 12:24:52 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/12 19:35:13 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "minishell_exec.h"
 #include "minishell_parsing.h"
 
 size_t	ft_pipex_strlen(char *s)
@@ -25,29 +26,59 @@ size_t	ft_pipex_strlen(char *s)
 	return (len + 1);
 }
 
-void set_heredoc(t_command_list *list)
+
+void	set_heredoc(t_command_node	*node, int i)
+{
+	int j;
+	t_token_node	*r_token;
+	
+	j = -1;
+	r_token = node->redir_list->front;
+
+	while (++j < node->redir_list->size)
+	{
+		if (r_token->type == TOKEN_IN_APPEND)
+			set_heredoc_file(&r_token, set_heredoc_path(r_token, ft_itoa(i), ft_itoa(j), 0));
+		r_token = r_token->next;
+	}
+}
+
+void	set_command(t_command_node	*node, t_process *prcs)
+{
+	int	i;
+	t_token_node	*c_token;
+	char            *temp;
+
+	i = -1;
+	c_token = node->cmd_list->front;
+
+	while (++i < node->cmd_list->size)
+	{
+		if (c_token->type == TOKEN_COMMAND)
+		{
+			temp = c_token->token;
+			c_token->token = get_parse_command(temp, prcs);
+			free(temp);
+			temp = NULL;
+		} 
+		c_token = c_token->next;
+	}
+}
+
+void parse_command_list(t_command_list *list, t_process *prcs)
 {
 	int				i;
 	int				j;
 	int				count;
 	t_command_node	*node;
-	t_token_node	*token;
 
 	i = -1;
 	count = 0;
 	node = list->front;
 	while (++i < list->size)
 	{
-		j = -1;
-		token = node->redir_list->front;
-		while (++j < node->redir_list->size)
-		{
-			if (token->type == TOKEN_IN_APPEND)
-			{
-				set_heredoc_file(&token, set_heredoc_path(token, ft_itoa(i), ft_itoa(j), 0));
-			} 
-			token = token->next;
-		}
+		set_command(node, prcs);
+		set_heredoc(node, i);
 		node = node->next;
 	}
 }
@@ -116,13 +147,13 @@ char	*expand_env(char *str, int check)
 {
 	if (check == 0)
 		return (str);
-
+	return (0);
 }
 
-char	*check_end_text(char * token)
-{
+// char	*check_end_text(char * token)
+// {
 	
-}
+// }
 
 void	heredoc_readline(int fd, char *token)
 {

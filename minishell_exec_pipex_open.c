@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 19:05:20 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/10 14:50:45 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/11 20:19:27 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,7 @@ void	run_process(t_process *prcs)
 		execute_builtin(prcs);
 	else if (execve(path, prcs->cmd, prcs->exec_envp) == -1)
 	{
-		free(path);
-		g_status = errno;
-		ft_error_exec(prcs, strerror(errno), 0);
+		ft_error_exec(prcs, strerror(errno), 127);
 	}
 }
 
@@ -46,16 +44,22 @@ void	other_command(t_process *prcs, int i)
 	if (prcs->file.out == -1) //출력 파일이 없는 경우
 	{
 		// printf("no output\n");
-		// if (i != prcs->t_cmd - 1)
+		// if (i != prcs->t_cmd - 1)cat
+		if (i == prcs->n_cmd - 1)
+		{
+			if (dup2(prcs->std_fd[1], 1) == -1)
+				ft_error_exec(prcs, strerror(errno), 0);
+		}
+		else
 			if (dup2(prcs->fd[1], 1) == -1)
 				ft_error_exec(prcs, strerror(errno), 0);
 	}
 	else //출력 파일이 있는 경우
 	{
 		// printf("output\n");
-		if (dup2(prcs->file.out, 1) == -1)
-			ft_error_exec(prcs, strerror(errno), 0);
-		if (dup2(prcs->fd[1], 1) == -1)
+		// if (dup2(prcs->file.out, 1) == -1)
+		// 	ft_error_exec(prcs, strerror(errno), 0);
+		if (dup2(prcs->fd[1], prcs->std_fd[1]) == -1)
 			ft_error_exec(prcs, strerror(errno), 0);
 		close(prcs->file.out);
 	}

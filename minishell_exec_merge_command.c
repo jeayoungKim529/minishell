@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:02:51 by jeakim            #+#    #+#             */
-/*   Updated: 2024/05/30 17:58:52 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/10 15:46:58 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*check_envp(t_process *prcs, t_token_node *token_node) //환경변수($) �
 	i = -1;
 	while (++i < cnt)
 		s[i] = token_node->token[i];
-	res = ft_strjoin(s, ft_envpfind(prcs->envp, token_node->token + cnt));
+	res = ft_strjoin(s, ft_envpfind(prcs->envp, token_node->token + cnt)->value);
 	free(s);
 	return (res);
 }
