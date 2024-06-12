@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:29:17 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/12 17:03:10 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/12 17:31:55 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,14 @@ typedef struct s_inout{
 
 typedef struct s_process{
 	t_token_list	*token_list;
-	char			**cmd; //free
+	char			**cmd;
 	int				n_cmd;
 	int				t_cmd;
 	t_envp			*envp;
 	t_senvp			senvp;
 	char			**exec_envp;
-	char			**path; //free
-	char			**path_x; //free
+	char			**path;
+	char			**path_x;
 	int				prevfd;
 	pid_t			pid;
 	int				fd[2];

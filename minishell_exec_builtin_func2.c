@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:41:35 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/12 15:16:21 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/12 17:32:42 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,6 @@ void	ft_cd(t_process *prcs)
 {
 	char	*old_pwd;
 
-	// if (access(prcs->cmd[1], X_OK) != 0)
-	// {
-	// 	printf("bash: cd: %s: Not a directory\n", prcs->cmd[1]);
-	// 	return ;
-	// }
 	old_pwd = getcwd(NULL, 0);
 	if (chdir(prcs->cmd[1]) == -1)
 	{

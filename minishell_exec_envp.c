@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:29:00 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/12 15:46:27 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/12 17:43:57 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ char	**init_exec_envp(t_process *prcs)
 	char	*temp;
 	char	**exec_envp;
 
-	if (!prcs->envp)
-		return (NULL);
 	num = 0;
 	cur = prcs->envp->next;
 	while (cur)
@@ -58,9 +56,8 @@ char	**init_exec_envp(t_process *prcs)
 	while (cur)
 	{
 		temp = ft_strjoin(cur->key, "=");
-		exec_envp[num] = ft_strjoin(temp, cur->value);
+		exec_envp[num++] = ft_strjoin(temp, cur->value);
 		free(temp);
-		num++;
 		cur = cur->next;
 	}
 	return (exec_envp);
@@ -87,8 +84,6 @@ void	envp_func(t_process *prcs, char *envp[])
 	i = 0;
 	prcs->envp = NULL;
 	prcs->cmd = NULL;
-	// if (!envp || !*envp)
-	// 	return (ft_error_exec(prcs, strerror(errno), errno));
 	init_status_envp(prcs);
 	while (envp && envp[i])
 	{
@@ -98,10 +93,9 @@ void	envp_func(t_process *prcs, char *envp[])
 		new = ft_envpnew(p[0], p[1]);
 		if (!new)
 			ft_error_exec(prcs, strerror(errno), errno);
-			ft_envpadd(prcs->envp, new);
+		ft_envpadd(prcs->envp, new);
 		free_second_char(p);
 		i++;
 	}
 	save_pwd(prcs);
-	// init_exec_envp(prcs);
 }

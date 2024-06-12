@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 17:44:42 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/12 15:46:32 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/12 17:44:57 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ int	init_prcs(t_process *prcs, t_command_list *list, t_command_node *cur)
 	init_path(prcs);
 	if (init_redirection(prcs, cur->redir_list) == -1)
 		return (-1);
-	// free_second_char(prcs->exec_envp);
-	// init_exec_envp(prcs);
 	prcs->cmd = merge_command(prcs, cur->cmd_list);
 	return (0);
 }

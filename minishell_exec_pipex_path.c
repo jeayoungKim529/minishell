@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:21:13 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/12 11:36:51 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/12 17:46:28 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,5 @@ char	*check_path(t_process *prcs)
 		path = make_basic_path(prcs);
 	if (path == NULL)
 		return (prcs->cmd[0]);
-		// ft_error_exec(prcs, "command not found", 0);
 	return (path);
 }
