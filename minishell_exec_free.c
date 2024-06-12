@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 19:14:44 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/11 19:48:18 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/12 16:04:50 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,16 @@ void	free_envp(t_process *prcs)
 
 	if (!prcs->envp)
 		return ;
-	cur = prcs->envp;
+	cur = prcs->envp->next;
 	while (cur)
 	{
 		next = cur->next;
 		free(cur->key);
+		cur->key = NULL;
 		free(cur->value);
+		cur->value = NULL;
 		free(cur);
+		cur = NULL;
 		cur = next;
 	}
 	if (prcs->senvp.pwd)
@@ -35,7 +38,7 @@ void	free_envp(t_process *prcs)
 		free(prcs->senvp.oldpwd);
 	if (prcs->senvp.home)
 		free(prcs->senvp.home);
-	prcs->envp = NULL;
+	prcs->envp->next = NULL;
 }
 
 void	free_command(t_process *prcs)
@@ -46,6 +49,7 @@ void	free_command(t_process *prcs)
 	while (prcs->cmd && prcs->cmd[i] != NULL)
 	{
 		free(prcs->cmd[i]);
+		prcs->cmd[i] = NULL;
 		i++;
 	}
 	free(prcs->cmd);
@@ -64,14 +68,20 @@ void	free_path(t_process *prcs)
 	{
 		i = -1;
 		while (prcs->path[++i])
+		{
 			free(prcs->path[i]);
+			prcs->path[i] = NULL;
+		}
 		free(prcs->path);
 	}
 	if (prcs->path_x)
 	{
 		i = -1;
 		while (prcs->path_x[++i])
+		{
 			free(prcs->path_x[i]);
+			prcs->path_x[i] = NULL;
+		}
 		free(prcs->path_x);
 	}
 	prcs->path = NULL;
@@ -88,6 +98,7 @@ void	free_exec_envp(t_process *prcs)
 		while (prcs->exec_envp[i])
 		{
 			free(prcs->exec_envp[i]);
+			prcs->exec_envp[i] = NULL;
 			i++;
 		}
 		free(prcs->exec_envp);

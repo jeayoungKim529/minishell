@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:41:35 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/11 19:58:29 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/12 15:16:21 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,16 @@ void	ft_cd(t_process *prcs)
 	char	*old_pwd;
 
 	// if (access(prcs->cmd[1], X_OK) != 0)
-	// 	printf("bash: cd: %s: No such file or directory\n", prcs->cmd[1]);
+	// {
+	// 	printf("bash: cd: %s: Not a directory\n", prcs->cmd[1]);
+	// 	return ;
+	// }
 	old_pwd = getcwd(NULL, 0);
 	if (chdir(prcs->cmd[1]) == -1)
-		printf("bash: cd: %s: No such file or directory\n", prcs->cmd[1]);
+	{
+		ft_error_builtin(strerror(errno), errno);
+		return ;
+	}
 	change_pwd(prcs, "OLDPWD", old_pwd);
 	change_pwd(prcs, "PWD", getcwd(NULL, 0));
 }
@@ -41,7 +47,6 @@ void	ft_echo(t_process *prcs)
 {
 	int	flag;
 	int	i;
-	int	j;
 
 	flag = 0;
 	i = 1;
@@ -57,13 +62,12 @@ void	ft_echo(t_process *prcs)
 	{
 		if (i == prcs->n_cmd - 1 && flag == 1)
 			write(1, prcs->cmd[i], ft_strlen(prcs->cmd[i]));
-			// printf("%s", prcs->cmd[i]);
 		else if (i == prcs->n_cmd - 1 && flag == 0)
-			write(1, prcs->cmd[i], ft_strlen(prcs->cmd[i]));
-			// printf("%s\n", prcs->cmd[i]);
+			write(1, ft_strjoin(prcs->cmd[i], "\n"), \
+				ft_strlen(ft_strjoin(prcs->cmd[i], "\n")));
 		else
-			write(1, prcs->cmd[i], ft_strlen(prcs->cmd[i]));
-			// printf("%s ", prcs->cmd[i]);
+			write(1, ft_strjoin(prcs->cmd[i], " "), \
+				ft_strlen(ft_strjoin(prcs->cmd[i], " ")));
 		i++;
 	}
 }

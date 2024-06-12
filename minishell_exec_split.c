@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:33:34 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/10 18:19:44 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/12 17:00:41 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 #include "minishell_exec.h"
 #include "minishell_parsing.h"
 
-size_t	ft_exec_split_len(const char *str, char c)
+size_t	ft_strlen_split(const char *str, char c)
 {
 	int	len;
 
 	len = 0;
-	while (str[len] && str[len] != c)
+	while (str[len] && str[len] != '=')
 		len++;
 	return (len);
 }
@@ -41,48 +41,19 @@ size_t	exec_count_num(const char *str, char c)
 		return (2);
 }
 
-char	**ft_exec_free_split(char **arr, int i)
+char	**ft_exec_split_util(char const *s, char **arr, int i, int len)
 {
-	if (i == 0)
-	{
-		free(arr);
+	len = ft_strlen(s + len + 1);
+	arr[1] = (char *)ft_calloc(sizeof(char), len + 1);
+	if (!arr[1])
 		return (NULL);
-	}
-	while (--i >= 0)
-		free(arr[i]);
-	free(arr);
-	return (NULL);
-}
-
-char	**ft_exec_splitsep(char **arr, const char *str, char c, int num)
-{
-	int	i;
-	int	len;
-
-	printf("num : %d\n", num);
-	// printf("splitlen : %d, totallen : %d\n", ft_split_len(str, c), ft_strlen(str));
-	if (num > 1 && (ft_exec_split_len(str, c) + 1 == ft_strlen(str)))
-		arr[1] = "";
-	i = 0;
-	while (str[i] && num > 1)
+	len = 0;
+	while (s[i + 1])
 	{
-		if (str[i] == c)
-		{
-			arr[1] = ft_strdup((char *)str);
-			if (arr[1] == NULL)
-			{
-
-				printf("dup!\n");
-				return (ft_exec_free_split(arr, 1));
-			}
-		}
+		arr[1][len] = s[i + 1];
 		i++;
+		len++;
 	}
-	i = 0;
-	len = ft_exec_split_len(str, c);
-	arr[0] = (char *)ft_calloc(sizeof(char), len + 1);
-	ft_strlcpy(arr[0], str, len + 1);
-	arr[num] = NULL;
 	return (arr);
 }
 
@@ -90,15 +61,26 @@ char	**ft_exec_split(char const *s, char c)
 {
 	char	**arr;
 	int		num;
+	int		i;
+	int		len;
 
 	num = exec_count_num(s, c);
 	arr = (char **)ft_calloc(sizeof(char *), (num + 1));
 	if (arr == NULL)
 		return (NULL);
-	if (num > 1 && ft_exec_split_len(s, c) + 1 == ft_strlen(s))
-		arr[1] = "";
-	if (ft_exec_splitsep(arr, s, c, num) == NULL)
+	len = ft_strlen_split(s, '=');
+	arr[0] = (char *)ft_calloc(sizeof(char), len + 1);
+	i = -1;
+	while (s[++i] && s[i] != '=')
+		arr[0][i] = s[i];
+	if (num == 1)
+		return (arr);
+	if (num == 2 && len == ft_strlen(s) - 1)
+	{
+		arr[1] = ft_strdup("\"\"");
+		return (arr);
+	}
+	if (!ft_exec_split_util(s, arr, i, len))
 		return (NULL);
 	return (arr);
 }
-
