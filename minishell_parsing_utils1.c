@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_utils1.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:54:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/12 16:01:41 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/12 19:40:27 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,9 @@ int	parsing(t_command_list	*cmd_list, char *line, t_process *prcs)
 
 
 	clear_list(&token_list);
-	if(cmd_list != NULL)
-	set_heredoc(cmd_list);
+	// if(cmd_list != NULL)
+	parse_command_list(cmd_list, prcs);
+	// print_command_list(cmd_list);
 
 	return (0);
 }
@@ -91,6 +92,7 @@ void readline_func(t_command_list *list, t_process *prcs)
 		free(str);
 		str = NULL;
     }
+
     /* 함수종료 */
     // return(0);
     // atexit(check_leaks);
