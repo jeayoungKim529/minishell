@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:33:35 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/10 16:33:41 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/12 16:50:26 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,25 +37,39 @@ void	change_pwd(t_process *prcs, char *key, char *value)
 {
 	t_envp	*cur;
 
-	if (ft_envpfind(prcs->envp, key) == NULL)
+	cur = ft_envpfind(prcs->envp, key);
+	if (cur == NULL)
 		ft_envpadd(prcs->envp, ft_envpnew(key, value));
 	else
 	{
-		cur = prcs->envp;
-		while (cur)
-		{
-			if (ft_strncmp(cur->key, key, ft_strlen(key) + 1) == 0)
-			{
-				cur->value = value;
-				break ;
-			}
-			cur = cur->next;
-		}
+		free(cur->value);
+		cur->value = NULL;
+		cur->value = value;
 	}
 	if (ft_strncmp(key, "OLDPWD", 7) == 0)
-		prcs->senvp.oldpwd = value;
+	{
+		free(prcs->senvp.oldpwd);
+		prcs->senvp.oldpwd = NULL;
+		prcs->senvp.oldpwd = ft_strdup(value);
+	}
 	else if (ft_strncmp(key, "PWD", 4) == 0)
-		prcs->senvp.pwd = value;
+	{
+		free(prcs->senvp.pwd);
+		prcs->senvp.pwd = NULL;
+		prcs->senvp.pwd = ft_strdup(value);
+	}
 }
 
-////////////////
+int	check_envp_key(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] && s[i] != '=')
+	{
+		if (ft_isalnum(s[i]) == 0 && s[i] != '_')
+			return (0);
+		i++;
+	}
+	return (1);
+}

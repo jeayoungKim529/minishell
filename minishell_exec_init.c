@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 17:44:42 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/11 17:47:39 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/12 15:46:32 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	init_path(t_process *prcs)
 	}
 	prcs->path_x = ft_split("/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.", ':');
 	if (!prcs->path_x)
-		ft_error_exec(prcs, strerror(errno), 0);
+		ft_error_exec(prcs, strerror(errno), errno);
 }
 
 int	init_redirection(t_process *prcs, t_token_list *list)
@@ -44,10 +44,10 @@ int	init_prcs(t_process *prcs, t_command_list *list, t_command_node *cur)
 {
 	prcs->t_cmd = list->front->cmd_list->size;
 	init_path(prcs);
-	if (init_redirection(prcs, list->front->redir_list) == -1)
+	if (init_redirection(prcs, cur->redir_list) == -1)
 		return (-1);
 	// free_second_char(prcs->exec_envp);
-	init_exec_envp(prcs);
+	// init_exec_envp(prcs);
 	prcs->cmd = merge_command(prcs, cur->cmd_list);
 	return (0);
 }

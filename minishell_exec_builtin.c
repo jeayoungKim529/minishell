@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:33:54 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/11 20:52:03 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/12 17:03:17 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,12 @@ int	execute_builtin(t_process *prcs)
 	else if (ft_strncmp("env", prcs->cmd[0], 4) == 0)
 		ft_env(prcs, 0);
 	else if (ft_strncmp("export", prcs->cmd[0], 7) == 0)
-		ft_export(prcs);
+		ft_export(prcs, 0);
 	else if (ft_strncmp("unset", prcs->cmd[0], 6) == 0)
 		ft_unset(prcs);
 	else if (ft_strncmp("exit", prcs->cmd[0], 5) == 0)
 		ft_exit(prcs);
 	if (dup2(prcs->prevfd, 1) == -1)
-		ft_error_exec(prcs, strerror(errno), 0);
+		ft_error_exec(prcs, strerror(errno), errno);
 	return (-1);
 }
