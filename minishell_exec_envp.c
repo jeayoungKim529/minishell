@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:29:00 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/03 20:19:23 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/10 15:40:45 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 //pwd, oldpwd, home 변수를 prcs에 따로 저장해두기
 void	save_pwd(t_process *prcs)
 {
-	prcs->senvp.pwd = ft_envpfind(prcs->envp, "PWD");
-	prcs->senvp.oldpwd = ft_envpfind(prcs->envp, "OLDPWD");
-	prcs->senvp.home = ft_envpfind(prcs->envp, "HOME");
+	prcs->senvp.pwd = ft_strdup(ft_envpfind(prcs->envp, "PWD")->value);
+	prcs->senvp.oldpwd = ft_strdup(ft_envpfind(prcs->envp, "OLDPWD")->value);
+	prcs->senvp.home = ft_strdup(ft_envpfind(prcs->envp, "HOME")->value);
 }
 
 void	init_exec_envp(t_process *prcs)
@@ -36,7 +36,7 @@ void	init_exec_envp(t_process *prcs)
 	}
 	prcs->exec_envp = (char **)ft_calloc(sizeof(char *), num + 1);
 	if (!prcs->exec_envp)
-		ft_error_exec(prcs, strerror(errno));
+		ft_error_exec(prcs, strerror(errno), 0);
 	num = 0;
 	cur = prcs->envp;
 	while (cur)
@@ -60,7 +60,7 @@ void	envp_func(t_process *prcs, char *envp[])
 	i = 0;
 	prcs->envp = NULL;
 	if (!envp || !envp[0])
-		ft_error_exec(prcs, strerror(errno));
+		ft_error_exec(prcs, strerror(errno), 0);
 	while (envp && envp[i])
 	{
 		p = ft_split(envp[i], '=');
@@ -68,7 +68,7 @@ void	envp_func(t_process *prcs, char *envp[])
 			continue ;
 		new = ft_envpnew(p[0], p[1]);
 		if (!new)
-			ft_error_exec(prcs, strerror(errno));
+			ft_error_exec(prcs, strerror(errno), 0);
 		if (i == 0)
 			prcs->envp = new;
 		else

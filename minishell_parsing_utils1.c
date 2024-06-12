@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_utils1.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:54:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/10 15:54:21 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/11 11:00:21 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,10 @@ int	parsing(t_command_list	*cmd_list, char *line)
 	return (0);
 }
 
-void readline_func(t_command_list *list, t_process *prcs)
+void readline_func(t_command_list *list, t_process *prcs, int *status)
 {
     char *str;
 	int fd;
-	int status;
     while(1)
     {
     

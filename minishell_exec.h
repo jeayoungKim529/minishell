@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:29:17 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/05 19:13:17 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/10 14:58:20 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct s_process{
 }	t_process;
 
 //minishell_exec.c
-void	ft_error_exec(t_process *prcs, char *s);
+void	ft_error_exec(t_process *prcs, char *s, int n);
 //minishell_exec_free.c
 void	free_envp(t_process *prcs);
 void	free_command(t_process *prcs);
@@ -74,7 +74,7 @@ void	init_exec_envp(t_process *prcs);
 t_envp	*ft_envpnew(char *key, char *value);
 void	ft_envpadd(t_envp *env, t_envp *new);
 void	ft_envpdel(t_envp *env, char *key);
-char	*ft_envpfind(t_envp *env, char *key);
+t_envp	*ft_envpfind(t_envp *env, char *key);
 //minishell_exec.c
 void	execute_commands(t_process *prcs, t_command_list *list);
 void	execute_single(t_process *prcs, int i);
@@ -85,6 +85,7 @@ char	*check_envp(t_process *prcs, t_token_node *node);
 //minishell_exec_builtin.c
 int		execute_builtin(t_process *prcs);
 int		check_builtin_command(char **com);
+void	ft_error_builtin(char *s, int n);
 //minishell_exec_builtin_func1.c
 void	ft_env(t_process *prcs, int flag);
 void	ft_export(t_process *prcs);
@@ -99,7 +100,6 @@ int		check_option(char *s);
 void	change_pwd(t_process *prcs, char *key, char *value);
 char	*check_last(char *s);
 char	*change_dir(t_process *prcs, char *s);
-void	ft_error_exec(t_process *prcs, char *s);
 //minishell_exec_redirection.c
 void	set_redirection(t_process *prcs, t_token_list *list);
 void	set_single_redirection(t_process *prcs);

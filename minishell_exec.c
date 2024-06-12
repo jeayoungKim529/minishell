@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:29:20 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/05 20:39:13 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/10 14:49:09 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,36 +20,36 @@ void	execute_single(t_process *prcs, int i)
 
 	prcs->pid = fork();
 	if (prcs->pid == -1)
-		ft_error_exec(prcs, strerror(errno));
+		ft_error_exec(prcs, strerror(errno), 0);
 	if (prcs->pid != 0)
 		signal_off();
 	if (prcs->pid == 0)
 	{
 		if (prcs->file.in != -1)
 			if (dup2(prcs->file.in, 0) == -1) // 입력 파일이 있는 경우
-				ft_error_exec(prcs, strerror(errno));
+				ft_error_exec(prcs, strerror(errno), 0);
 		if (prcs->file.out != -1)
 		{
 			if (dup2(prcs->prevfd, 1) == -1)
-				ft_error_exec(prcs, strerror(errno));
+				ft_error_exec(prcs, strerror(errno), 0);
 			if (dup2(prcs->file.out, 1) == -1) // 출력 파일이 있는 경우
-				ft_error_exec(prcs, strerror(errno));
+				ft_error_exec(prcs, strerror(errno), 0);
 			close(prcs->file.out);
 		}
 		exec_signal_func();
 		run_process(prcs);
 		if (dup2(1, prcs->prevfd) == -1)
-			ft_error_exec(prcs, strerror(errno));
+			ft_error_exec(prcs, strerror(errno), 0);
 	}
 }
 
 void	execute_multi(t_process *prcs, int i)
 {
 	if (pipe(prcs->fd) == -1)
-		ft_error_exec(prcs, strerror(errno));
+		ft_error_exec(prcs, strerror(errno), 0);
 	prcs->pid = fork();
 	if (prcs->pid == -1)
-		ft_error_exec(prcs, strerror(errno));
+		ft_error_exec(prcs, strerror(errno), 0);
 	if (prcs->pid != 0)
 		signal_off();
 	else if (prcs->pid == 0)

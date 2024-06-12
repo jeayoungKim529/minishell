@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_quotes.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 12:29:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/10 22:12:57 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/11 17:53:51 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,7 +200,7 @@ char *make_one_line(char **result)
 	while (i < len - 1)
 	{
 		j = 0;
-		printf(" i = %d\n", i);
+		// printf(" i = %d\n", i);
 		while (result[idx] && result[idx][j])
 		{
 			// printf("%d %d %d\n", i, idx,j);
@@ -213,11 +213,12 @@ char *make_one_line(char **result)
 	return (str);
 }
 
-char	**expand_env_string(char **result)
+char	**expand_env_string(char ***result)
 {
 	char	*temp;
 	int		idx;
 	int		len;
+	char	**line;
 
 	idx = -1;
 	while (result[++idx])

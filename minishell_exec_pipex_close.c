@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exec_pipex_close.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:03:09 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/05 21:36:11 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/10 14:18:23 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,12 @@
 
 void	execute_wait(t_process *prcs, t_command_list *list, int flag)
 {
-	int	status;
 	int	i;
 
 	i = 0;
 	while (flag == 0 && i < list->size && list->front->cmd_list->size > 0)
 	{
-		if (wait(&status) == -1)
+		if (wait(&g_status) == -1)
 			exit(EXIT_FAILURE);
 		i++;
 	}

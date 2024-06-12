@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:17:36 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/03 16:17:53 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/10 14:58:29 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,14 @@ t_envp	*ft_envpnew(char *key, char *value)
 	node = (t_envp *)malloc(sizeof(t_envp));
 	if (!node)
 		return (NULL);
-	node->key = key;
-	node->value = value;
+	node->key = ft_strdup(key);
+	node->value = ft_strdup(value);
 	node->before = NULL;
 	node->next = NULL;
 	return (node);
 }
 
-char	*ft_envpfind(t_envp *env, char *key)
+t_envp	*ft_envpfind(t_envp *env, char *key)
 {
 	t_envp	*cur;
 
@@ -90,7 +90,7 @@ char	*ft_envpfind(t_envp *env, char *key)
 	while (cur)
 	{
 		if (ft_strncmp(key, cur->key, ft_strlen(key) + 1) == 0)
-			return (cur->value);
+			return (cur);
 		cur = cur->next;
 	}
 	return (NULL);
