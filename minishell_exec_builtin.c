@@ -3,20 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exec_builtin.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:33:54 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/14 19:26:27 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/14 21:49:40 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_exec.h"
 
-int	ft_error_builtin(char *s, int n)
+int	ft_error_builtin(t_process *prcs, char *s, int n)
 {
 	ft_putstr_fd(s, 2);
 	ft_putstr_fd("\n", 2);
+	prcs->envp->status = n;
 	return (-1);
 }
 
@@ -58,10 +59,8 @@ int	execute_builtin(t_process *prcs)
 		ft_unset(prcs);
 	else if (ft_strncmp("exit", prcs->cmd[0], 5) == 0)
 		ft_exit(prcs);
-
 	else if (ft_strncmp("sdf", prcs->cmd[0], 4) == 0)
 		printf("%d\n", prcs->envp->status);
 
-	prcs->envp->status = 0;
-	return (-1);
+	return (prcs->envp->status);
 }

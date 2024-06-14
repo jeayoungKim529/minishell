@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exec_pipex_close.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:03:09 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/14 20:20:49 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/14 22:01:58 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,9 @@ void	execute_wait(t_process *prcs, t_command_list *list, int flag)
 	int	status;
 
 	i = 0;
-	printf("WIFEXITED : %d\n", WIFEXITED(status));
-	printf("WEXITSTATUS : %d\n", WEXITSTATUS(status));
-	printf("WIFSIGNALED : %d\n", WIFSIGNALED(status));
-	if (flag == 1)
-	{
-		if (WIFEXITED(status))
-			prcs->envp->status = WEXITSTATUS(status);
-	}
+	// printf("WIFEXITED : %d\n", WIFEXITED(status));
+	// printf("WEXITSTATUS : %d\n", WEXITSTATUS(status));
+	// printf("WIFSIGNALED : %d\n", WIFSIGNALED(status));
 	while (flag == 0 && i < list->size && list->front->cmd_list->size > 0)
 	{
 		if (wait(&status) == -1)
@@ -63,6 +58,8 @@ void	ft_unlink(t_process *prcs, t_command_list *list)
 
 void	finish_commands(t_process *prcs, t_command_list *list, int flag)
 {
+	if (list->front->cmd_list->size > 1)
+		close(prcs->prevfd);
 	execute_wait(prcs, list, flag);
 	free_path(prcs);
 	ft_unlink(prcs, list);

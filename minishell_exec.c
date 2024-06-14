@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exec.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:29:20 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/14 10:43:43 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/14 22:15:54 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,11 @@ void	execute_commands(t_process *prcs, t_command_list *list, int i)
 {
 	t_command_node	*cur;
 	int				flag;
-		extern int sig;
 
 	cur = list->front;
 	prcs->prevfd = dup(prcs->std_fd[0]);
 	flag = 0;
+	prcs->t_cmd = list->size;
 	while (cur && list->size > 0 && list->front->cmd_list->size > 0)
 	{
 		if (init_prcs(prcs, list, cur) == -1)
