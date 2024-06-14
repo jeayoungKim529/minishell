@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:41:35 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/14 13:49:49 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/14 14:58:06 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,30 +69,22 @@ void	ft_echo(t_process *prcs)
 
 void	ft_exit(t_process *prcs)
 {
-	int	i;
-
-	if (prcs->cmd[1] && prcs->cmd[1][0] && ft_isalnum(prcs->cmd[1][0]) != 2)
+	if (ft_isalnum_exit(prcs->cmd[1]) != 1)
 	{
-		printf("exit\nbash: exit: %s: numeric argument required\n", prcs->cmd[1]);
-		prcs->envp->status = 1;
-		exit(255);
+		printf("exit\nminishell: exit: %s: numeric argument required", \
+			prcs->cmd[1]);
+		ft_error_exec_exit(prcs, NULL, 255);
 	}
 	if (prcs->n_cmd > 2)
 	{
-		printf("exit\nbash: exit: too many arguments\n");
+		ft_error_exec(prcs, "exit\nminishell: exit: too many arguments", 1);
 		return ;
 	}
-	i = 0;
-	while (i < ft_strlen(prcs->cmd[1]))
+	if (ft_isalnum_exit(prcs->cmd[1]) != 1)
 	{
-		if (ft_isalnum(prcs->cmd[1][i]) != 2)
-		{
-			printf("exit\nbash: exit: %s: numeric argument required\n", \
-				prcs->cmd[1]);
-			ft_error_exec_exit(prcs, NULL, 255);
-		}
-		i++;
+		printf("exit\nminishell: exit: %s: numeric argument required", \
+			prcs->cmd[1]);
+		ft_error_exec_exit(prcs, NULL, 255);
 	}
-	prcs->envp->status = 0;
-	ft_error_exec_exit(prcs, NULL, 0);
+	ft_error_exec_exit(prcs, "exit\n", ft_atoi_exit(prcs->cmd[1]));
 }

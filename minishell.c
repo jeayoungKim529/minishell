@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:23:07 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/14 11:21:42 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/14 14:58:00 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ void	readline_func(t_command_list *list, t_process *prcs);
 
 void	ft_error_exec(t_process *prcs, char *s, int n)
 {
-	// if (prcs->envp)
-	// 	free_envp(prcs);
 	if (prcs->path || prcs->path_x)
 		free_path(prcs);
 	if (prcs)
@@ -42,8 +40,6 @@ void	ft_error_exec_exit(t_process *prcs, char *s, int n)
 	int	flag;
 
 	flag = 0;
-	// if (prcs->envp)
-	// 	free_envp(prcs);
 	if (prcs->path || prcs->path_x)
 		free_path(prcs);
 	if (prcs)
@@ -57,7 +53,6 @@ void	ft_error_exec_exit(t_process *prcs, char *s, int n)
 		revert_signal();
 	}
 	prcs->envp->status = n;
-	dprintf(2, "exit code : %d\n", n);
 	exit(n);
 }
 
