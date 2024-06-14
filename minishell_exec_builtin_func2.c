@@ -17,11 +17,6 @@ void	ft_cd(t_process *prcs)
 {
 	char	*old_pwd;
 
-	// if (access(prcs->cmd[1], X_OK) != 0)
-	// {
-	// 	printf("bash: cd: %s: Not a directory\n", prcs->cmd[1]);
-	// 	return ;
-	// }
 	old_pwd = getcwd(NULL, 0);
 	if (chdir(prcs->cmd[1]) == -1)
 	{

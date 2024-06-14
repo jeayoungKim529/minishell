@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:17:36 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/12 17:21:44 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/12 17:36:47 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,8 @@ void	ft_envpdel(t_envp *env, char *key)
 	{
 		if (ft_strncmp(node->key, key, ft_strlen(key) + 1) == 0)
 			break ;
-		else
-		{
-			before = node;
-			node = node->next;
-		}
+		before = node;
+		node = node->next;
 	}
 	if (!node)
 		return ;
@@ -54,7 +51,6 @@ void	ft_envpdel(t_envp *env, char *key)
 		before->next = node->next;
 	free(node->key);
 	free(node->value);
-	free(node->next);
 	free(node);
 }
 

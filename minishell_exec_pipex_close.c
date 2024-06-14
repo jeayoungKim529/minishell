@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:03:09 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/12 14:39:02 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/12 19:44:41 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,27 @@
 #include "minishell_exec.h"
 #include "minishell_parsing.h"
 
-//cenvp;
-//unlink(heredoc)
-
 void	execute_wait(t_process *prcs, t_command_list *list, int flag)
 {
 	int	i;
 	int	status;
 
-	status = 0;
 	i = 0;
 	while (flag == 0 && i < list->size && list->front->cmd_list->size > 0)
 	{
-		if (wait(&status) == -1) 
+		if (wait(&status) == -1)
 			exit(EXIT_FAILURE);
-			//
+		printf("WIFEXITED : %d\n",WIFEXITED(status));
+        printf("WEXITSTATUS : %d\n",WEXITSTATUS(status));
+        printf("WIFSIGNALED : %d\n",WIFSIGNALED(status));
+		if (WIFEXITED(status))
+			prcs->envp->status = WIFEXITED(status);
+		else if (WEXITSTATUS(status))
+			prcs->envp->status = WEXITSTATUS(status);
+		// else 
+		if (WIFSIGNALED(status))
+			prcs->envp->status = WIFSIGNALED(status) + 128;
+		printf("stats:%d\n", prcs->envp->status);
 		i++;
 	}
 }
@@ -37,9 +43,9 @@ void	ft_unlink(t_process *prcs, t_command_list *list)
 {
 	t_token_node	*cur;
 
-	if (!list || !list->front || !list->front->redir_list || list->front->redir_list->size <= 0)
+	if (!list || !list->front || !list->front->redir_list || \
+		list->front->redir_list->size <= 0)
 		return ;
-	// if (list->front->redir_list->size > 0){}
 	cur = list->front->redir_list->front;
 	while (cur)
 	{

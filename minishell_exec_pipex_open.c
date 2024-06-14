@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 19:05:20 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/12 16:03:40 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/12 19:28:31 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ void	run_process(t_process *prcs)
 	if (check_builtin_command(prcs->cmd) == 1)
 		execute_builtin(prcs);
 	else if (execve(path, prcs->cmd, init_exec_envp(prcs)) == -1)
+	{
+		printf("eror:%d\n", errno);
 		ft_error_exec(prcs, strerror(errno), errno);
+	}
 	exit (0);
 }
 
