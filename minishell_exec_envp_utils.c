@@ -6,26 +6,26 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:17:36 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/12 17:36:47 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/14 15:11:41 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_exec.h"
 
-void	print_envp(t_process *prcs)
-{
-	t_envp	*cur;
+// void	print_envp(t_process *prcs)
+// {
+// 	t_envp	*cur;
 
-	printf("envp\n");
-	cur = prcs->envp;
-	printf("%s=%s\n", cur->key, cur->value);
-	while (cur)
-	{
-		printf("%s=%s\n", cur->key, cur->value);
-		cur = cur->next;
-	}
-}
+// 	printf("envp\n");
+// 	cur = prcs->envp;
+// 	printf("%s=%s\n", cur->key, cur->value);
+// 	while (cur)
+// 	{
+// 		printf("%s=%s\n", cur->key, cur->value);
+// 		cur = cur->next;
+// 	}
+// }
 
 void	ft_envpdel(t_envp *env, char *key)
 {
