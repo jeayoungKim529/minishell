@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:26:23 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/12 16:58:19 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/14 17:34:51 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,37 +39,30 @@ int	parse_quotes(char *str)
 	return (len + 2);
 }
 
-int	get_cmd_length(char *str)
+int	get_cmd_length(char *str, int len)
 {
-	int	len;
 	int	count;
-	
-	count = 0;
 
-	len = 0;
+	count = 0;
 	if (str[0] == '|' || str[0] == '>' || str[0] == '<')
 	{
 		if (str[0] == '>' && str[1] == '>' || str[0] == '<' && str[1] == '<')
 			len = 2;
 		else
 			len = 1;
+		return (len);
 	}
-	else
+	while (str[len] && str[len] != ' ' && str[len] != '|' && str[len] != '>'
+		&& str[len] != '<')
 	{
-		while (str[len] && str[len] != ' '&& str[len] != '|' && str[len] != '>' && str[len] != '<')
+		if (str[len] == '\"' || str[len] == '\'')
 		{
-			if (str[len] == '\"' || str[len] == '\'')
-			{
-				count = parse_quotes(str + len);
-				if (count == -1)
-				{
-					return (-1);
-				}
-				len += count;
-				len --;	
-			}
-			len ++;
+			count = parse_quotes(str + len);
+			if (count == -1)
+				return (-1);
+			len += count - 1;
 		}
+		len ++;
 	}
 	return (len);
 }
@@ -80,34 +73,22 @@ char	*put_token(char *str)
 	int		i;
 	char	*str2;
 
-	
-	len = get_cmd_length(str);
+	len = get_cmd_length(str, 0);
 	if (len == -1)
 	{
 		return (0);
 	}
 	i = -1;
- 	str2 = (char *)malloc(sizeof(char) * (len + 1));
+	str2 = (char *)malloc(sizeof(char) * (len + 1));
 	if (!str2)
 		return (0);
 	while (++i < len)
 		str2[i] = str[i];
 	str2[i] = '\0';
-	// if (str2[0] == '\0')
-	// {
-	// 	free(str2);
-	// 	return (0);
-	// }
 	return (str2);
 }
 
-void quotes_check(char *line)
-{
-	int in_single_quote;
-	int in_double_quote;
-}
-
-t_token_type set_token_type(char *str)
+t_token_type	set_token_type(char *str)
 {
 	if (*str == '|')
 		return (TOKEN_PIPE);
@@ -125,31 +106,27 @@ t_token_type set_token_type(char *str)
 
 int	token_split(char *line, t_token_list *tmp_list)
 {
-	char *cmdline;
-	
+	char	*cmdline;
+
 	cmdline = 0;
 	while (*line)
 	{
-
 		while (*line && *line == ' ')
 			line++;
-		if (*line)
+		if (!*line)
+			break ;
+		cmdline = put_token(line);
+		if (cmdline != NULL)
 		{
-			cmdline = put_token(line);
-			if (cmdline != NULL)
-			{
-				add_token_list(tmp_list, cmdline, set_token_type(cmdline));
-				line += (int)ft_strlen(cmdline);
-					free(cmdline);
-					cmdline = 0;
-			}
-			else
-			{
-				return (1);
-			}
-			if (!*line)
-				break;
+			add_token_list(tmp_list, cmdline, set_token_type(cmdline));
+			line += (int)ft_strlen(cmdline);
+			free (cmdline);
+			cmdline = 0;
 		}
+		else
+			return (1);
+		if (!*line)
+			break ;
 	}
 	if (cmdline)
 		free(cmdline);

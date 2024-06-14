@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:54:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/14 10:58:35 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/14 18:56:01 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,16 @@
 #include "minishell_parsing.h"
 #include "minishell_exec.h"
 
-int parsing(t_command_list	*cmd_list, char *line, t_process *prcs);
-
-
-// void check_leaks(void)
-// {
-// 	system ("leaks minishell");
-// }
-
-
+void	execute_commands(t_process *prcs, t_command_list *list, int i);
 
 int	parsing(t_command_list	*cmd_list, char *line, t_process *prcs)
 {
-	t_token_list token_list;
+	t_token_list	token_list;
 
 	token_list.size = 0;
 	cmd_list->size = 0;
-	
-    if (!cmd_list)
-	{
+	if (!cmd_list)
 		free_command_list(cmd_list);
-	}
 	if (token_split(line, &token_list))
 	{
 		clear_list(&token_list);
@@ -42,8 +31,9 @@ int	parsing(t_command_list	*cmd_list, char *line, t_process *prcs)
 		// prcs->envp->value = 258;
 		return (1);
 	}
-		// print_list(&token_list);
-	if (make_command_list(&token_list, cmd_list))
+	if (token_list.size == 1 && token_list.front->type == TOKEN_PIPE)
+		return (ft_error_parse(1, "syntax error near unexpected token"));
+	if (make_command_list(&token_list, cmd_list, 0, 0))
 	{
 		clear_list(&token_list);
 		free_command_list(cmd_list);
@@ -51,51 +41,36 @@ int	parsing(t_command_list	*cmd_list, char *line, t_process *prcs)
 		// prcs->envp->value = 258;
 		return (1);
 	}
-	// if (cmd_list->front->cmd_list->size == 0 && \
-	// cmd_list->front->redir_list->size == 0)
-	// {
-		// free_command_list(cmd_list);
-        // cmd_list = NULL;
-	// }
-
-
-	// clear_list(&token_list);
-	// // if(cmd_list != NULL)
 	parse_command_list(cmd_list, prcs);
+	// leak
+	// clear_list(&token_list);
+	// free_command_list(cmd_list);
 	// print_command_list(cmd_list);
-
-
 	return (0);
 }
 
-void readline_func(t_command_list *list, t_process *prcs)
+void	readline_func(t_command_list *list, t_process *prcs)
 {
-    char *str;
-	int fd;
-    while(1)
-    {
-    
-        str = readline("prompt : ");/* read함수는 저장한 문자열의 메모리주소를 반환한다 */
-        if (str)/* 입력이 된다면 (주소가 존재한다면) */
+	char	*str;
+	int		fd;
+
+	while (1)
+	{
+		str = readline("prompt : ");
+		if (str)
 		{
 			if (parsing(list, str, prcs) == 1)
 			{
 				free(str);
-				continue;
+				continue ;
 			}
 		}
-        else/* str = NULL 이라면 (EOF, cntl + D)*/
-            break ;/* 반복문을 탈출해준다.*/
+		else
+			break ;
 		add_history(str);
-						// print_command_list(list);
-		// if (list->)
 		execute_commands(prcs, list, 0);
 		free(str);
 		str = NULL;
-    }
-
-    /* 함수종료 */
-    // return(0);
-    // atexit(check_leaks);
-	exit(0);
+	}
+	return ;
 }

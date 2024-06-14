@@ -6,10 +6,9 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:40:02 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/05 21:48:16 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/14 19:25:50 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 #include "minishell_parsing.h"
@@ -22,11 +21,11 @@ int	add_token_list(t_token_list *list, char *token, t_token_type type)
 	if (new_node == NULL)
 		ft_error_parse(2, "malloc error");
 	new_node->token = ft_strdup(token);
-	if(new_node->token == NULL)
+	if (new_node->token == NULL)
 		ft_error_parse(2, "malloc error");
 	new_node->type = type;
 	new_node->next = NULL;
-	new_node->prev = NULL; 
+	new_node->prev = NULL;
 	if (list->size == 0)
 	{
 		list->front = new_node;
@@ -65,43 +64,38 @@ void	del_token_list(t_token_list *list)
 	}
 	list->size--;
 }
-int	add_command_list(t_command_list *list)
+
+int	add_cmd_list(t_command_list *list, t_token_list *c_l, t_token_list *r_l)
 {
 	t_command_node	*new_node;
-	t_token_list	*cmd_list;
-	t_token_list	*redir_list;
 
 	new_node = (t_command_node *)ft_calloc(sizeof(t_command_node), 1);
-	cmd_list = (t_token_list *)ft_calloc(sizeof(t_token_list), 1);
-	redir_list = (t_token_list *)ft_calloc(sizeof(t_token_list), 1);
-	if (new_node == NULL || cmd_list == NULL || redir_list == NULL)
+	c_l = (t_token_list *)ft_calloc(sizeof(t_token_list), 1);
+	r_l = (t_token_list *)ft_calloc(sizeof(t_token_list), 1);
+	if (new_node == NULL || c_l == NULL || r_l == NULL)
 		ft_error_parse(2, "malloc error");
-
 	new_node->next = NULL;
-	new_node->prev = NULL; 
-	new_node->cmd_list = cmd_list;
-	new_node->redir_list = redir_list;
-	cmd_list->size = 0;
-	redir_list->size = 0;
+	new_node->prev = NULL;
+	new_node->cmd_list = c_l;
+	new_node->redir_list = r_l;
+	c_l->size = 0;
+	r_l->size = 0;
 	if (list->size == 0)
 	{
 		list->front = new_node;
 		list->rear = new_node;
+		list->size++;
+		return (1);
 	}
-	else
-	{
-		list->rear->next = new_node;
-		new_node->prev = list->rear;
-		list->rear = new_node;
-	}
+	list->rear->next = new_node;
+	new_node->prev = list->rear;
+	list->rear = new_node;
 	list->size++;
 	return (1);
 }
 
-void	del_command_list(t_command_list *list)
+void	del_command_list(t_command_list *list, t_command_node *tmp)
 {
-	t_command_node	*tmp;
-
 	if (list->size > 1)
 	{
 		tmp = list->front;
@@ -115,99 +109,16 @@ void	del_command_list(t_command_list *list)
 		tmp->redir_list = NULL;
 		free(tmp);
 		tmp = NULL;
-	}
-	else
-	{
-		clear_list(list->front->cmd_list);
-		clear_list(list->front->redir_list);
-		free(list->front->cmd_list);
-		list->front->cmd_list = NULL;
-		free(list->front->redir_list);
-		list->front->redir_list = NULL;
-		free(list->front);
-		list->front = NULL;
-	}
-	list->size--;
-
-}
-
-
-
-void print_command_list(t_command_list *list)
-{
-	t_command_node *head;
-    head = list->front;
-    int i = 0;
-
-        printf("total list size :%d\n\n", list->size);
-		// if (head == NULL)
-		// 	return;
-		// if (head->cmd_list == 0 || head->redir_list == 0)
-		// 	return ;
-		// if (head->cmd_list->size == 0 || head->redir_list->size == 0)
-		// 	return ;
-		printf("========================\n");
-    while(i < list->size)
-    {
-        printf("list[%d]\n", i);
-		printf("----------------------------------\n");
-		printf(" ㄴredir_list : ");
-		print_list(head->redir_list);
-		printf("----------------------------------\n");
-		printf("ㄴcmd_list : ");
-		print_list(head->cmd_list);
-		printf("----------------------------------\n");
-		printf("\n");
-        head = head->next;
-		i++;
-    }
-}
-
-
-void print_list(t_token_list *list)
-{
-	t_token_node *head;
-	head = list->front;
-	int i = 0;
-
-
-    printf("size = %d\n", list->size);
-	if (list->size == 0)
+		list->size--;
 		return ;
-	while(i < list->size)
-	{
-		printf(" |%s| ",head->token);
-		printf("type :%u ",head->type);
-		head = head->next;
-		printf("->");
-		i++;
 	}
-	printf("\n");
-}
-
-void	clear_list(t_token_list *list)
-{
-	t_token_node *head;
-	t_token_node *temp;
-	head = list->front;
-	
-	while(list->size != 0)
-	{
-		del_token_list(list);
-	}
-}
-
-void free_command_list(t_command_list *command_list)
-{
-    t_command_node *curr;
-	t_command_node *next;
-	int i = 0;
-
-    curr = command_list->front;
-    while (command_list->size != 0)
-    {
-        del_command_list(command_list);
-    }
-
-    // free(command_list);
+	clear_list(list->front->cmd_list);
+	clear_list(list->front->redir_list);
+	free(list->front->cmd_list);
+	list->front->cmd_list = NULL;
+	free(list->front->redir_list);
+	list->front->redir_list = NULL;
+	free(list->front);
+	list->front = NULL;
+	list->size--;
 }
