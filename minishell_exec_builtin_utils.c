@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:33:35 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/12 17:32:52 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/14 14:48:24 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,47 @@ int	check_envp_key(char *s)
 		i++;
 	}
 	return (1);
+}
+
+int	ft_isalnum_exit(char *s)
+{
+	int	i;
+
+	if (!s)
+		return (0);
+	i = 0;
+	if (s[i] == '-' || s[i] == '+')
+	{
+		if (ft_strlen(s) == 1)
+			return (0);
+		i++;
+	}
+	while (s[i])
+	{
+		if (ft_isalnum(s[i]) != 2)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+
+int	ft_atoi_exit(char *s)
+{
+	int	n;
+
+	if (!s)
+		return (0);
+	n = ft_atoi(s);
+	if (n < 0)
+	{
+		while (n < 0)
+			n += 256;
+	}
+	else if (n > 255)
+	{
+		while (n > 255)
+			n -= 256;
+	}
+	return (n);
 }

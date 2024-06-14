@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:03:09 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/14 11:52:19 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/14 14:06:00 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,9 @@ void	execute_wait(t_process *prcs, t_command_list *list, int flag)
 	i = 0;
 	if (flag == 1)
 	{
-		printf("WIFEXITED : %d\n", WIFEXITED(status));
-        printf("WEXITSTATUS : %d\n", WEXITSTATUS(status));
-        printf("WIFSIGNALED : %d\n", WIFSIGNALED(status));
-		// if (WIFEXITED(status))
-		// 	prcs->envp->status = WIFEXITED(status);
-		// else if (WEXITSTATUS(status))
-		// 	prcs->envp->status = WEXITSTATUS(status);
-		// else 
+		// printf("WIFEXITED : %d\n", WIFEXITED(status));
+        // printf("WEXITSTATUS : %d\n", WEXITSTATUS(status));
+        // printf("WIFSIGNALED : %d\n", WIFSIGNALED(status));
 		if (WIFEXITED(status))
 			prcs->envp->status = WEXITSTATUS(status);
 	}
@@ -37,9 +32,9 @@ void	execute_wait(t_process *prcs, t_command_list *list, int flag)
 	{
 		if (wait(&status) == -1)
 			exit(EXIT_FAILURE);
-		printf("WIFEXITED : %d\n", WIFEXITED(status));
-        printf("WEXITSTATUS : %d\n", WEXITSTATUS(status));
-        printf("WIFSIGNALED : %d\n", WIFSIGNALED(status));
+		// printf("WIFEXITED : %d\n", WIFEXITED(status));
+        // printf("WEXITSTATUS : %d\n", WEXITSTATUS(status));
+        // printf("WIFSIGNALED : %d\n", WIFSIGNALED(status));
 		// if (WIFEXITED(status))
 		// 	prcs->envp->status = WIFEXITED(status);
 		// else if (WEXITSTATUS(status))

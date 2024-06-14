@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:29:17 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/12 17:31:55 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/14 14:45:46 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ void	ft_exit(t_process *prcs);
 int		check_option(char *s);
 void	change_pwd(t_process *prcs, char *key, char *value);
 int		check_envp_key(char *s);
+int		ft_isalnum_exit(char *s);
+int		ft_atoi_exit(char *s);
 // char	*check_last(char *s);
 // char	*change_dir(t_process *prcs, char *s);
 //minishell_exec_redirection.c
