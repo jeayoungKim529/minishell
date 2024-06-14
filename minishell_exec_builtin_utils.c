@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:33:35 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/14 14:48:24 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/14 15:00:28 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ int	ft_isalnum_exit(char *s)
 	}
 	return (1);
 }
-
 
 int	ft_atoi_exit(char *s)
 {

@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:33:54 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/14 13:49:11 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/14 15:01:29 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ int	execute_builtin(t_process *prcs)
 	else if (ft_strncmp("sdf", prcs->cmd[0], 4) == 0)
 		printf("%d\n", prcs->envp->status);
 
-	// if (dup2(prcs->prevfd, 1) == -1)
-	// 	ft_error_exec(prcs, strerror(errno), errno);
 	prcs->envp->status = 0;
 	return (-1);
 }
