@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_heredoc.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:40:07 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/14 18:52:28 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/14 22:13:44 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void	set_heredoc_file(t_token_node **token_node, char *path, t_process *prcs)
 	int				fd;
 	int				status;
 	int				heredoc_fd;
+		extern int sig;
 
 	node = *token_node;
 	fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0666);
@@ -98,8 +99,12 @@ void	set_heredoc_file(t_token_node **token_node, char *path, t_process *prcs)
 		heredoc_readline(fd, node->token, prcs, 1);
 	wait(&status);
 	builtin_signal_func();
-	// if (WIFEXITED(status))
-	// printf("WIFEXITED %d\n",WEXITSTATUS(status)); // TODO
+	// if (sig == 131)
+	// 	printf("WIFEXITED %d\n",WEXITSTATUS(status)); // TODO
+	if (WIFEXITED(status))
+		prcs->envp->status = WEXITSTATUS(status);
+	if (WIFSIGNALED(status))
+		prcs->envp->status = WIFSIGNALED(status) + 128;
 	free (node->token);
 	node->token = path;
 	close(fd);

@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 17:44:42 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/14 11:36:35 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/14 16:43:46 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	init_redirection(t_process *prcs, t_token_list *list)
 
 int	init_prcs(t_process *prcs, t_command_list *list, t_command_node *cur)
 {
-	prcs->t_cmd = list->front->cmd_list->size;
+	prcs->n_cmd = list->front->cmd_list->size;
 	init_path(prcs);
 	if (init_redirection(prcs, cur->redir_list) == -1)
 		return (-1);

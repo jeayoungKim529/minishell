@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/06/10 20:14:36 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/14 22:11:32 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 
 #include <readline/readline.h>
 #include <readline/history.h>
+
+extern int	sig;
 
 typedef enum e_token_type
 {

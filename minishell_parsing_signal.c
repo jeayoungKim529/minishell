@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_signal.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:53:13 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/14 17:23:24 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/14 22:14:58 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	signal_off(void)
 // 히어독일때
 void	handle_signal_heredoc(int signal)
 {
+	// sig = 131;
 	(void)signal;
 	// builtin_signal_func(); 
 	exit(1);
@@ -79,9 +80,7 @@ void heredoc_signal_func(void) // 물어보기
 // execve 함수를 실행할 때
 void handle_sigquit_exec(int signal)
 {
-	extern int sig;
-
-	sig = 131;
+	// sig = 131;
 	(void)signal;
 	// write(1, "\n", 1);
 	write(1, "dho", 3);
@@ -95,14 +94,15 @@ void handle_sigint_exec(int signal)
 	sig = 130;
 	(void)signal;
 	// write(1, "\n", 1);
-	write(1, "dho\n", 4);
-	printf("sigint\n");
-	dprintf(2, "dho\n");
+	// write(1, "dho\n", 4);
+	// printf("sigint\n");
+	// dprintf(2, "dho\n");
 	// revert_signal();
 	exit(1);
 }
 void exec_signal_func(void)
 {
+
 	(void)signal;
 	print_signal_on();
 	signal(SIGQUIT, handle_sigquit_exec); // ctrl + \ 막아놓음

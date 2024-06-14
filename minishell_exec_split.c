@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:33:34 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/12 17:00:41 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/14 20:16:01 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,9 @@ size_t	exec_count_num(const char *str, char c)
 
 char	**ft_exec_split_util(char const *s, char **arr, int i, int len)
 {
+	int	flag;
+
+	flag = 0;
 	len = ft_strlen(s + len + 1);
 	arr[1] = (char *)ft_calloc(sizeof(char), len + 1);
 	if (!arr[1])
@@ -50,7 +53,10 @@ char	**ft_exec_split_util(char const *s, char **arr, int i, int len)
 	len = 0;
 	while (s[i + 1])
 	{
-		arr[1][len] = s[i + 1];
+		if (flag == 0 && (s[i + 1] == '\"' || s[i + 1] == '\''))
+			i++;
+		else
+			arr[1][len] = s[i + 1];
 		i++;
 		len++;
 	}

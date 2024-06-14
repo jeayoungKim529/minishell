@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:23:07 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/14 20:19:35 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/14 22:12:14 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "minishell_parsing.h"
 #include "minishell_exec.h"
 
-int sig;
+int	sig;
 
 void	readline_func(t_command_list *list, t_process *prcs);
 
