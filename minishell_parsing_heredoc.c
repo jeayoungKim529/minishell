@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:40:07 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/12 19:35:13 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/14 10:36:01 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,14 @@ void	set_command(t_command_node	*node, t_process *prcs)
 	{
 		if (c_token->type == TOKEN_COMMAND)
 		{
+			if (ft_strchr(c_token->token, '$') != 0)
+			{
+
 			temp = c_token->token;
 			c_token->token = get_parse_command(temp, prcs);
 			free(temp);
 			temp = NULL;
+			}
 		} 
 		c_token = c_token->next;
 	}
@@ -138,6 +142,8 @@ void	set_heredoc_file(t_token_node **token_node, char *path)
 	// printf("whodo\n");
 	builtin_signal_func(); 
 	// TODO 히어독 종료 코드 설정
+	if (WIFEXITED(status))
+	printf("WIFEXITED %d\n",WEXITSTATUS(status));
 	free (node->token);
 	node->token = path;
 	close(fd);
