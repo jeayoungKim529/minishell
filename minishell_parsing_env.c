@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 20:42:03 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/12 19:37:07 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/14 15:50:13 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,10 @@ int	env_split_count(char *s)
 	}
 	return (count);
 }
-char	**make_env_result(char **result, char *s)
+char	**make_env_result(char **result, char *s, int i, int idx)
 {
-	int		i;
-	int		idx;
 	int		len;
 
-	i = 0;
-	idx = 0;
 	while (s[i])
 	{
 		len = 0;
@@ -69,6 +65,7 @@ char	**make_env_result(char **result, char *s)
 		}
 		idx ++;
 	}
+	result[idx] = 0;
 	return (result);
 }
 
@@ -80,15 +77,16 @@ char	**env_split(char *s)
 	size = env_split_count(s);
 	if (s[0] == 0)
 		size = 0;
-	result = (char **)ft_calloc(sizeof(char *), (size + 1));
+	result = (char **)ft_calloc(sizeof(char *), (size + 2));
 	if (result == 0)
 		return (free_split(result));
-	result = make_env_result(result, s);
+	result[0] = ft_itoa(size);
+	result = make_env_result(result, s, 0, 1);
 	if (result == 0)
 		return (0);
 	return (result);
 }
-void	env_var_transform(char **result, t_process *prcs )
+void	env_var_transform(char **result, t_process *prcs)
 {
 	int	i;
 	t_envp *node;
@@ -96,21 +94,22 @@ void	env_var_transform(char **result, t_process *prcs )
 	char    *temp;
 
 	i = 0;
-	// while (result[i] != NULL)
-	// {
-	// 	if (result[i][0] == '$')
-	// 	{
-			node = ft_envpfind(prcs->envp, (result[i] + 1));
-			if (node!= NULL)
-			{
-				temp = result[i];
-				result[i] = ft_strdup(node->value);
-				free(temp);
-				temp = NULL;
-			}
-		// }
-		// i++;
-	// }
+	node = ft_envpfind(prcs->envp, (result[i] + 1));
+	if (node!= NULL)
+	{
+		temp = result[i];
+		result[i] = ft_strdup(node->value);
+		free(temp);
+		temp = NULL;
+	}
+	else if (ft_strncmp(result[i], "$PWD", 5) == 0)
+		result[i] = ft_strdup(prcs->senvp.pwd);
+	else if (ft_strncmp(result[i], "$OLDPWD", 7) == 0)
+		result[i] = ft_strdup(prcs->senvp.oldpwd);
+	else if (ft_strncmp(result[i], "$HOME", 6) == 0)
+		result[i] = ft_strdup(prcs->senvp.home);
+	else
+		*result = ft_strdup("");
 }
 
 void	expand_env_string(char **line, t_process *prcs) // 무조건 치환 하면 됨
@@ -119,17 +118,17 @@ void	expand_env_string(char **line, t_process *prcs) // 무조건 치환 하면 
 	int		i;
 	char	**result;
 
-	i = 0;
+	i = 1;
 	if (ft_strchr(*line, '$') == 0)
 		return ;
 	else
 	{
 		result = env_split(*line);
 		temp = *line;
-		while (result[i] != NULL)
+		while (i < ft_atoi(result[0]) + 1)
 		{
 			if (result[i][0] == '$')
-			env_var_transform(&result[i], prcs);
+				env_var_transform(&result[i], prcs);
 			i++;
 		}
 		*line = make_one_line(result);
@@ -137,4 +136,5 @@ void	expand_env_string(char **line, t_process *prcs) // 무조건 치환 하면 
 		free(temp);
 		temp = NULL;
 	}
+
 }
