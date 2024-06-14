@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:43:22 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/14 14:35:59 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/14 15:02:07 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	ft_export(t_process *prcs, int i)
 	while (++i < prcs->n_cmd)
 		if (ft_isalnum(prcs->cmd[i][0]) != 1 || \
 			check_envp_key(prcs->cmd[i]) == 0)
-			return (ft_error_exec(prcs, "minishell: export: not a valid identifier", \
-				1));
+			return (ft_error_exec(prcs, \
+				"minishell: export: not a valid identifier", 1));
 	i = 0;
 	while (++i < prcs->n_cmd)
 	{

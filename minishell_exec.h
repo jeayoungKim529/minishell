@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:29:17 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/14 14:45:46 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/14 15:01:10 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,8 +127,5 @@ void	execute_wait(t_process *prcs, t_command_list *list, int flag);
 //minishell_exec_pipex_path.c
 char	*check_path(t_process *prcs);
 char	*make_basic_path(t_process *prcs);
-
-
-
 
 #endif
