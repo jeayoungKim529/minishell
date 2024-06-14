@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 16:55:31 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/14 19:26:11 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/14 20:18:20 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ void	set_command(t_command_node	*node, t_process *prcs)
 	{
 		if (c_token->type == TOKEN_COMMAND)
 		{
-			if (ft_strchr(c_token->token, '$') != 0)
+			if (ft_strchr(c_token->token, '$') != 0 || ft_strchr(c_token->\
+				token, '\'') != 0 || ft_strchr(c_token->token, '\"') != 0)
 			{
 				temp = c_token->token;
 				c_token->token = get_parse_command(temp, prcs, 1);
