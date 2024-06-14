@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:53:13 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/14 10:44:18 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/14 11:14:57 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,9 +116,6 @@ void handle_sigint_exec(int signal)
 }
 void exec_signal_func(void)
 {
-		write(1, "dho\n", 4);
-	printf("sigint\n");
-	dprintf(2, "dho\n");
 	(void)signal;
 	print_signal_on();
 	signal(SIGQUIT, handle_sigquit_exec); // ctrl + \ 막아놓음

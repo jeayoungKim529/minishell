@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:39:58 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/12 19:35:56 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/14 14:58:50 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,23 @@ void exec_signal_func(void);
 void	signal_func(void);
 void	revert_signal(void);
 
-
+//minishell_parsing_heredoc.c
 void	parse_command_list(t_command_list *list, t_process *prcs);
-char	*set_heredoc_path(t_token_node *node, char *i, char *j, char *temp);
-void	set_heredoc_file(t_token_node **token_node, char *path);
-void	heredoc_readline(int fd, char *end_text);
+size_t	ft_pipex_strlen(char *s);
+void	set_heredoc(t_command_node	*node, int i, t_process *prcs);
+void	set_command(t_command_node	*node, t_process *prcs);
+void parse_command_list(t_command_list *list, t_process *prcs);
+char *set_heredoc_path(t_token_node *node, char *i, char *j, char *temp);
+void	set_heredoc_file(t_token_node **token_node, char *path, t_process *prcs);
+char	*expand_env(char **str, int check, t_process *prcs);
+void	heredoc_readline(int fd, char *token , t_process *prcs);
+
 
 void	ft_error_parse(int status, char *s);
 
 
 int		env_split_count(char *s);
-char	**make_env_result(char **result, char *s);
+char	**make_env_result(char **result, char *s, int i, int idx);
 char	**env_split(char *s);
 void	expand_env_string(char **line, t_process *prcs);
 char	*make_one_line(char **result);
@@ -79,8 +85,9 @@ char	**free_split(char **result);
 int		get_quotes_lenght(char *str);
 int		puotes_split_count(char *s, int i, int count);
 char	**make_mini_result(char **result, char *s, int i, int idx);
-void	remove_quotes(char **result, t_process *prcs);
+void	remove_quotes(char **result, t_process *prcs, int check);
 char	**mini_split(char *s);
-char	*get_parse_command(char *command, t_process *prcs);
+char	*get_parse_command(char *command, t_process *prcs, int check);
+void	env_var_transform(char **result, t_process *prcs );
 
 #endif

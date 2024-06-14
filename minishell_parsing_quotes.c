@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 12:29:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/12 19:35:23 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/14 15:50:26 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ char	**make_mini_result(char **result, char *s, int i, int idx)
 		}
 		idx ++;
 	}
+	result[idx] = 0;
 	return (result);
 }
 
@@ -79,16 +80,17 @@ char	**mini_split(char *s)
 	size = puotes_split_count(s, 0, 0);
 	if (s[0] == 0)
 		size = 0;
-	result = (char **)ft_calloc(sizeof(char *), (size + 1));
+	result = (char **)ft_calloc(sizeof(char *), (size + 2));
 	if (result == 0)
 		return (free_split(result));
-	result = make_mini_result(result, s, 0, 0);
+	result[0] = ft_itoa(size);
+	result = make_mini_result(result, s, 0, 1);
 	if (result == 0)
 		return (0);
 	return (result);
 }
 
-void	remove_quotes(char **result, t_process *prcs)
+void	remove_quotes(char **result, t_process *prcs, int check)
 {
 	char	*temp;
 	int		idx;
@@ -104,23 +106,24 @@ void	remove_quotes(char **result, t_process *prcs)
 				*result = ft_substr(temp, 1, ft_strlen(temp) - 2);
 			else
 				*result = ft_substr(temp, 0, ft_strlen(temp));
-			expand_env_string(result, prcs);
+			if (check)
+				expand_env_string(result, prcs);
 		}
 		free(temp);
 		temp = NULL;
 }
 
-char	*get_parse_command(char *command, t_process *prcs)
+char	*get_parse_command(char *command, t_process *prcs, int check)
 {
 	char	**result;
 	char	*line;
 	int		i;
 
-	i = 0;
+	i = 1;
 	result = mini_split(command);
-	while(result[i] != NULL)
+	while(i < ft_atoi(result[0]) + 1)
 	{
-		remove_quotes(&result[i], prcs);
+		remove_quotes(&result[i], prcs, check);
 		i++;
 	}
 	line = make_one_line(result);

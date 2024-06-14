@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:40:07 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/14 10:36:01 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/14 15:51:09 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ size_t	ft_pipex_strlen(char *s)
 }
 
 
-void	set_heredoc(t_command_node	*node, int i)
+void	set_heredoc(t_command_node	*node, int i, t_process *prcs)
 {
 	int j;
 	t_token_node	*r_token;
@@ -38,7 +38,7 @@ void	set_heredoc(t_command_node	*node, int i)
 	while (++j < node->redir_list->size)
 	{
 		if (r_token->type == TOKEN_IN_APPEND)
-			set_heredoc_file(&r_token, set_heredoc_path(r_token, ft_itoa(i), ft_itoa(j), 0));
+			set_heredoc_file(&r_token, set_heredoc_path(r_token, ft_itoa(i), ft_itoa(j), 0), prcs);
 		r_token = r_token->next;
 	}
 }
@@ -58,11 +58,10 @@ void	set_command(t_command_node	*node, t_process *prcs)
 		{
 			if (ft_strchr(c_token->token, '$') != 0)
 			{
-
-			temp = c_token->token;
-			c_token->token = get_parse_command(temp, prcs);
-			free(temp);
-			temp = NULL;
+				temp = c_token->token;
+				c_token->token = get_parse_command(temp, prcs, 1);
+				free(temp);
+				temp = NULL;
 			}
 		} 
 		c_token = c_token->next;
@@ -82,7 +81,7 @@ void parse_command_list(t_command_list *list, t_process *prcs)
 	while (++i < list->size)
 	{
 		set_command(node, prcs);
-		set_heredoc(node, i);
+		set_heredoc(node, i, prcs);
 		node = node->next;
 	}
 }
@@ -118,7 +117,7 @@ char *set_heredoc_path(t_token_node *node, char *i, char *j, char *temp)
 }
 
 
-void	set_heredoc_file(t_token_node **token_node, char *path)
+void	set_heredoc_file(t_token_node **token_node, char *path, t_process *prcs)
 {
 	t_token_node	*node;
 	int				fd;
@@ -137,7 +136,7 @@ void	set_heredoc_file(t_token_node **token_node, char *path)
 	if (heredoc_fd != 0)
 		signal_off();
 	if (heredoc_fd == 0)
-		heredoc_readline(fd, node->token);
+		heredoc_readline(fd, node->token ,prcs);
 	wait(&status);
 	// printf("whodo\n");
 	builtin_signal_func(); 
@@ -148,12 +147,32 @@ void	set_heredoc_file(t_token_node **token_node, char *path)
 	node->token = path;
 	close(fd);
 }
+void	print_envp(t_process *prcs);
 
-char	*expand_env(char *str, int check)
+char	*expand_env(char **str, int check, t_process *prcs)
 {
-	if (check == 0)
-		return (str);
-	return (0);
+	char	*temp;
+	int		i;
+	char	**result;
+
+// print_envp(prcs);
+	i = 0;
+	if (check)
+	{
+		result = env_split(*str);
+		temp = *str;
+		while (result[i] != NULL)
+		{
+			if (result[i][0] == '$')
+				env_var_transform(&result[i], prcs);
+			i++;
+		}
+		*str = make_one_line(result);
+		printf("str = %s\n", *str);
+		free_split(result);
+		free(temp);
+	}
+	return (*str);
 }
 
 // char	*check_end_text(char * token)
@@ -161,28 +180,32 @@ char	*expand_env(char *str, int check)
 	
 // }
 
-void	heredoc_readline(int fd, char *token)
+void	heredoc_readline(int fd, char *token , t_process *prcs)
 {
 	char	*str;
 	int		check;
 	char	*end_text;
 
-
-	check = 0;
-	
+	check = 1;
+	if (ft_strchr(token, '\"') != NULL || ft_strchr(token, '\'') != NULL)
+		check = 0;
+	end_text = get_parse_command(token, prcs, 0);
 	heredoc_signal_func();
 	while (1)
 	{
 		str = readline("> ");
-		if (ft_strncmp(str, token, ft_pipex_strlen(str)) == 0 || !str)
+		if (ft_strncmp(str, end_text, ft_pipex_strlen(end_text) + 1) == 0 || !str)
 			break ;
+		write (fd, expand_env(&str, check, prcs), ft_strlen(str));
 		write (fd, "\n", 1);
-		write (fd, expand_env(str, check), ft_strlen(str));
 		if (str != NULL)
 			free (str);
 	}
 	if (str)
 		free(str);
-	// builtin_signal_func();
+		str = NULL;
+	if (end_text)
+		free (end_text);
+		end_text = NULL;
 	exit(0);
 }

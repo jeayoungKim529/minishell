@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 16:09:28 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/12 16:10:24 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/14 15:39:26 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,18 @@ char *make_one_line(char **result)
 		len += ft_strlen(result[idx]);
 	str = ft_calloc(sizeof (char), len + 1);
 	i = 0;
-	idx = 0;
-	while (i < len - 1)
+	idx = 1;
+	while (idx < ft_atoi(result[0]) + 1) // TODO i < len - 1 ㅇㅣㄹ ㄸㅐ ㅈㅏㄹ ㅈㅏㄱ도ㅇ했음
 	{
 		j = 0;
-		while (result[idx] && result[idx][j])
+		if (result[idx][0] != '\0')
 		{
-			str[i] = result[idx][j];
-			j++;
-			i++;
+			while (j < ft_strlen(result[idx]))
+			{
+				str[i] = result[idx][j];
+				j++;
+				i++;
+			}
 		}
 		idx ++;
 	}
