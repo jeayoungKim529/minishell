@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exec.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:29:20 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/12 16:08:40 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/14 10:43:43 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	execute_single(t_process *prcs, int i)
 	{
 		set_single_redirection(prcs);
 		exec_signal_func();
+
 		run_process(prcs);
 		if (dup2(1, prcs->prevfd) == -1)
 			ft_error_exec(prcs, strerror(errno), errno);
@@ -60,6 +61,7 @@ void	execute_commands(t_process *prcs, t_command_list *list, int i)
 {
 	t_command_node	*cur;
 	int				flag;
+		extern int sig;
 
 	cur = list->front;
 	prcs->prevfd = dup(prcs->std_fd[0]);
