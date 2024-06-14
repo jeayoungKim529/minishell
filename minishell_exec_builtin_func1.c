@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:43:22 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/12 17:17:20 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/12 21:46:11 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_env(t_process *prcs, int flag)
 		else if (cur->value && flag == 1)
 			printf("%s=\"%s\"\n", cur->key, cur->value);
 		else if (cur->value)
-			printf("%s=\"%s\"\n", cur->key, cur->value);
+			printf("%s=%s\n", cur->key, cur->value);
 		else if (!cur->value && flag == 1)
 			printf("%s\n", cur->key);
 		cur = cur->next;

@@ -20,6 +20,11 @@
 	"minishell_parsing.h": "c",
 	"sstream": "c",
 	"__node_handle": "c",
-	"__locale": "c"
+	"__locale": "c",
+	"bitset": "c",
+	"utility": "c",
+	"algorithm": "c",
+	"chrono": "c",
+	"stdarg.h": "c"
 }
 }

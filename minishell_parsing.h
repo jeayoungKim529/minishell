@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:39:58 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/10 16:23:42 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/12 19:35:56 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # define MINISHELL_PARSING_H
 
 # include "minishell.h"
+# include "minishell_exec.h"
 
 
 
@@ -61,11 +62,25 @@ void	signal_func(void);
 void	revert_signal(void);
 
 
-void	set_heredoc(t_command_list *list);
+void	parse_command_list(t_command_list *list, t_process *prcs);
 char	*set_heredoc_path(t_token_node *node, char *i, char *j, char *temp);
 void	set_heredoc_file(t_token_node **token_node, char *path);
 void	heredoc_readline(int fd, char *end_text);
 
 void	ft_error_parse(int status, char *s);
+
+
+int		env_split_count(char *s);
+char	**make_env_result(char **result, char *s);
+char	**env_split(char *s);
+void	expand_env_string(char **line, t_process *prcs);
+char	*make_one_line(char **result);
+char	**free_split(char **result);
+int		get_quotes_lenght(char *str);
+int		puotes_split_count(char *s, int i, int count);
+char	**make_mini_result(char **result, char *s, int i, int idx);
+void	remove_quotes(char **result, t_process *prcs);
+char	**mini_split(char *s);
+char	*get_parse_command(char *command, t_process *prcs);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:41:35 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/12 17:32:42 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/14 10:33:21 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,9 @@ void	ft_exit(t_process *prcs)
 		{
 			printf("exit\nbash: exit: %s: numeric argument required\n", \
 				prcs->cmd[1]);
-			ft_error_exec(prcs, NULL, 0);
+			ft_error_exec_exit(prcs, NULL, 0);
 		}
 		i++;
 	}
-	ft_error_exec(prcs, NULL, 0);
+	ft_error_exec_exit(prcs, NULL, 0);
 }

@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:21:37 by jimchoi           #+#    #+#             */
-/*   Updated: 2023/10/24 12:13:43 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/10 21:12:46 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 
 	i = 0;
 	len = ft_strlen(src);
-	while (src[i] != '\0' && i < size - 1 && size != 0)
+	while (src[i] != '\0' && i + 1 < size && size != 0)
 	{
 		dst[i] = src[i];
 		i++;
