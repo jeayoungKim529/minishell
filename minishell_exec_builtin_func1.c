@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:43:22 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/12 21:46:11 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/14 11:04:07 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ void	ft_export(t_process *prcs, int i)
 	if (prcs->n_cmd == 1)
 		return (ft_env(prcs, 1));
 	while (++i < prcs->n_cmd)
-		if (check_envp_key(prcs->cmd[i]) == 0)
+		if (ft_isalnum(prcs->cmd[i][0]) != 1 || \
+			check_envp_key(prcs->cmd[i]) == 0)
 			return (ft_error_exec(prcs, "bash: export: not a valid identifier", \
 				1));
 	i = 0;
