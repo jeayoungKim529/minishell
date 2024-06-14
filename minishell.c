@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:23:07 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/14 10:28:06 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/14 11:21:42 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	ft_error_exec_exit(t_process *prcs, char *s, int n)
 		revert_signal();
 	}
 	prcs->envp->status = n;
+	dprintf(2, "exit code : %d\n", n);
 	exit(n);
 }
 

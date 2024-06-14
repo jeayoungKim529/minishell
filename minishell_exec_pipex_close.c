@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:03:09 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/12 19:44:41 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/14 11:52:19 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,35 @@ void	execute_wait(t_process *prcs, t_command_list *list, int flag)
 	int	status;
 
 	i = 0;
+	if (flag == 1)
+	{
+		printf("WIFEXITED : %d\n", WIFEXITED(status));
+        printf("WEXITSTATUS : %d\n", WEXITSTATUS(status));
+        printf("WIFSIGNALED : %d\n", WIFSIGNALED(status));
+		// if (WIFEXITED(status))
+		// 	prcs->envp->status = WIFEXITED(status);
+		// else if (WEXITSTATUS(status))
+		// 	prcs->envp->status = WEXITSTATUS(status);
+		// else 
+		if (WIFEXITED(status))
+			prcs->envp->status = WEXITSTATUS(status);
+	}
 	while (flag == 0 && i < list->size && list->front->cmd_list->size > 0)
 	{
 		if (wait(&status) == -1)
 			exit(EXIT_FAILURE);
-		printf("WIFEXITED : %d\n",WIFEXITED(status));
-        printf("WEXITSTATUS : %d\n",WEXITSTATUS(status));
-        printf("WIFSIGNALED : %d\n",WIFSIGNALED(status));
-		if (WIFEXITED(status))
-			prcs->envp->status = WIFEXITED(status);
-		else if (WEXITSTATUS(status))
-			prcs->envp->status = WEXITSTATUS(status);
+		printf("WIFEXITED : %d\n", WIFEXITED(status));
+        printf("WEXITSTATUS : %d\n", WEXITSTATUS(status));
+        printf("WIFSIGNALED : %d\n", WIFSIGNALED(status));
+		// if (WIFEXITED(status))
+		// 	prcs->envp->status = WIFEXITED(status);
+		// else if (WEXITSTATUS(status))
+		// 	prcs->envp->status = WEXITSTATUS(status);
 		// else 
+		if (WIFEXITED(status))
+			prcs->envp->status = WEXITSTATUS(status);
 		if (WIFSIGNALED(status))
 			prcs->envp->status = WIFSIGNALED(status) + 128;
-		printf("stats:%d\n", prcs->envp->status);
 		i++;
 	}
 }
