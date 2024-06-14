@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:23:07 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/14 16:14:09 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/14 20:19:35 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,10 @@ int	ft_error_parse(int status, char *s)
 	// exit(status);
 }
 
-// void check_leaks()
-// {
-// 	system("leaks minishell");
-// }
+void check_leaks()
+{
+	system("leaks minishell");
+}
 
 void	init_process(t_process *prcs)
 {
@@ -98,12 +98,11 @@ int	main(int argc, char *argv[], char *envp[])
 	char			*line;
 
 	builtin_signal_func();
-
 	init_process(&prcs);
 	envp_func(&prcs, envp);
 	readline_func(&list, &prcs);
 	free_envp(&prcs);
 	revert_signal();
-	// atexit(check_leaks);
+	atexit(check_leaks);
 	exit(0);
 }
