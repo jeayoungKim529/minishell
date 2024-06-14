@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:23:07 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/14 14:58:00 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/14 16:14:09 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,13 @@ void	ft_error_exec_exit(t_process *prcs, char *s, int n)
 	exit(n);
 }
 
-void	ft_error_parse(int status, char *s)
+int	ft_error_parse(int status, char *s)
 {
 	ft_putstr_fd(s, 2);
     ft_putstr_fd("\n", 2);
 	if (status == 2)
 		exit(1);
+	return (1);
     // revert_signal();
     // exit(status);
 		// write(1, "\n", 1);

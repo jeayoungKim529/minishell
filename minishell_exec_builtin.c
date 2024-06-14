@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exec_builtin.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:33:54 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/14 15:01:29 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/14 19:26:27 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,8 @@ int	check_builtin_command(char **com)
 		return (1);
 	else if (ft_strncmp("exit", com[0], 5) == 0)
 		return (1);
-
 	else if (ft_strncmp("sdf", com[0], 4) == 0)
 		return (1);
-
 	return (0);
 }
 

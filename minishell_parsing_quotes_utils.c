@@ -6,29 +6,25 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 16:09:28 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/14 15:39:26 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/14 18:01:39 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_parsing.h"
 
-char *make_one_line(char **result)
+char	*make_one_line(char **result, int idx, int len)
 {
-	int		idx;
-	int		len;
 	int		i;
 	int		j;
 	char	*str;
 
-	idx = -1;
-	len = 0;
+	i = 0;
 	while (result[++idx] != 0)
 		len += ft_strlen(result[idx]);
 	str = ft_calloc(sizeof (char), len + 1);
-	i = 0;
 	idx = 1;
-	while (idx < ft_atoi(result[0]) + 1) // TODO i < len - 1 ㅇㅣㄹ ㄸㅐ ㅈㅏㄹ ㅈㅏㄱ도ㅇ했음
+	while (idx < ft_atoi(result[0]) + 1)
 	{
 		j = 0;
 		if (result[idx][0] != '\0')
@@ -48,11 +44,14 @@ char *make_one_line(char **result)
 char	**free_split(char **result)
 {
 	int	i;
+	int	len;
 
 	i = 0;
-	while (result[i] != NULL)
+	len = ft_atoi(result[0]) + 1;
+	while (i < len)
 	{
-		free(result[i]);
+		if (result[i])
+			free(result[i]);
 		result[i] = 0;
 		i++;
 	}
