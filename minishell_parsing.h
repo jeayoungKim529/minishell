@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:39:58 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/14 20:14:21 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/14 21:26:13 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int				parse_quotes(char *str);
 int				get_cmd_length(char *str, int len);
 char			*put_token(char *str);
 t_token_type	set_token_type(char *str);
-int				token_split(char *line, t_token_list *tmp_list);
+int				token_split(char *line, t_token_list *tmp_list, char *cmdline);
 // minishell_parsing_list_utils.c
 int				add_cmd_list(t_command_list *list, t_token_list *c_l, \
 					t_token_list *r_l);

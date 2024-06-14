@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:26:23 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/14 17:34:51 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/14 21:26:42 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,14 +104,11 @@ t_token_type	set_token_type(char *str)
 		return (TOKEN_COMMAND);
 }
 
-int	token_split(char *line, t_token_list *tmp_list)
+int	token_split(char *line, t_token_list *tmp_list, char *cmdline)
 {
-	char	*cmdline;
-
-	cmdline = 0;
 	while (*line)
 	{
-		while (*line && *line == ' ')
+		while (*line && (*line == ' ' || *line == '\t'))
 			line++;
 		if (!*line)
 			break ;
@@ -130,5 +127,6 @@ int	token_split(char *line, t_token_list *tmp_list)
 	}
 	if (cmdline)
 		free(cmdline);
+		cmdline = NULL;
 	return (0);
 }

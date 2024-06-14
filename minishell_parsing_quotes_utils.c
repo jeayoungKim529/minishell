@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 16:09:28 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/14 18:01:39 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/14 21:16:30 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	**free_split(char **result)
 	{
 		if (result[i])
 			free(result[i]);
-		result[i] = 0;
+		result[i] = NULL;
 		i++;
 	}
 	free (result);

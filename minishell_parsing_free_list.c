@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 17:20:04 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/14 20:13:49 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/14 21:23:37 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	free_command_list(t_command_list *command_list)
 		del_command_list(command_list, 0);
 	}
 }
+
 void	print_command_list(t_command_list *list)
 {
 	t_command_node	*head;
@@ -62,7 +63,7 @@ void	print_command_list(t_command_list *list)
 	}
 }
 
-void print_list(t_token_list *list)
+void	print_list(t_token_list *list)
 {
 	t_token_node	*head;
 	int				i;
