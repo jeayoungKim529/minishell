@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 19:05:20 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/15 15:02:45 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/15 16:01:33 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	run_process(t_process *prcs)
 
 	if (check_builtin_command(prcs->cmd) == 1)
 	{
-		execute_builtin(prcs);
+		execute_builtin(prcs, 1);
 		exit(prcs->envp->status);
 	}
 	path = check_path(prcs);
