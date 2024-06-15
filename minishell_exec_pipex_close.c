@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exec_pipex_close.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:03:09 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/15 14:06:06 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/15 14:38:03 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,6 @@ void	execute_wait(t_process *prcs, t_command_list *list, int flag)
 	int	status;
 
 	i = 0;
-	// printf("WIFEXITED : %d\n", WIFEXITED(status));
-	// printf("WEXITSTATUS : %d\n", WEXITSTATUS(status));
-	// printf("WIFSIGNALED : %d\n", WIFSIGNALED(status));
 	while (flag == 0 && i < list->size && list->front->cmd_list->size > 0)
 	{
 		if (wait(&status) == -1)
@@ -30,7 +27,7 @@ void	execute_wait(t_process *prcs, t_command_list *list, int flag)
 		if (WIFEXITED(status))
 			prcs->envp->status = WEXITSTATUS(status);
 		if (WIFSIGNALED(status))
-			prcs->envp->status = WIFSIGNALED(status) + 128;
+			prcs->envp->status = WTERMSIG(status) + 128;
 		i++;
 	}
 }
