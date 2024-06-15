@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:29:20 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/15 16:01:49 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/15 16:08:34 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	execute_single(t_process *prcs)
 		set_single_redirection(prcs);
 		exec_signal_func();
 		run_process(prcs);
-		// if (dup2(1, prcs->prevfd) == -1)
-		// 	ft_error_exec(prcs, strerror(errno), errno);
+		if (dup2(1, prcs->prevfd) == -1)
+			ft_error_exec(prcs, strerror(errno), errno);
 	}
 }
 
