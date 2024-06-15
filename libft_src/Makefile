@@ -38,7 +38,11 @@ ft_substr.c \
 ft_tolower.c \
 ft_toupper.c \
 get_next_line_bonus.c \
-get_next_line_utils_bonus.c 
+get_next_line_utils_bonus.c \
+\
+ft_printf.c\
+ft_printf_utils_nbr.c\
+ft_printf_libft.c
 
 BNS_SRCS=ft_lstnew_bonus.c \
 ft_lstsize_bonus.c \

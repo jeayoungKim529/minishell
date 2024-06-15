@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:41:35 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/15 14:53:37 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/15 15:34:31 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ void	ft_pwd(t_process *prcs)
 
 	cur = ft_envpfind(prcs->envp, "PWD");
 	if (cur != NULL && cur->value != NULL)
-		printf("%s\n", cur->value);
+		ft_printf("%s\n", cur->value);
 	else
-		printf("%s\n", prcs->senvp.pwd);
+		ft_printf("%s\n", prcs->senvp.pwd);
 	prcs->envp->status = 0;
 }
 
@@ -65,11 +65,11 @@ void	ft_echo(t_process *prcs)
 	while (i < prcs->n_cmd)
 	{
 		if (i == prcs->n_cmd - 1 && flag == 1)
-			printf("%s", prcs->cmd[i]);
+			ft_printf("%s", prcs->cmd[i]);
 		else if (i == prcs->n_cmd - 1 && flag == 0)
-			printf("%s\n", prcs->cmd[i]);
+			ft_printf("%s\n", prcs->cmd[i]);
 		else if (ft_strncmp(prcs->cmd[i], "", 1) != 0)
-			printf("%s ", prcs->cmd[i]);
+			ft_printf("%s ", prcs->cmd[i]);
 		i++;
 	}
 	prcs->envp->status = 0;
@@ -79,7 +79,7 @@ void	ft_exit(t_process *prcs)
 {
 	if (prcs->cmd[1] && ft_isalnum_exit(prcs->cmd[1]) != 1)
 	{
-		printf("exit\nminishell: exit: %s: numeric argument required\n", \
+		ft_printf("exit\nminishell: exit: %s: numeric argument required\n", \
 			prcs->cmd[1]);
 		ft_error_exec_exit(prcs, NULL, 255);
 	}
@@ -90,7 +90,7 @@ void	ft_exit(t_process *prcs)
 	}
 	if (prcs->cmd[1] && ft_isalnum_exit(prcs->cmd[1]) != 1)
 	{
-		printf("exit\nminishell: exit: %s: numeric argument required\n", \
+		ft_printf("exit\nminishell: exit: %s: numeric argument required\n", \
 			prcs->cmd[1]);
 		ft_error_exec_exit(prcs, NULL, 255);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exec_builtin_func1.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:43:22 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/15 13:58:35 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/15 15:33:16 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,23 @@ void	ft_env(t_process *prcs, int flag)
 	cur = prcs->envp->next;
 	if (prcs->n_cmd > 1 && flag == 0)
 	{
-		printf("env: %s: No such file or directory\n", prcs->cmd[1]);
+		ft_printf("env: %s: No such file or directory\n", prcs->cmd[1]);
 		return (ft_error_exec(prcs, NULL, 127));
 	}
 	while (cur)
 	{
 		if (flag == 1)
-			printf("declare -x ");
+			ft_printf("declare -x ");
 		if (cur->value && ((ft_strncmp(cur->value, "\"\"", 3) == 0 && flag == 1) \
 			|| ft_strncmp(cur->value, "\"\"", 3) != 0))
-			printf("%s=%s\n", cur->key, cur->value);
+			ft_printf("%s=%s\n", cur->key, cur->value);
 		else if (cur->value && flag == 1)
-			printf("%s=\"%s\"\n", cur->key, cur->value);
+			ft_printf("%s=\"%s\"\n", cur->key, cur->value);
 		else if (flag == 1 && (!cur->value || ft_strncmp(cur->value, "\"\"", 3) \
 			== 0))
-			printf("%s\n", cur->key);
+			ft_printf("%s\n", cur->key);
 		else if (ft_strncmp(cur->value, "\"\"", 3) == 0)
-			printf("%s=\n", cur->key);
+			ft_printf("%s=\n", cur->key);
 		cur = cur->next;
 	}
 	prcs->envp->status = 0;
@@ -47,7 +47,6 @@ void	ft_export(t_process *prcs, int i)
 	int		flag;
 
 	flag = 0;
-	dprintf(2, "ncmd : %d\n", prcs->n_cmd);
 	if (prcs->n_cmd == 1)
 		return (ft_env(prcs, 1));
 	while (++i < prcs->n_cmd)
@@ -55,7 +54,7 @@ void	ft_export(t_process *prcs, int i)
 		if ((ft_isalnum(prcs->cmd[i][0]) != 1 && prcs->cmd[i][0] != '_') || \
 			check_envp_key(prcs->cmd[i]) == 0)
 		{
-			printf("minishell: export: %s: not a valid identifier\n", \
+			ft_printf("minishell: export: %s: not a valid identifier\n", \
 				prcs->cmd[i]);
 			ft_error_builtin(prcs, NULL, 1);
 			flag = 1;
@@ -100,7 +99,7 @@ void	ft_unset(t_process *prcs)
 		if ((ft_isalnum(prcs->cmd[i][0]) != 1 && prcs->cmd[i][0] != '_') || \
 			check_envp_key(prcs->cmd[i]) == 0)
 		{
-			printf("minishell: unset: %s: not a valid identifier\n", \
+			ft_printf("minishell: unset: %s: not a valid identifier\n", \
 				prcs->cmd[i]);
 			ft_error_builtin(prcs, NULL, 1);
 			flag = 1;

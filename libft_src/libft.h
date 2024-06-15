@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 21:22:29 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/05/17 13:58:02 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/15 15:27:44 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <stdarg.h>
 
 typedef struct s_list
 {
@@ -97,5 +98,14 @@ char	*make_line(t_node *node, char *line, int size);
 int		find_line(t_node *node);
 // void	*ft_bzero(void *s, size_t n);
 void	make_save(t_node *node, int size);
+int		ft_putchar_fd_p(char c, int fd);
+int		ft_putstr_fd_p(char *s, int fd);
+int		ft_putnbr_fd_p(long n, int fd);
+int		ft_putnbr_fd_u(unsigned int n, int fd);
+int		ft_putnbr_fd_hex(unsigned int n, int fd, int mode);
+int		ft_putnbrstr_fd_hex(unsigned long n, int fd);
+int		ft_putstr_fd_hex(void *s, int fd);
+int		ft_printf_logic(const char *format, va_list ap);
+int		ft_printf(const char *format, ...);
 
 #endif
