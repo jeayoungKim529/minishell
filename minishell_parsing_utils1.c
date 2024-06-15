@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:54:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/15 14:10:11 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/15 14:29:39 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,10 @@ int	parsing(t_command_list	*cmd_list, char *line, t_process *prcs)
 		prcs->envp->status = 1;
 		return (1);
 	}
+	// print_command_list(cmd_list);
 	parse_command_list(cmd_list, prcs);
 	clear_list(&token_list);
-	print_command_list(cmd_list);
+	// print_command_list(cmd_list);
 	return (0);
 }
 
