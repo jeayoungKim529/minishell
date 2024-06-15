@@ -3,18 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+         #
+#    By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/17 12:35:23 by jeakim            #+#    #+#              #
-#    Updated: 2024/06/14 17:20:59 by jimchoi          ###   ########.fr        #
+#    Updated: 2024/06/15 13:53:31 by jeakim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 
-CFLAGS = -g #-fsanitize=address
+CFLAGS = -Wall -Werror -Wextra
+#-g -fsanitize=address
 
-# -Wall -Werror -Wextra
 NAME = minishell
 LINKING_FLAGS =
 #  -lreadline -L${HOME}/.brew/opt/readline/lib
