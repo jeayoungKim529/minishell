@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:29:20 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/14 22:15:54 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/15 12:32:52 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	execute_single(t_process *prcs, int i)
 	{
 		set_single_redirection(prcs);
 		exec_signal_func();
-
 		run_process(prcs);
 		if (dup2(1, prcs->prevfd) == -1)
 			ft_error_exec(prcs, strerror(errno), errno);
@@ -66,7 +65,7 @@ void	execute_commands(t_process *prcs, t_command_list *list, int i)
 	prcs->prevfd = dup(prcs->std_fd[0]);
 	flag = 0;
 	prcs->t_cmd = list->size;
-	while (cur && list->size > 0 && list->front->cmd_list->size > 0)
+	while (cur && list->size > 0 && list->front->cmd_list->size > 0 && ++i >= 0)
 	{
 		if (init_prcs(prcs, list, cur) == -1)
 			return (free_command(prcs));
@@ -82,7 +81,6 @@ void	execute_commands(t_process *prcs, t_command_list *list, int i)
 		free_command(prcs);
 		free_path(prcs);
 		cur = cur->next;
-		i++;
 	}
 	finish_commands(prcs, list, flag);
 }

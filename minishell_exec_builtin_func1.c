@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:43:22 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/14 21:16:56 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/15 13:21:46 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,18 @@ void	ft_env(t_process *prcs, int flag)
 	cur = prcs->envp->next;
 	if (prcs->n_cmd > 1 && flag == 0)
 	{
-		printf("env: %s: No such file or directory5\n", prcs->cmd[1]);
+		printf("env: %s: No such file or directory\n", prcs->cmd[1]);
 		return (ft_error_exec(prcs, NULL, 127));
 	}
 	while (cur)
 	{
 		if (flag == 1)
 			printf("declare -x ");
-		if (cur->value && ft_strncmp(cur->value, "\"\"", 3) == 0 && flag == 1)
+		if (cur->value && ((ft_strncmp(cur->value, "\"\"", 3) == 0 && flag == 1) \
+			|| ft_strncmp(cur->value, "\"\"", 3) != 0))
 			printf("%s=%s\n", cur->key, cur->value);
 		else if (cur->value && flag == 1)
 			printf("%s=\"%s\"\n", cur->key, cur->value);
-		else if (cur->value && ft_strncmp(cur->value, "\"\"", 3) != 0)
-			printf("%s=%s\n", cur->key, cur->value);
 		else if (flag == 1 && (!cur->value || ft_strncmp(cur->value, "\"\"", 3) \
 			== 0))
 			printf("%s\n", cur->key);
