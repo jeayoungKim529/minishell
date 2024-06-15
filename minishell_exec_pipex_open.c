@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 19:05:20 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/14 21:32:52 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/15 13:37:18 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	run_process(t_process *prcs)
 	}
 	path = check_path(prcs);
 	if (path == NULL && ft_strchr(prcs->cmd[0], '/') == NULL)
-		ft_error_exec_exit(prcs, "command not found3\n", 127);
+		ft_error_exec_exit(prcs, "command not found", 127);
 	if (path == NULL && ft_strchr(prcs->cmd[0], '/') != NULL)
 		ft_error_exec_exit(prcs, "No such file or directory3\n", 127);
 	else if (path == NULL)
