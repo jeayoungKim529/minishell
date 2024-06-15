@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 20:42:03 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/15 14:49:37 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/15 15:06:38 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,9 @@ char	**make_env_result(char **result, char *s, int i, int idx)
 		else
 		{
 			len ++;
-			while (ft_isalnum(s[i + len]) != 0 || s[i + len] == '?') //  CHECK
+			while (ft_isalnum(s[i + len]) != 0 || s[i + len] == '?')
 				len ++;
 			result[idx] = ft_substr(s, i, len);
-
 			i += len;
 		}
 		idx ++;
@@ -95,7 +94,7 @@ void	env_var_transform(char **result, t_process *prcs)
 	i = 0;
 	node = ft_envpfind(prcs->envp, (result[i] + 1));
 	if (ft_strncmp(result[i], "$?", 3) == 0)
-		result[i] = ft_itoa(prcs->envp->status); // CHECK
+		result[i] = ft_itoa(prcs->envp->status);
 	else if (node != NULL)
 	{
 		temp = result[i];

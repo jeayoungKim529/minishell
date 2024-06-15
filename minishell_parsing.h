@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:39:58 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/15 13:52:40 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/15 15:05:34 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void			set_command(t_command_node	*node, t_process *prcs);
 void			clear_list(t_token_list *list);
 void			free_command_list(t_command_list *command_list);
 int				ft_error_parse(int status, char *s);
-void	print_command_list(t_command_list *list);
+// void	print_command_list(t_command_list *list);
 // void print_list(t_token_list *list);
 
 #endif
