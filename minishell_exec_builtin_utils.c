@@ -6,14 +6,13 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:33:35 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/15 14:18:47 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/15 14:22:35 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_exec.h"
 
-//ft_echo
 int	check_option(char *s)
 {
 	int	i;
@@ -34,7 +33,6 @@ int	check_option(char *s)
 	return (0);
 }
 
-//ft_cd
 void	change_pwd(t_process *prcs, char *key, char *value)
 {
 	t_envp	*cur;
