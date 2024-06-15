@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:33:54 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/14 22:29:04 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/15 15:34:43 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ int	check_builtin_command(char **com)
 		return (1);
 	else if (ft_strncmp("exit", com[0], 5) == 0)
 		return (1);
-	else if (ft_strncmp("sdf", com[0], 4) == 0)
-		return (1);
 	return (0);
 }
 
@@ -59,7 +57,5 @@ int	execute_builtin(t_process *prcs)
 		ft_unset(prcs);
 	else if (ft_strncmp("exit", prcs->cmd[0], 5) == 0)
 		ft_exit(prcs);
-	else if (ft_strncmp("sdf", prcs->cmd[0], 4) == 0)
-		printf("%d\n", prcs->envp->status);
 	return (prcs->envp->status);
 }
