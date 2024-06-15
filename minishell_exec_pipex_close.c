@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:03:09 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/15 13:59:46 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/15 14:06:06 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ void	execute_wait(t_process *prcs, t_command_list *list, int flag)
 
 void	ft_unlink(t_process *prcs, t_command_list *list)
 {
-	t_token_node	*cur;
+	t_command_node	*cur_l;
+	t_token_node	*cur_t;
 
 	if (prcs->file.in == -1)
 		close(prcs->file.in);
@@ -46,12 +47,17 @@ void	ft_unlink(t_process *prcs, t_command_list *list)
 	if (!list || !list->front || !list->front->redir_list || \
 		list->front->redir_list->size <= 0)
 		return ;
-	cur = list->front->redir_list->front;
-	while (cur)
+	cur_l = list->front;
+	while (cur_l)
 	{
-		if (cur->type == TOKEN_OUT_APPEND)
-			unlink(cur->token);
-		cur = cur->next;
+		cur_t = cur_l->redir_list->front;
+		while (cur_t)
+		{
+			if (cur_t->type == TOKEN_IN_APPEND)
+				unlink(cur_t->token);
+			cur_t = cur_t->next;
+		}
+		cur_l = cur_l->next;
 	}
 }
 
