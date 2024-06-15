@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:54:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/14 21:56:51 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/15 12:32:36 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	readline_func(t_command_list *list, t_process *prcs)
 		else
 			break ;
 		add_history(str);
-		execute_commands(prcs, list, 0);
+		execute_commands(prcs, list, -1);
 		if (list)
 			free_command_list(list);
 		free(str);
