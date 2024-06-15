@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:54:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/15 13:34:35 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/15 13:49:44 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	parsing(t_command_list	*cmd_list, char *line, t_process *prcs)
 
 	token_list.size = 0;
 	cmd_list->size = 0;
-	if (token_split(line, &token_list, 0) || token_list.size == 1 \
-		&& token_list.front->type == TOKEN_PIPE)
+	if (token_split(line, &token_list, 0) || (token_list.size == 1 \
+		&& token_list.front->type == TOKEN_PIPE))
 	{
 		if (token_list.size == 1)
 			ft_error_parse(1, "syntax error near unexpected token");
@@ -40,13 +40,13 @@ int	parsing(t_command_list	*cmd_list, char *line, t_process *prcs)
 	}
 	parse_command_list(cmd_list, prcs);
 	clear_list(&token_list);
+	print_command_list(cmd_list);
 	return (0);
 }
 
 void	readline_func(t_command_list *list, t_process *prcs)
 {
 	char	*str;
-	int		fd;
 
 	while (1)
 	{

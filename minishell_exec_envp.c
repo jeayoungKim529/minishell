@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exec_envp.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:29:00 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/15 13:29:00 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/15 13:58:25 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ void	init_status_envp(t_process *prcs)
 void	envp_func(t_process *prcs, char *envp[])
 {
 	int		i;
-	t_envp	*cur;
 	t_envp	*new;
 	char	**p;
 

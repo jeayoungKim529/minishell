@@ -6,15 +6,13 @@
 #    By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/17 12:35:23 by jeakim            #+#    #+#              #
-#    Updated: 2024/06/14 22:32:01 by jimchoi          ###   ########.fr        #
+#    Updated: 2024/06/15 13:48:16 by jimchoi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 
-CFLAGS = -g #-fsanitize=address
-
-# -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra
 NAME = minishell
 LINKING_FLAGS =
 #  -lreadline -L${HOME}/.brew/opt/readline/lib

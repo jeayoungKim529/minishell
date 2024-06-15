@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:40:07 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/15 12:28:34 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/15 13:52:09 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	set_heredoc(t_command_node	*node, int i, t_process *prcs)
 		{
 			num = ft_itoa(i);
 			name = ft_strjoin(num, "-");
-			path = set_heredoc_path(r_token, num, ft_itoa(j), name);
+			path = set_heredoc_path(num, ft_itoa(j), name);
 			if (path == NULL)
 				ft_error_parse(2, "heredoc path error");
 			set_heredoc_file(&r_token, path, prcs);
@@ -51,7 +51,7 @@ void	set_heredoc(t_command_node	*node, int i, t_process *prcs)
 	}
 }
 
-char	*set_heredoc_path(t_token_node *node, char *i, char *j, char *name)
+char	*set_heredoc_path(char *i, char *j, char *name)
 {
 	char	*temp;
 	char	*path;

@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 22:24:16 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/15 12:28:06 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/15 13:55:15 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 void	handle_signal_builtin(int signal)
 {
+	(void)signal;
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);

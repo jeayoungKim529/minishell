@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 16:55:31 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/14 21:14:01 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/15 13:54:45 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	parse_command_list(t_command_list *list, t_process *prcs)
 {
 	t_command_node	*node;
 	int				i;
-	int				j;
 	int				count;
 
 	i = -1;

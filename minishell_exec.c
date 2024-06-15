@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exec.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:29:20 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/15 12:32:52 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/15 13:56:16 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 #include "minishell_exec.h"
 #include "minishell_parsing.h"
 
-void	execute_single(t_process *prcs, int i)
+void	execute_single(t_process *prcs)
 {
-	char	*path;
-
 	prcs->pid = fork();
 	if (prcs->pid == -1)
 		ft_error_exec(prcs, strerror(errno), errno);
@@ -75,7 +73,7 @@ void	execute_commands(t_process *prcs, t_command_list *list, int i)
 			flag = 1;
 		}
 		else if (list->size == 1)
-			execute_single(prcs, i);
+			execute_single(prcs);
 		else
 			execute_multi(prcs, i);
 		free_command(prcs);

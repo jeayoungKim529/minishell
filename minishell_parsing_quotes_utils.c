@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 16:09:28 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/14 21:16:30 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/15 13:54:09 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 char	*make_one_line(char **result, int idx, int len)
 {
-	int		i;
-	int		j;
+	size_t	i;
+	size_t	j;
 	char	*str;
 
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 12:29:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/14 18:00:47 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/15 13:53:28 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,6 @@ char	**mini_split(char *s)
 void	remove_quotes(char **result, t_process *prcs, int check)
 {
 	char	*temp;
-	int		idx;
-	int		len;
-	char	**line;
 
 	temp = *result;
 	if (**result == '\'')

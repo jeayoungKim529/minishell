@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:53:13 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/15 12:27:13 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/15 13:51:22 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	print_signal_on(void)
 
 void	handle_signal(int signal)
 {
+	(void)signal;
 	write(1, "\n", 1);
 }
 

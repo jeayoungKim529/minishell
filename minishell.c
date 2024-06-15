@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:23:07 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/15 13:32:24 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/15 13:49:10 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,9 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	t_command_list	list;
 	t_process		prcs;
-	char			*line;
 
+	(void)argc;
+	(void)argv;
 	builtin_signal_func();
 	init_process(&prcs);
 	envp_func(&prcs, envp);

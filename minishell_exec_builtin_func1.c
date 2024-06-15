@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exec_builtin_func1.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:43:22 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/15 13:21:46 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/15 13:58:35 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ void	ft_export_second(t_process *prcs)
 
 void	ft_unset(t_process *prcs)
 {
-	t_envp	*cur;
 	int		i;
 	int		flag;
 
