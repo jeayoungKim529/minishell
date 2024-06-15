@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exec.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:29:17 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/15 13:56:21 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/15 16:01:06 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int		set_redirection_write(t_process *prcs, t_token_node *cur);
 int		set_single_redirection(t_process *prcs);
 void	set_multi_redirection(t_process *prcs, int i);
 //minishell_exec_builtin.c
-int		execute_builtin(t_process *prcs);
+int		execute_builtin(t_process *prcs, int flag);
 int		check_builtin_command(char **com);
 int		ft_error_builtin(t_process *prcs, char *s, int n);
 //minishell_exec_builtin_func1.c
