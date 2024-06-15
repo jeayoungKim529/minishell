@@ -1,33 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   minishell_parsing_signal_exec.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/09 13:21:41 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/14 18:54:05 by jimchoi          ###   ########.fr       */
+/*   Created: 2024/06/14 22:24:36 by jimchoi           #+#    #+#             */
+/*   Updated: 2024/06/15 12:25:45 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
+#include "minishell_parsing.h"
 
-char	*ft_strdup(char *src)
+// execve 함수를 실행할 때
+void	handle_sigquit_exec(int signal)
 {
-	size_t	i;
-	size_t	len;
-	char	*str;
+	(void)signal;
+	exit(1);
+}
 
-	i = 0;
-	len = ft_strlen(src);
-	str = (char *)malloc(sizeof(char) * (len + 1));
-	if (!str)
-		return (0);
-	while (i < len)
-	{
-		str[i] = src[i];
-		i++;
-	}
-	str[i] = '\0';
-	return (str);
+void	handle_sigint_exec(int signal)
+{
+	(void)signal;
+	exit(1);
+}
+
+void	exec_signal_func(void)
+{
+	(void)signal;
+	print_signal_on();
+	signal(SIGQUIT, handle_sigquit_exec);
+	signal(SIGINT, handle_sigint_exec);
 }

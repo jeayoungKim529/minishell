@@ -1,22 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalnum.c                                       :+:      :+:    :+:   */
+/*   minishell_parsing_signal_heredoc.c                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/05 19:56:20 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/05/22 19:42:19 by jeakim           ###   ########.fr       */
+/*   Created: 2024/06/14 22:23:43 by jimchoi           #+#    #+#             */
+/*   Updated: 2024/06/15 12:23:58 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
+#include "minishell_parsing.h"
 
-int	ft_isalnum(int c)
+void	handle_signal_heredoc(int signal)
 {
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
-		return (1);
-	else if (c >= '0' && c <= '9')
-		return (2);
-	return (0);
-}	
+	(void)signal;
+	exit(1);
+}
+
+void	heredoc_signal_func(void)
+{
+	(void)signal;
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, handle_signal_heredoc);
+}
