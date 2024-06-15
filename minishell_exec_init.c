@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 17:44:42 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/15 12:24:23 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/15 14:50:07 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@ void	init_path(t_process *prcs)
 
 int	init_redirection(t_process *prcs, t_token_list *list)
 {
+	if (prcs->file.in != -1)
+		close (prcs->file.in);
+	if (prcs->file.out != -1)
+		close (prcs->file.out);
 	prcs->file.in = -1;
 	prcs->file.out = -1;
 	if (list && list->size > 0)

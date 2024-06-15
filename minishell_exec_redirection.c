@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:08:24 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/14 19:18:43 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/15 15:01:42 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	set_multi_redirection(t_process *prcs, int i)
 		ft_error_exec_exit(prcs, strerror(errno), errno);
 	if (prcs->file.out == -1)
 	{
-		if (i == prcs->t_cmd - 1)
+		if (i == prcs->t_cmd)
 		{
 			if (dup2(prcs->std_fd[1], 1) == -1)
 				ft_error_exec_exit(prcs, strerror(errno), errno);
