@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exec_builtin_func2.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:41:35 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/14 21:37:36 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/15 13:58:48 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 void	ft_cd(t_process *prcs)
 {
 	char	*old_pwd;
-	int		tmp;
 
 	old_pwd = getcwd(NULL, 0);
 	if (prcs->n_cmd == 1 || access(prcs->cmd[1], X_OK) == -1)

@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:39:58 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/14 20:14:21 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/15 13:52:40 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int				parse_quotes(char *str);
 int				get_cmd_length(char *str, int len);
 char			*put_token(char *str);
 t_token_type	set_token_type(char *str);
-int				token_split(char *line, t_token_list *tmp_list);
+int				token_split(char *line, t_token_list *tmp_list, char *cmdline);
 // minishell_parsing_list_utils.c
 int				add_cmd_list(t_command_list *list, t_token_list *c_l, \
 					t_token_list *r_l);
@@ -62,8 +62,7 @@ size_t			p_strlen(char *s);
 void			set_heredoc(t_command_node	*node, int i, t_process *prcs);
 void			set_heredoc_file(t_token_node **token_node, char *path, \
 					t_process *prcs);
-char			*set_heredoc_path(t_token_node *node, char *i, char *j, \
-					char *name);
+char			*set_heredoc_path(char *i, char *j, char *name);
 void			heredoc_readline(int fd, char *token, t_process *prcs, \
 					int check);
 // minishell_parsing_quotes.c
@@ -90,13 +89,7 @@ void			set_command(t_command_node	*node, t_process *prcs);
 void			clear_list(t_token_list *list);
 void			free_command_list(t_command_list *command_list);
 int				ft_error_parse(int status, char *s);
-
-
-
-
-//지울거
 void	print_command_list(t_command_list *list);
-void print_list(t_token_list *list);
-
+// void print_list(t_token_list *list);
 
 #endif

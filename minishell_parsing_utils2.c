@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:26:23 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/14 17:34:51 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/15 13:50:56 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,25 +39,25 @@ int	parse_quotes(char *str)
 	return (len + 2);
 }
 
-int	get_cmd_length(char *str, int len)
+int	get_cmd_length(char *s, int len)
 {
 	int	count;
 
 	count = 0;
-	if (str[0] == '|' || str[0] == '>' || str[0] == '<')
+	if (s[0] == '|' || s[0] == '>' || s[0] == '<')
 	{
-		if (str[0] == '>' && str[1] == '>' || str[0] == '<' && str[1] == '<')
+		if ((s[0] == '>' && s[1] == '>') || (s[0] == '<' && s[1] == '<'))
 			len = 2;
 		else
 			len = 1;
 		return (len);
 	}
-	while (str[len] && str[len] != ' ' && str[len] != '|' && str[len] != '>'
-		&& str[len] != '<')
+	while (s[len] && s[len] != ' ' && s[len] != '|' && s[len] != '>'
+		&& s[len] != '<')
 	{
-		if (str[len] == '\"' || str[len] == '\'')
+		if (s[len] == '\"' || s[len] == '\'')
 		{
-			count = parse_quotes(str + len);
+			count = parse_quotes(s + len);
 			if (count == -1)
 				return (-1);
 			len += count - 1;
@@ -104,14 +104,11 @@ t_token_type	set_token_type(char *str)
 		return (TOKEN_COMMAND);
 }
 
-int	token_split(char *line, t_token_list *tmp_list)
+int	token_split(char *line, t_token_list *tmp_list, char *cmdline)
 {
-	char	*cmdline;
-
-	cmdline = 0;
 	while (*line)
 	{
-		while (*line && *line == ' ')
+		while (*line && (*line == ' ' || *line == '\t'))
 			line++;
 		if (!*line)
 			break ;
@@ -130,5 +127,6 @@ int	token_split(char *line, t_token_list *tmp_list)
 	}
 	if (cmdline)
 		free(cmdline);
+		cmdline = NULL;
 	return (0);
 }

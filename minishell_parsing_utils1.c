@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_utils1.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:54:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/15 12:32:36 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/15 14:10:11 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,58 +22,52 @@ int	parsing(t_command_list	*cmd_list, char *line, t_process *prcs)
 
 	token_list.size = 0;
 	cmd_list->size = 0;
-	// if (!cmd_list)
-	// 	free_command_list(cmd_list);
-	if (token_split(line, &token_list))
+	if (token_split(line, &token_list, 0) || (token_list.size == 1 \
+		&& token_list.front->type == TOKEN_PIPE))
 	{
+		if (token_list.size == 1)
+			ft_error_parse(1, "syntax error near unexpected token");
 		clear_list(&token_list);
-		//exit status : 258
-		// prcs->envp->value = 258;
+		prcs->envp->status = 1;
 		return (1);
 	}
-	if (token_list.size == 1 && token_list.front->type == TOKEN_PIPE)
-		return (ft_error_parse(1, "syntax error near unexpected token"));
 	if (make_command_list(&token_list, cmd_list, 0, 0))
 	{
 		clear_list(&token_list);
 		free_command_list(cmd_list);
-		//exit_status : 258
-		// prcs->envp->value = 258;
+		prcs->envp->status = 1;
 		return (1);
 	}
 	parse_command_list(cmd_list, prcs);
-	// leak
 	clear_list(&token_list);
-	// free_command_list(cmd_list);
-	// print_command_list(cmd_list);
+	print_command_list(cmd_list);
 	return (0);
 }
+
 void	readline_func(t_command_list *list, t_process *prcs)
 {
 	char	*str;
-	int		fd;
 
 	while (1)
 	{
+		if (list->front)
+			free_command_list(list);
 		str = readline("prompt : ");
 		if (str)
 		{
 			if (parsing(list, str, prcs) == 1)
 			{
 				free(str);
+				str = NULL;
 				continue ;
 			}
 		}
 		else
 			break ;
 		add_history(str);
-		execute_commands(prcs, list, -1);
-		if (list)
-			free_command_list(list);
+		execute_commands(prcs, list, 0);
 		free(str);
 		str = NULL;
 	}
 	return ;
-	if (list)
-		free_command_list(list);
 }

@@ -3,18 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+         #
+#    By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/17 12:35:23 by jeakim            #+#    #+#              #
-#    Updated: 2024/06/15 13:53:31 by jeakim           ###   ########.fr        #
+#    Updated: 2024/06/15 14:06:17 by jimchoi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 
 CFLAGS = -Wall -Werror -Wextra
-#-g -fsanitize=address
-
 NAME = minishell
 LINKING_FLAGS =
 #  -lreadline -L${HOME}/.brew/opt/readline/lib
@@ -39,6 +37,9 @@ SRCS = minishell.c \
 		minishell_parsing_env.c\
 		minishell_parsing_command_utils.c\
 		minishell_parsing_free_list.c\
+		minishell_parsing_signal_builtin.c\
+		minishell_parsing_signal_heredoc.c\
+		minishell_parsing_signal_exec.c\
 		\
 		minishell_exec.c\
 		minishell_exec_split.c\

@@ -1,55 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_parsing_signal.c                         :+:      :+:    :+:   */
+/*   minishell_parsing_signal_builtin.c                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/03 14:53:13 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/15 13:51:22 by jimchoi          ###   ########.fr       */
+/*   Created: 2024/06/14 22:24:16 by jimchoi           #+#    #+#             */
+/*   Updated: 2024/06/15 13:55:15 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_parsing.h"
 
-void	print_signal_off(void)
-{
-	struct termios	term;
-
-	if (tcgetattr(1, &term) != 0)
-		return ;
-	term.c_lflag &= ~(ECHOCTL);
-	tcsetattr(1, 0, &term);
-}
-
-void	print_signal_on(void)
-{
-	struct termios	term;
-
-	if (tcgetattr(1, &term) != 0)
-		return ;
-	term.c_lflag |= (ECHOCTL);
-	tcsetattr(1, 0, &term);
-}
-
-void	handle_signal(int signal)
+void	handle_signal_builtin(int signal)
 {
 	(void)signal;
 	write(1, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 }
 
-void	signal_func(void)
+void	builtin_signal_func(void)
 {
-	write(1, "\n", 1);
 	print_signal_off();
 	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, handle_signal);
+	signal(SIGINT, handle_signal_builtin);
 }
 
-void	signal_off(void)
+void	revert_signal(void)
 {
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, SIG_IGN);
-	print_signal_off();
+	print_signal_on();
+	signal(SIGQUIT, SIG_DFL);
+	signal(SIGINT, SIG_DFL);
 }

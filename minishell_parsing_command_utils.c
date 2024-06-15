@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 16:55:31 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/14 20:18:20 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/15 13:54:45 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	parse_command_list(t_command_list *list, t_process *prcs)
 {
 	t_command_node	*node;
 	int				i;
-	int				j;
 	int				count;
 
 	i = -1;
@@ -52,6 +51,7 @@ char	*expand_env(char **str, int check, t_process *prcs)
 		*str = make_one_line(result, -1, 0);
 		free_split(result);
 		free(temp);
+		temp = NULL;
 	}
 	return (*str);
 }

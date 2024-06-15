@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exec.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:29:17 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/15 12:23:09 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/15 13:56:21 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	ft_error_exec(t_process *prcs, char *s, int n);
 void	ft_error_exec_exit(t_process *prcs, char *s, int n);
 //minishell_exec.c
 void	execute_multi(t_process *prcs, int i);
-void	execute_single(t_process *prcs, int i);
+void	execute_single(t_process *prcs);
 //minishell_exec_envp.c
 void	envp_func(t_process *prcs, char *envp[]);
 void	init_status_envp(t_process *prcs);

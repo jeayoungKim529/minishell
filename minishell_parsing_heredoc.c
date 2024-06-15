@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_heredoc.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:40:07 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/14 22:13:44 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/15 13:52:09 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	set_heredoc(t_command_node	*node, int i, t_process *prcs)
 		{
 			num = ft_itoa(i);
 			name = ft_strjoin(num, "-");
-			path = set_heredoc_path(r_token, num, ft_itoa(j), name);
+			path = set_heredoc_path(num, ft_itoa(j), name);
 			if (path == NULL)
 				ft_error_parse(2, "heredoc path error");
 			set_heredoc_file(&r_token, path, prcs);
@@ -51,7 +51,7 @@ void	set_heredoc(t_command_node	*node, int i, t_process *prcs)
 	}
 }
 
-char	*set_heredoc_path(t_token_node *node, char *i, char *j, char *name)
+char	*set_heredoc_path(char *i, char *j, char *name)
 {
 	char	*temp;
 	char	*path;
@@ -86,7 +86,6 @@ void	set_heredoc_file(t_token_node **token_node, char *path, t_process *prcs)
 	int				fd;
 	int				status;
 	int				heredoc_fd;
-		extern int sig;
 
 	node = *token_node;
 	fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0666);
@@ -99,8 +98,6 @@ void	set_heredoc_file(t_token_node **token_node, char *path, t_process *prcs)
 		heredoc_readline(fd, node->token, prcs, 1);
 	wait(&status);
 	builtin_signal_func();
-	// if (sig == 131)
-	// 	printf("WIFEXITED %d\n",WEXITSTATUS(status)); // TODO
 	if (WIFEXITED(status))
 		prcs->envp->status = WEXITSTATUS(status);
 	if (WIFSIGNALED(status))
