@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:41:35 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/15 14:20:57 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/15 14:53:37 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,10 @@ void	ft_echo(t_process *prcs)
 	while (++i < prcs->n_cmd)
 	{
 		if (check_option(prcs->cmd[i]) == 0)
-		{
 			flag = 1;
-			printf("%d : %s\n", i, prcs->cmd[i]);
-		}
 		else
 			break ;
 	}
-	printf("flag : %d\n", flag);
 	while (i < prcs->n_cmd)
 	{
 		if (i == prcs->n_cmd - 1 && flag == 1)

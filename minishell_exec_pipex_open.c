@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 19:05:20 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/15 13:37:18 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/15 15:02:45 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ void	run_process(t_process *prcs)
 	else if (path == NULL)
 		path = prcs->cmd[0];
 	else if (execve(path, prcs->cmd, init_exec_envp(prcs)) == -1)
-	{
 		ft_error_exec_exit(prcs, strerror(errno), errno);
-	}
 	exit (1);
 }
