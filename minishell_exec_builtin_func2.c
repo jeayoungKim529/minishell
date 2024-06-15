@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exec_builtin_func2.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:41:35 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/15 13:58:48 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/15 14:20:57 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,22 +54,25 @@ void	ft_echo(t_process *prcs)
 	int	i;
 
 	flag = 0;
-	i = 1;
-	while (i < prcs->n_cmd)
+	i = 0;
+	while (++i < prcs->n_cmd)
 	{
 		if (check_option(prcs->cmd[i]) == 0)
+		{
 			flag = 1;
+			printf("%d : %s\n", i, prcs->cmd[i]);
+		}
 		else
 			break ;
-		i++;
 	}
+	printf("flag : %d\n", flag);
 	while (i < prcs->n_cmd)
 	{
 		if (i == prcs->n_cmd - 1 && flag == 1)
 			printf("%s", prcs->cmd[i]);
 		else if (i == prcs->n_cmd - 1 && flag == 0)
 			printf("%s\n", prcs->cmd[i]);
-		else
+		else if (ft_strncmp(prcs->cmd[i], "", 1) != 0)
 			printf("%s ", prcs->cmd[i]);
 		i++;
 	}
