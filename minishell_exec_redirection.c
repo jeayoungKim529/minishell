@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:08:24 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/12 17:46:17 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/14 19:18:43 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,20 @@ int	set_single_redirection(t_process *prcs)
 	if (prcs->file.in != -1)
 	{
 		if (dup2(prcs->file.in, 0) == -1)
-			return (ft_error_builtin(strerror(errno), errno));
+			return (ft_error_builtin(prcs, strerror(errno), errno));
 	}
 	else
 		if (dup2(prcs->std_fd[0], 0) == -1)
-			return (ft_error_builtin(strerror(errno), errno));
+			return (ft_error_builtin(prcs, strerror(errno), errno));
 	if (prcs->file.out != -1)
 	{
 		if (dup2(prcs->file.out, 1) == -1)
-			return (ft_error_builtin(strerror(errno), errno));
+			return (ft_error_builtin(prcs, strerror(errno), errno));
 		close(prcs->file.out);
 	}
 	else
 		if (dup2(prcs->std_fd[1], 1) == -1)
-			return (ft_error_builtin(strerror(errno), errno));
+			return (ft_error_builtin(prcs, strerror(errno), errno));
 	return (1);
 }
 
@@ -43,11 +43,10 @@ void	set_multi_redirection(t_process *prcs, int i)
 			ft_error_exec_exit(prcs, strerror(errno), errno);
 	}
 	else if (dup2(prcs->file.in, 0) == -1)
-		if (dup2(prcs->file.in, 0) == -1)
-			ft_error_exec_exit(prcs, strerror(errno), errno);
+		ft_error_exec_exit(prcs, strerror(errno), errno);
 	if (prcs->file.out == -1)
 	{
-		if (i == prcs->n_cmd - 1)
+		if (i == prcs->t_cmd - 1)
 		{
 			if (dup2(prcs->std_fd[1], 1) == -1)
 				ft_error_exec_exit(prcs, strerror(errno), errno);
@@ -73,13 +72,13 @@ int	set_redirection_read(t_process *prcs, t_token_node *cur)
 	{
 		tmp_fd = open(cur->token, O_RDONLY);
 		if (tmp_fd == -1)
-			return (ft_error_builtin(strerror(errno), errno));
+			return (ft_error_builtin(prcs, strerror(errno), errno));
 	}
 	else if (cur->type == TOKEN_IN_APPEND)
 	{
 		tmp_fd = open(cur->token, O_RDONLY);
 		if (tmp_fd == -1)
-			return (ft_error_builtin(strerror(errno), errno));
+			return (ft_error_builtin(prcs, strerror(errno), errno));
 	}
 	if (tmp_fd > -1)
 	{
@@ -98,13 +97,13 @@ int	set_redirection_write(t_process *prcs, t_token_node *cur)
 	{
 		tmp_fd = open(cur->token, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 		if (tmp_fd == -1)
-			return (ft_error_builtin(strerror(errno), errno));
+			return (ft_error_builtin(prcs, strerror(errno), errno));
 	}
 	else if (cur->type == TOKEN_OUT_APPEND || cur->type == 5)
 	{
 		tmp_fd = open(cur->token, O_WRONLY | O_CREAT | O_APPEND, 0666);
 		if (tmp_fd == -1)
-			return (ft_error_builtin(strerror(errno), errno));
+			return (ft_error_builtin(prcs, strerror(errno), errno));
 	}
 	if (tmp_fd > -1)
 	{

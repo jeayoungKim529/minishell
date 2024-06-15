@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 17:20:04 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/14 21:23:37 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/15 12:30:14 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,48 +38,48 @@ void	free_command_list(t_command_list *command_list)
 	}
 }
 
-void	print_command_list(t_command_list *list)
-{
-	t_command_node	*head;
-	int				i;
+// void	print_command_list(t_command_list *list)
+// {
+// 	t_command_node	*head;
+// 	int				i;
 
-	head = list->front;
-	i = 0;
-	printf("total list size :%d\n\n", list->size);
-	printf("========================\n");
-	while (i < list->size)
-	{
-		printf("list[%d]\n", i);
-		printf("----------------------------------\n");
-		printf(" ㄴredir_list : ");
-		print_list(head->redir_list);
-		printf("----------------------------------\n");
-		printf("ㄴcmd_list : ");
-		print_list(head->cmd_list);
-		printf("----------------------------------\n");
-		printf("\n");
-		head = head->next;
-		i++;
-	}
-}
+// 	head = list->front;
+// 	i = 0;
+// 	printf("total list size :%d\n\n", list->size);
+// 	printf("========================\n");
+// 	while (i < list->size)
+// 	{
+// 		printf("list[%d]\n", i);
+// 		printf("----------------------------------\n");
+// 		printf(" ㄴredir_list : ");
+// 		print_list(head->redir_list);
+// 		printf("----------------------------------\n");
+// 		printf("ㄴcmd_list : ");
+// 		print_list(head->cmd_list);
+// 		printf("----------------------------------\n");
+// 		printf("\n");
+// 		head = head->next;
+// 		i++;
+// 	}
+// }
 
-void	print_list(t_token_list *list)
-{
-	t_token_node	*head;
-	int				i;
+// void	print_list(t_token_list *list)
+// {
+// 	t_token_node	*head;
+// 	int				i;
 
-	head = list->front;
-	i = 0;
-	printf ("size = %d\n", list->size);
-	if (list->size == 0)
-		return ;
-	while (i < list->size)
-	{
-		printf (" |%s| ", head->token);
-		printf ("type : %u", head->type);
-		head = head->next;
-		printf("->");
-		i++;
-	}
-	printf("\n");
-}
+// 	head = list->front;
+// 	i = 0;
+// 	printf ("size = %d\n", list->size);
+// 	if (list->size == 0)
+// 		return ;
+// 	while (i < list->size)
+// 	{
+// 		printf (" |%s| ", head->token);
+// 		printf ("type : %u", head->type);
+// 		head = head->next;
+// 		printf("->");
+// 		i++;
+// 	}
+// 	printf("\n");
+// }

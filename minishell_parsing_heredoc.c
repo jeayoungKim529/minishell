@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:40:07 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/14 21:28:03 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/15 12:28:34 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,10 @@ void	set_heredoc_file(t_token_node **token_node, char *path, t_process *prcs)
 		heredoc_readline(fd, node->token, prcs, 1);
 	wait(&status);
 	builtin_signal_func();
-	// if (WIFEXITED(status))
-	// printf("WIFEXITED %d\n",WEXITSTATUS(status)); // TODO
+	if (WIFEXITED(status))
+		prcs->envp->status = WEXITSTATUS(status);
+	if (WIFSIGNALED(status))
+		prcs->envp->status = WIFSIGNALED(status) + 128;
 	free (node->token);
 	node->token = path;
 	close(fd);

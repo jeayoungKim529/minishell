@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:02:51 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/12 17:48:54 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/14 21:21:41 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	**merge_command(t_process *prcs, t_token_list *token_list)
 	i = 0;
 	while (cur && i < prcs->n_cmd)
 	{
-		res[i] = cur->token;
+		res[i] = ft_strdup(cur->token);
 		i++;
 		cur = cur->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:29:17 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/14 15:21:02 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/14 19:56:14 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_process{
 	t_inout			file;
 }	t_process;
 
+void	execute_commands(t_process *prcs, t_command_list *list, int i);
 void	init_process(t_process *prcs);
 void	ft_error_exec(t_process *prcs, char *s, int n);
 void	ft_error_exec_exit(t_process *prcs, char *s, int n);
@@ -92,10 +93,11 @@ void	set_multi_redirection(t_process *prcs, int i);
 //minishell_exec_builtin.c
 int		execute_builtin(t_process *prcs);
 int		check_builtin_command(char **com);
-int		ft_error_builtin(char *s, int n);
+int		ft_error_builtin(t_process *prcs, char *s, int n);
 //minishell_exec_builtin_func1.c
 void	ft_unset(t_process *prcs);
 void	ft_export(t_process *prcs, int i);
+void	ft_export_second(t_process *prcs);
 void	ft_env(t_process *prcs, int flag);
 //minishell_exec_builtin_func2.c
 void	ft_exit(t_process *prcs);

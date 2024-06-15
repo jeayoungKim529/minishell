@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:33:35 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/14 15:00:28 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/14 19:10:33 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	check_option(char *s)
 	int	i;
 
 	i = 0;
+	if (ft_strlen(s) == 1 && s[i] == '-')
+		return (1);
 	while (s[i])
 	{
 		if (i == 0 & s[i] != '-')

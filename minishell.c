@@ -6,15 +6,13 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:23:07 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/14 20:58:14 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/15 13:32:24 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // #include "minishell.h"
 #include "minishell_parsing.h"
 #include "minishell_exec.h"
-
-int sig;
 
 void	readline_func(t_command_list *list, t_process *prcs);
 
@@ -59,22 +57,10 @@ void	ft_error_exec_exit(t_process *prcs, char *s, int n)
 int	ft_error_parse(int status, char *s)
 {
 	ft_putstr_fd(s, 2);
-    ft_putstr_fd("\n", 2);
+	ft_putstr_fd("\n", 2);
 	if (status == 2)
 		exit(1);
 	return (1);
-    // revert_signal();
-    // exit(status);
-		// write(1, "\n", 1);
-	// rl_on_new_line();
-	// rl_replace_line("", 0);
-	// rl_redisplay();
-	// exit(status);
-}
-
-void check_leaks()
-{
-	system("leaks minishell");
 }
 
 void	init_process(t_process *prcs)
@@ -103,6 +89,11 @@ int	main(int argc, char *argv[], char *envp[])
 	readline_func(&list, &prcs);
 	free_envp(&prcs);
 	revert_signal();
-	atexit(check_leaks);
 	exit(0);
 }
+
+// void check_leaks()
+// {
+// 	system("leaks minishell");
+// }
+	// atexit(check_leaks);
