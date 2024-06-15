@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:39:58 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/15 15:05:34 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/15 16:33:59 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 // minishell_parsing_utils1.c 
 int				parsing(t_command_list	*cmd_list, char *line, t_process *prcs);
-void			readline_func(t_command_list *list, t_process *prcs);
+void			readline_func(t_command_list *list, t_process *prcs, char *str);
 //utils2
 // minishell_parsing_utils2.c
 int				parse_quotes(char *str);
@@ -81,6 +81,7 @@ char			**make_env_result(char **result, char *s, int i, int idx);
 char			**env_split(char *s);
 void			env_var_transform(char **result, t_process *prcs);
 void			expand_env_string(char **line, t_process *prcs);
+int				make_env_str(char *s, char **result);
 // minishell_parsing_command_utils.c
 void			parse_command_list(t_command_list *list, t_process *prcs);
 char			*expand_env(char **str, int check, t_process *prcs);
