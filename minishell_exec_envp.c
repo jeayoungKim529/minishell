@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:29:00 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/12 17:43:57 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/15 13:29:00 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	save_pwd(t_process *prcs)
 	cur = ft_envpfind(prcs->envp, "HOME");
 	if (cur)
 		prcs->senvp.home = ft_strdup(cur->value);
+	else
+		prcs->senvp.home = "/Users/jeakim";
 }
 
 char	**init_exec_envp(t_process *prcs)
