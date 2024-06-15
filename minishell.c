@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:23:07 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/15 13:49:10 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/15 16:34:09 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "minishell_parsing.h"
 #include "minishell_exec.h"
 
-void	readline_func(t_command_list *list, t_process *prcs);
+void	readline_func(t_command_list *list, t_process *prcs, char *str);
 
 void	ft_error_exec(t_process *prcs, char *s, int n)
 {
@@ -81,13 +81,14 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	t_command_list	list;
 	t_process		prcs;
+	char			*str;
 
 	(void)argc;
 	(void)argv;
 	builtin_signal_func();
 	init_process(&prcs);
 	envp_func(&prcs, envp);
-	readline_func(&list, &prcs);
+	readline_func(&list, &prcs, str);
 	free_envp(&prcs);
 	revert_signal();
 	exit(0);
@@ -97,4 +98,4 @@ int	main(int argc, char *argv[], char *envp[])
 // {
 // 	system("leaks minishell");
 // }
-	// atexit(check_leaks);
+// 	atexit(check_leaks);

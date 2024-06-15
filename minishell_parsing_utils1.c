@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:54:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/15 15:06:05 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/15 16:34:17 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,10 @@ int	parsing(t_command_list	*cmd_list, char *line, t_process *prcs)
 	return (0);
 }
 
-void	readline_func(t_command_list *list, t_process *prcs)
+void	readline_func(t_command_list *list, t_process *prcs, char *str)
 {
-	char	*str;
-
 	while (1)
 	{
-		if (list->front)
-			free_command_list(list);
 		str = readline("prompt : ");
 		if (str)
 		{
@@ -65,8 +61,12 @@ void	readline_func(t_command_list *list, t_process *prcs)
 			break ;
 		add_history(str);
 		execute_commands(prcs, list, 0);
+		if (list->front)
+			free_command_list(list);
 		free(str);
 		str = NULL;
 	}
+	if (list->front)
+		free_command_list(list);
 	return ;
 }

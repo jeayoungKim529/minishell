@@ -6,7 +6,7 @@
 #    By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/17 12:35:23 by jeakim            #+#    #+#              #
-#    Updated: 2024/06/15 14:06:17 by jimchoi          ###   ########.fr        #
+#    Updated: 2024/06/15 16:14:06 by jimchoi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ SRCS = minishell.c \
 		minishell_parsing_signal_builtin.c\
 		minishell_parsing_signal_heredoc.c\
 		minishell_parsing_signal_exec.c\
+		minishell_parsing_env_utils.c\
 		\
 		minishell_exec.c\
 		minishell_exec_split.c\
