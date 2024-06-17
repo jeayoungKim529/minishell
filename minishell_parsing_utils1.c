@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_utils1.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:54:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/15 16:34:17 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/17 11:50:49 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,19 @@ int	parsing(t_command_list	*cmd_list, char *line, t_process *prcs)
 
 	token_list.size = 0;
 	cmd_list->size = 0;
-	if (token_split(line, &token_list, 0) || (token_list.size == 1 \
-		&& token_list.front->type == TOKEN_PIPE))
+	if (token_split(line, &token_list, 0) || (token_list.front->type == TOKEN_PIPE))
 	{
-		if (token_list.size == 1)
+		if (token_list.front->type == TOKEN_PIPE)
 			ft_error_parse(1, "syntax error near unexpected token");
 		clear_list(&token_list);
-		prcs->envp->status = 1;
+		prcs->envp->status = 2;
 		return (1);
 	}
 	if (make_command_list(&token_list, cmd_list, 0, 0))
 	{
 		clear_list(&token_list);
 		free_command_list(cmd_list);
-		prcs->envp->status = 1;
+		prcs->envp->status = 2;
 		return (1);
 	}
 	parse_command_list(cmd_list, prcs);
