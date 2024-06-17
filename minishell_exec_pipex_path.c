@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:21:13 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/17 18:39:30 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/17 20:45:28 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ char	*make_basic_path(t_process *prcs)
 
 	ch = 0;
 	i = 0;
+	if (!prcs->path_x)
+		return (NULL);
 	while (prcs->path_x[i] && ch == 0)
 	{
 		path_p = ft_strjoin(prcs->path_x[i], "/");
@@ -56,8 +58,8 @@ char	*check_path(t_process *prcs)
 
 	ch = 0;
 	i = -1;
-	if (!prcs->cmd || !prcs->cmd[0])
-		ft_error_exec_exit(prcs, NULL, 0);
+	if (!prcs->cmd || !prcs->cmd[0] || ft_envpfind(prcs->envp, "PATH") == NULL)
+		ft_error_exec_exit(prcs, "No such file or directory", 127);
 	while (prcs->path && prcs->path[++i] && ch == 0)
 	{
 		path_p = ft_strjoin(prcs->path[i], "/");

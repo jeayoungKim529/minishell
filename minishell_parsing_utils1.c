@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:54:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/17 15:41:39 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/17 21:10:19 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ int handle_parsing_error(t_token_list *t, t_command_list *c, t_process *prcs)
 	prcs->envp->status = 2;
 	return (1);
 }
+
+void	print_command_list(t_command_list *list);
+
 int	parsing(t_command_list	*cmd_list, char *line, t_process *prcs)
 {
 	t_token_list	token_list;
@@ -49,9 +52,13 @@ int	parsing(t_command_list	*cmd_list, char *line, t_process *prcs)
 		clear_list(&token_list);
 		free_command_list(cmd_list);
 		ft_error_parse(1, "ambiguous redirect");
+		prcs->envp->status = 1;
 		return (1);
 	}
+	// print_command_list(cmd_list);
 	clear_list(&token_list);
+	if (ft_strlen(line) > 0)
+		add_history(line);
 	return (0);
 }
 
@@ -71,7 +78,7 @@ void	readline_func(t_command_list *list, t_process *prcs, char *str)
 		}
 		else if (!str)
 			break ;
-		add_history(str);
+		// add_history(str);
 		execute_commands(prcs, list, 0);
 		if (list->front)
 			free_command_list(list);

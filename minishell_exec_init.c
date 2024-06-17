@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 17:44:42 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/17 18:25:30 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/17 20:41:36 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,12 @@ void	init_path(t_process *prcs)
 		s = dst->value;
 		prcs->path = ft_split(s, ':');
 	}
-	prcs->path_x = ft_split("/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.", ':');
-	if (!prcs->path_x)
-		ft_error_exec(prcs, strerror(errno), errno);
+	if (ft_envpfind(prcs->envp, "PATH") == NULL)
+		prcs->path_x = ft_split("/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.", ':');
+	else
+		prcs->path_x = NULL;
+	// if (!prcs->path_x)
+	// 	ft_error_exec(prcs, strerror(errno), errno);
 }
 
 int	init_redirection(t_process *prcs, t_token_list *list)
