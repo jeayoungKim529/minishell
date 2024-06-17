@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:41:35 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/17 20:19:24 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/17 21:39:54 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	ft_echo(t_process *prcs)
 	}
 	while (i < prcs->n_cmd)
 	{
+		// printf("%d %s\n", i, prcs->cmd[i]);
 		if (i == prcs->n_cmd - 1 && flag == 1)
 			write(1, prcs->cmd[i], ft_strlen(prcs->cmd[i]));
 		else if (i == prcs->n_cmd - 1 && flag == 0)
@@ -75,7 +76,7 @@ void	ft_echo(t_process *prcs)
 			write(1, prcs->cmd[i], ft_strlen(prcs->cmd[i]));
 			write(1, "\n", 1);
 		}
-		else if (ft_strncmp(prcs->cmd[i], "", 1) != 0)
+		else
 		{
 			write(1, prcs->cmd[i], ft_strlen(prcs->cmd[i]));
 			write(1, " ", 1);

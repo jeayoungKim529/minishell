@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_utils1.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:54:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/17 21:10:19 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/17 21:32:42 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	parsing(t_command_list	*cmd_list, char *line, t_process *prcs)
 		prcs->envp->status = 1;
 		return (1);
 	}
-	// print_command_list(cmd_list);
+	print_command_list(cmd_list);
 	clear_list(&token_list);
 	if (ft_strlen(line) > 0)
 		add_history(line);
