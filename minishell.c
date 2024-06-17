@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:23:07 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/17 10:33:02 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/17 11:12:21 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ int	main(int argc, char *argv[], char *envp[])
 	builtin_signal_func();
 	init_process(&prcs);
 	envp_func(&prcs, envp);
-	print_envp(&prcs);
 	readline_func(&list, &prcs, str);
 	free_envp(&prcs);
 	revert_signal();
