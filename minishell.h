@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 13:33:15 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/15 13:33:16 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/17 20:24:02 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef enum e_token_type
 	TOKEN_OUT_APPEND,
 	TOKEN_SINGLE_QUOTE,
 	TOKEN_DOUBLE_QUOTE,
+	TOKEN_ENV,
 }	t_token_type;
 
 typedef struct s_token_node {
