@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:39:58 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/16 20:28:19 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/17 15:26:47 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,10 @@ void			handle_signal_builtin(int signal);
 void			builtin_signal_func(void);
 // minishell_parsing_heredoc.c
 size_t			p_strlen(char *s);
-void			set_heredoc(t_command_node	*node, int i, t_process *prcs);
+int				set_heredoc(t_command_node	*node, int i, int j, t_process *prcs);
 void			set_heredoc_file(t_token_node **token_node, char *path, \
 					t_process *prcs);
+int				set_redir(t_token_node **node, t_process *prcs);
 char			*set_heredoc_path(char *i, char *j, char *name);
 void			heredoc_readline(int fd, char *token, t_process *prcs, \
 					int check);
@@ -83,7 +84,7 @@ void			env_var_transform(char **result, t_process *prcs, int i);
 void			expand_env_string(char **line, t_process *prcs);
 char			*make_env_str(char *s, int *i);
 // minishell_parsing_command_utils.c
-void			parse_command_list(t_command_list *list, t_process *prcs);
+int				parse_command_list(t_command_list *list, t_process *prcs);
 char			*expand_env(char **str, int check, t_process *prcs);
 void			set_command(t_command_node	*node, t_process *prcs);
 // minishell_parsing_free_list.c

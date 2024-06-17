@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_heredoc.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:40:07 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/15 14:53:56 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/17 15:38:24 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,33 @@ size_t	p_strlen(char *s)
 		len++;
 	return (len + 1);
 }
+int	set_redir(t_token_node **node, t_process *prcs)
+{
+	char	*temp;
 
-void	set_heredoc(t_command_node	*node, int i, t_process *prcs)
+	if (ft_strchr((*node)->token, '$'))
+	{
+		temp = get_parse_command((*node)->token, prcs, 1);
+		if (ft_strlen(temp) == 0)
+		{
+			free(temp);
+			temp = NULL;
+			return (1);
+		}
+		free((*node)->token);
+		(*node)->token = temp;
+		temp = 0;
+	}
+	return (0);
+}
+
+int	set_heredoc(t_command_node	*node, int i, int j, t_process *prcs)
 {
 	t_token_node	*r_token;
 	char			*path;
-	int				j;
 	char			*num;
 	char			*name;
 
-	j = -1;
 	r_token = node->redir_list->front;
 	while (++j < node->redir_list->size)
 	{
@@ -47,8 +64,14 @@ void	set_heredoc(t_command_node	*node, int i, t_process *prcs)
 				ft_error_parse(2, "heredoc path error");
 			set_heredoc_file(&r_token, path, prcs);
 		}
+		else
+		{
+			if (set_redir(&r_token, prcs) == 1)
+				return (1);
+		}
 		r_token = r_token->next;
 	}
+	return (0);
 }
 
 char	*set_heredoc_path(char *i, char *j, char *name)

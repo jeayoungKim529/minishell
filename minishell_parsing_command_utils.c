@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 16:55:31 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/17 09:53:22 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/17 15:26:33 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "minishell_exec.h"
 #include "minishell_parsing.h"
 
-void	parse_command_list(t_command_list *list, t_process *prcs)
+int	parse_command_list(t_command_list *list, t_process *prcs)
 {
 	t_command_node	*node;
 	int				i;
@@ -24,9 +24,11 @@ void	parse_command_list(t_command_list *list, t_process *prcs)
 	while (++i < list->size)
 	{
 		set_command(node, prcs);
-		set_heredoc(node, i, prcs);
+		if (set_heredoc(node, i, -1, prcs))
+			return (1);
 		node = node->next;
 	}
+	return (0);
 }
 
 char	*expand_env(char **str, int check, t_process *prcs)
