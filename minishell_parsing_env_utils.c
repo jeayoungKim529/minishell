@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_env_utils.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:13:15 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/15 16:13:52 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/17 10:25:29 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	env_split_count(char *s)
 		else
 		{
 			i++;
-			while (ft_isalnum(s[i]) != 0 || s[i] == '?')
+			while (ft_isalnum(s[i]) != 0 || s[i] == '?' || s[i] == '_')
 			{
 				i ++;
 				if (s[i - 1] == '?')
@@ -43,25 +43,29 @@ int	env_split_count(char *s)
 	return (count);
 }
 
-int	make_env_str(char *s, char **result)
+char	*make_env_str(char *s, int *i)
 {
 	int	len;
 
 	len = 1;
-	while (ft_isalnum(s[len]) != 0 || s[len] == '?')
+	while (ft_isalnum(s[len]) != 0 || s[len] == '?' || s[len] == '_')
 	{
 		len ++;
 		if (s[len - 1] == '?')
 			break ;
 	}
-	*result = ft_substr(s, 0, len);
-	return (len);
+	*i += len;
+	return (ft_substr(s, 0, len));
 }
 
-char	**make_env_result(char **result, char *s, int i, int idx)
+char	**make_env_result(char **result, char *s)
 {
-	int		len;
+	int	len;
+	int	i;
+	int	idx;
 
+	i = 0;
+	idx = 1;
 	while (s[i])
 	{
 		len = 0;
@@ -73,9 +77,11 @@ char	**make_env_result(char **result, char *s, int i, int idx)
 			i += len;
 		}
 		else
-			i += make_env_str(s, &result[idx]);
+		{
+			result[idx] = make_env_str(s + i, &i);
+		}
 		idx ++;
 	}
-	result[idx] = 0;
+	result[idx] = NULL;
 	return (result);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exec_builtin_func1.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:43:22 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/15 15:33:16 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/17 10:36:00 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,19 @@ void	ft_env(t_process *prcs, int flag)
 	}
 	while (cur)
 	{
+		printf("key:%s = value:%s\n", cur->key, cur->value);
 		if (flag == 1)
 			ft_printf("declare -x ");
-		if (cur->value && ((ft_strncmp(cur->value, "\"\"", 3) == 0 && flag == 1) \
-			|| ft_strncmp(cur->value, "\"\"", 3) != 0))
-			ft_printf("%s=%s\n", cur->key, cur->value);
+		if (cur->value && ((ft_strncmp(cur->value, "\"\"", 3) == 0 \
+			&& flag == 1) || ft_strncmp(cur->value, "\"\"", 3) != 0))
+			printf("%s=%s\n", cur->key, cur->value);
 		else if (cur->value && flag == 1)
-			ft_printf("%s=\"%s\"\n", cur->key, cur->value);
+			printf("%s=\"%s\"\n", cur->key, cur->value);
 		else if (flag == 1 && (!cur->value || ft_strncmp(cur->value, "\"\"", 3) \
 			== 0))
-			ft_printf("%s\n", cur->key);
+			ft_printf("%s\n", cur->value);
 		else if (ft_strncmp(cur->value, "\"\"", 3) == 0)
-			ft_printf("%s=\n", cur->key);
+			printf("%s=\n", cur->value);
 		cur = cur->next;
 	}
 	prcs->envp->status = 0;
