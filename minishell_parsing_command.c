@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_command.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:48:40 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/14 18:05:13 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/16 19:20:09 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,6 @@ int	is_meta(t_token_type type)
 
 int	set_re(t_token_node *t_node, t_command_node *c_node, t_token_node **node)
 {
-	int	count;
-
-	count = 1;
 	if (t_node->next == NULL || is_meta(t_node->next->type))
 	{
 		ft_error_parse(1, "syntax error near unexpected token");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_utils1.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:54:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/15 15:06:05 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/17 11:50:49 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,19 @@ int	parsing(t_command_list	*cmd_list, char *line, t_process *prcs)
 
 	token_list.size = 0;
 	cmd_list->size = 0;
-	if (token_split(line, &token_list, 0) || (token_list.size == 1 \
-		&& token_list.front->type == TOKEN_PIPE))
+	if (token_split(line, &token_list, 0) || (token_list.front->type == TOKEN_PIPE))
 	{
-		if (token_list.size == 1)
+		if (token_list.front->type == TOKEN_PIPE)
 			ft_error_parse(1, "syntax error near unexpected token");
 		clear_list(&token_list);
-		prcs->envp->status = 1;
+		prcs->envp->status = 2;
 		return (1);
 	}
 	if (make_command_list(&token_list, cmd_list, 0, 0))
 	{
 		clear_list(&token_list);
 		free_command_list(cmd_list);
-		prcs->envp->status = 1;
+		prcs->envp->status = 2;
 		return (1);
 	}
 	parse_command_list(cmd_list, prcs);
@@ -43,14 +42,10 @@ int	parsing(t_command_list	*cmd_list, char *line, t_process *prcs)
 	return (0);
 }
 
-void	readline_func(t_command_list *list, t_process *prcs)
+void	readline_func(t_command_list *list, t_process *prcs, char *str)
 {
-	char	*str;
-
 	while (1)
 	{
-		if (list->front)
-			free_command_list(list);
 		str = readline("prompt : ");
 		if (str)
 		{
@@ -65,8 +60,12 @@ void	readline_func(t_command_list *list, t_process *prcs)
 			break ;
 		add_history(str);
 		execute_commands(prcs, list, 0);
+		if (list->front)
+			free_command_list(list);
 		free(str);
 		str = NULL;
 	}
+	if (list->front)
+		free_command_list(list);
 	return ;
 }

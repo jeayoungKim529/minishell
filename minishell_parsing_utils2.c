@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_utils2.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:26:23 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/15 13:50:56 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/17 10:23:48 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,6 @@ int	token_split(char *line, t_token_list *tmp_list, char *cmdline)
 	}
 	if (cmdline)
 		free(cmdline);
-		cmdline = NULL;
+	cmdline = NULL;
 	return (0);
 }
