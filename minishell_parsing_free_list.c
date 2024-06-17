@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_free_list.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 17:20:04 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/15 15:05:51 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/16 19:20:46 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,12 @@
 
 void	clear_list(t_token_list *list)
 {
-	t_token_node	*head;
-
-	head = list->front;
 	while (list->size != 0)
 		del_token_list(list);
 }
 
 void	free_command_list(t_command_list *command_list)
 {
-	t_command_node	*curr;
-	int				i;
-
-	i = 0;
-	curr = command_list->front;
 	while (command_list->size != 0)
 	{
 		del_command_list(command_list, 0);

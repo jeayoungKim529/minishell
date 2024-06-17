@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:23:07 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/15 16:34:09 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/17 10:33:02 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,6 @@ void	ft_error_exec(t_process *prcs, char *s, int n)
 
 void	ft_error_exec_exit(t_process *prcs, char *s, int n)
 {
-	int	flag;
-
-	flag = 0;
 	if (prcs->path || prcs->path_x)
 		free_path(prcs);
 	if (prcs)
@@ -76,6 +73,7 @@ void	init_process(t_process *prcs)
 	prcs->file.in = -1;
 	prcs->file.out = -1;
 }
+void	print_envp(t_process *prcs);
 
 int	main(int argc, char *argv[], char *envp[])
 {
@@ -85,9 +83,11 @@ int	main(int argc, char *argv[], char *envp[])
 
 	(void)argc;
 	(void)argv;
+	str = 0;
 	builtin_signal_func();
 	init_process(&prcs);
 	envp_func(&prcs, envp);
+	print_envp(&prcs);
 	readline_func(&list, &prcs, str);
 	free_envp(&prcs);
 	revert_signal();

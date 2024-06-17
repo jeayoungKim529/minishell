@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_quotes.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 12:29:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/15 14:40:28 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/17 10:28:10 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	remove_quotes(char **result, t_process *prcs, int check)
 			expand_env_string(result, prcs);
 	}
 	free(temp);
-		temp = NULL;
+	temp = NULL;
 }
 
 char	*get_parse_command(char *command, t_process *prcs, int check)
