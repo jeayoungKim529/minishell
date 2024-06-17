@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:41:35 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/17 14:36:23 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/17 20:19:24 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	ft_cd(t_process *prcs)
 	old_pwd = getcwd(NULL, 0);
 	if (prcs->n_cmd == 1 || access(prcs->cmd[1], X_OK) == -1)
 	{
-		ft_error_builtin(prcs, strerror(errno), 1);
+		if (prcs->n_cmd != 1)
+			ft_error_builtin(prcs, strerror(errno), 1);
 		if (chdir(prcs->senvp.home) == -1)
 		{
 			ft_error_builtin(prcs, strerror(errno), errno);

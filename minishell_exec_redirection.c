@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:08:24 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/17 16:13:49 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/17 20:21:57 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	set_single_redirection(t_process *prcs, int flag)
 	if (prcs->file.in != -1 && flag != 0)
 	{
 		if (dup2(prcs->file.in, 0) == -1)
-			return (ft_error_builtin(prcs, strerror(errno), errno));
+			return (ft_error_builtin(prcs, strerror(errno), 1));
 	}
 	else
 		if (dup2(prcs->std_fd[0], 0) == -1)
