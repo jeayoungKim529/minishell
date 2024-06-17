@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_signal_builtin.c                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 22:24:16 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/15 13:55:15 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/17 11:24:29 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 void	handle_signal_builtin(int signal)
 {
+	g_sig = 1;
 	(void)signal;
 	write(1, "\n", 1);
 	rl_on_new_line();

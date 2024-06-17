@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:03:09 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/17 10:17:06 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/17 14:25:03 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,16 @@ void	finish_commands(t_process *prcs, t_command_list *list, int flag)
 {
 	if (list->front->cmd_list->size > 1)
 		close(prcs->prevfd);
+	if (prcs->file.in != -1)
+	{
+		close(prcs->file.in);
+		prcs->file.in = -1;
+	}
+	if (prcs->file.out != -1)
+	{
+		close(prcs->file.out);
+		prcs->file.out = -1;
+	}
 	execute_wait(prcs, list, flag);
 	free_path(prcs);
 	ft_unlink(prcs, list);

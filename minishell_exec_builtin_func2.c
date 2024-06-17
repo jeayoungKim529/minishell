@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:41:35 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/15 15:34:31 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/17 14:36:23 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	ft_cd(t_process *prcs)
 	old_pwd = getcwd(NULL, 0);
 	if (prcs->n_cmd == 1 || access(prcs->cmd[1], X_OK) == -1)
 	{
+		ft_error_builtin(prcs, strerror(errno), 1);
 		if (chdir(prcs->senvp.home) == -1)
 		{
 			ft_error_builtin(prcs, strerror(errno), errno);
@@ -34,6 +35,8 @@ void	ft_cd(t_process *prcs)
 	change_pwd(prcs, "OLDPWD", old_pwd);
 	change_pwd(prcs, "PWD", getcwd(NULL, 0));
 	prcs->envp->status = 0;
+	if (access(prcs->cmd[1], X_OK) == -1)
+		prcs->envp->status = 1;
 }
 
 void	ft_pwd(t_process *prcs)
@@ -50,8 +53,8 @@ void	ft_pwd(t_process *prcs)
 
 void	ft_echo(t_process *prcs)
 {
-	int	flag;
-	int	i;
+	int		flag;
+	int		i;
 
 	flag = 0;
 	i = 0;
@@ -65,11 +68,17 @@ void	ft_echo(t_process *prcs)
 	while (i < prcs->n_cmd)
 	{
 		if (i == prcs->n_cmd - 1 && flag == 1)
-			ft_printf("%s", prcs->cmd[i]);
+			write(1, prcs->cmd[i], ft_strlen(prcs->cmd[i]));
 		else if (i == prcs->n_cmd - 1 && flag == 0)
-			ft_printf("%s\n", prcs->cmd[i]);
+		{
+			write(1, prcs->cmd[i], ft_strlen(prcs->cmd[i]));
+			write(1, "\n", 1);
+		}
 		else if (ft_strncmp(prcs->cmd[i], "", 1) != 0)
-			ft_printf("%s ", prcs->cmd[i]);
+		{
+			write(1, prcs->cmd[i], ft_strlen(prcs->cmd[i]));
+			write(1, " ", 1);
+		}
 		i++;
 	}
 	prcs->envp->status = 0;
@@ -78,21 +87,13 @@ void	ft_echo(t_process *prcs)
 void	ft_exit(t_process *prcs)
 {
 	if (prcs->cmd[1] && ft_isalnum_exit(prcs->cmd[1]) != 1)
-	{
-		ft_printf("exit\nminishell: exit: %s: numeric argument required\n", \
-			prcs->cmd[1]);
-		ft_error_exec_exit(prcs, NULL, 255);
-	}
+		ft_error_exec_exit(prcs, "numeric argument required", 255);
 	if (prcs->n_cmd > 2)
 	{
 		ft_error_exec(prcs, "exit\nminishell: exit: too many arguments", 1);
 		return ;
 	}
 	if (prcs->cmd[1] && ft_isalnum_exit(prcs->cmd[1]) != 1)
-	{
-		ft_printf("exit\nminishell: exit: %s: numeric argument required\n", \
-			prcs->cmd[1]);
-		ft_error_exec_exit(prcs, NULL, 255);
-	}
+		ft_error_exec_exit(prcs, "numeric argument required", 255);
 	ft_error_exec_exit(prcs, "exit", ft_atoi_exit(prcs->cmd[1]));
 }
