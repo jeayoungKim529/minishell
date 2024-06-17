@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:29:20 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/17 14:13:15 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/17 16:14:05 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "minishell_exec.h"
 #include "minishell_parsing.h"
 
-void	execute_single(t_process *prcs)
+void	execute_single(t_process *prcs, t_command_node *cur)
 {
 	prcs->pid = fork();
 	if (prcs->pid == -1)
@@ -23,7 +23,9 @@ void	execute_single(t_process *prcs)
 		signal_off();
 	if (prcs->pid == 0)
 	{
-		set_single_redirection(prcs);
+		if (init_redirection(prcs, cur->redir_list) == -1)
+			ft_error_exec_exit(prcs, strerror(errno), 1);
+		set_single_redirection(prcs, 1);
 		exec_signal_func();
 		run_process(prcs);
 		if (dup2(1, prcs->prevfd) == -1)
@@ -31,7 +33,7 @@ void	execute_single(t_process *prcs)
 	}
 }
 
-void	execute_multi(t_process *prcs, int i)
+void	execute_multi(t_process *prcs, t_command_node *cur, int i)
 {
 	if (pipe(prcs->fd) == -1)
 		ft_error_exec(prcs, strerror(errno), errno);
@@ -43,6 +45,8 @@ void	execute_multi(t_process *prcs, int i)
 	else if (prcs->pid == 0)
 	{
 		exec_signal_func();
+		if (init_redirection(prcs, cur->redir_list) == -1)
+			ft_error_exec_exit(prcs, strerror(errno), 1);
 		set_multi_redirection(prcs, i);
 		close(prcs->fd[0]);
 		close(prcs->fd[1]);
@@ -69,13 +73,13 @@ void	execute_commands(t_process *prcs, t_command_list *list, int i)
 			return (free_command(prcs));
 		if (list->size == 1 && check_builtin_command(prcs->cmd) == 1)
 		{
-			execute_builtin(prcs, 0);
+			execute_builtin(prcs, cur, 0);
 			flag = 1;
 		}
 		else if (list->size == 1)
-			execute_single(prcs);
+			execute_single(prcs, cur);
 		else
-			execute_multi(prcs, i);
+			execute_multi(prcs, cur, i);
 		free_command(prcs);
 		free_path(prcs);
 		cur = cur->next;

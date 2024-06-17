@@ -6,21 +6,21 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:21:13 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/17 14:46:49 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/17 15:38:40 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_exec.h"
 
-int	check_directory(t_process *prcs)
+void	is_directory(t_process *prcs)
 {
-	struct stat	*buf;
+	struct stat	path_stat;
 
-	buf = NULL;
-	if (lstat(prcs->cmd[0], buf) == -1)
+	if (stat(prcs->cmd[0], &path_stat) != 0)
 		ft_error_exec_exit(prcs, strerror(errno), errno);
-	return (S_ISDIR(buf->st_mode));
+    if (S_ISDIR(path_stat.st_mode) != 0 && ft_strchr(prcs->cmd[0], '/') != NULL)
+		ft_error_exec_exit(prcs, "is a directory", 126);
 }
 
 char	*make_basic_path(t_process *prcs)

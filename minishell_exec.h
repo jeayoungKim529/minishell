@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:29:17 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/15 16:01:06 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/17 16:13:35 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ void	init_process(t_process *prcs);
 void	ft_error_exec(t_process *prcs, char *s, int n);
 void	ft_error_exec_exit(t_process *prcs, char *s, int n);
 //minishell_exec.c
-void	execute_multi(t_process *prcs, int i);
-void	execute_single(t_process *prcs);
+void	execute_multi(t_process *prcs, t_command_node *cur, int i);
+void	execute_single(t_process *prcs, t_command_node *cur);
 //minishell_exec_envp.c
 void	envp_func(t_process *prcs, char *envp[]);
 void	init_status_envp(t_process *prcs);
@@ -88,10 +88,10 @@ char	**merge_command(t_process *prcs, t_token_list *token_list);
 int		set_redirection(t_process *prcs, t_token_list *list);
 int		set_redirection_read(t_process *prcs, t_token_node *cur);
 int		set_redirection_write(t_process *prcs, t_token_node *cur);
-int		set_single_redirection(t_process *prcs);
+int		set_single_redirection(t_process *prcs, int flag);
 void	set_multi_redirection(t_process *prcs, int i);
 //minishell_exec_builtin.c
-int		execute_builtin(t_process *prcs, int flag);
+int		execute_builtin(t_process *prcs, t_command_node *cur, int flag);
 int		check_builtin_command(char **com);
 int		ft_error_builtin(t_process *prcs, char *s, int n);
 //minishell_exec_builtin_func1.c
@@ -115,6 +115,7 @@ void	run_process(t_process *prcs);
 //minishell_exec_pipex_path.c
 char	*check_path(t_process *prcs);
 char	*make_basic_path(t_process *prcs);
+void	is_directory(t_process *prcs);
 //minishell_exec_pipex_close.c
 void	finish_commands(t_process *prcs, t_command_list *list, int flag);
 void	ft_unlink(t_process *prcs, t_command_list *list);
