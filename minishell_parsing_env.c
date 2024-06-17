@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 20:42:03 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/17 10:27:19 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/17 20:27:28 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	**env_split(char *s)
 	return (result);
 }
 
-void	env_var_transform(char **result, t_process *prcs, int i)
+void	env_var_transform(char **result, t_process *prcs, int i, t_token_node **token)
 {
 	t_envp	*node;
 	char	*temp;
@@ -53,11 +53,15 @@ void	env_var_transform(char **result, t_process *prcs, int i)
 	else if (ft_strncmp(temp, "$", 2) == 0)
 		result[i] = ft_strdup("$");
 	else
+	{
+		if (token)
+			(*token)->type = TOKEN_ENV;
 		result[i] = ft_strdup("");
+	}
 	free(temp);
 }
 
-void	expand_env_string(char **line, t_process *prcs)
+void	expand_env_string(char **line, t_process *prcs, t_token_node **token)
 {
 	char	*temp;
 	int		i;
@@ -73,7 +77,7 @@ void	expand_env_string(char **line, t_process *prcs)
 		while (i <= ft_atoi(result[0]))
 		{
 			if (result[i][0] == '$')
-				env_var_transform(result, prcs, i);
+				env_var_transform(result, prcs, i, token);
 			i++;
 		}
 		*line = make_one_line(result, -1, 0);

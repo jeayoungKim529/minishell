@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 12:29:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/17 10:28:10 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/17 20:38:01 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char	**mini_split(char *s)
 	return (result);
 }
 
-void	remove_quotes(char **result, t_process *prcs, int check)
+void	remove_quotes(char **result, t_process *prcs, int check, t_token_node **token)
 {
 	char	*temp;
 
@@ -102,13 +102,13 @@ void	remove_quotes(char **result, t_process *prcs, int check)
 		else
 			*result = ft_substr(temp, 0, ft_strlen(temp));
 		if (check)
-			expand_env_string(result, prcs);
+			expand_env_string(result, prcs, token);
 	}
 	free(temp);
 	temp = NULL;
 }
 
-char	*get_parse_command(char *command, t_process *prcs, int check)
+char	*get_parse_command(char *command, t_process *prcs, int check, t_token_node **token)
 {
 	char	**result;
 	char	*line;
@@ -118,10 +118,11 @@ char	*get_parse_command(char *command, t_process *prcs, int check)
 	result = mini_split(command);
 	while (i < ft_atoi(result[0]) + 1)
 	{
-		remove_quotes(&result[i], prcs, check);
+		remove_quotes(&result[i], prcs, check, token);
 		i++;
 	}
 	line = make_one_line(result, -1, 0);
+	i = 0;
 	free_split(result);
 	return (line);
 }
