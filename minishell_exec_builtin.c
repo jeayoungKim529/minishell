@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:33:54 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/15 16:10:38 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/17 16:17:58 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,12 @@ int	check_builtin_command(char **com)
 	return (0);
 }
 
-int	execute_builtin(t_process *prcs, int flag)
+int	execute_builtin(t_process *prcs, t_command_node *cur, int flag)
 {
+	if (flag == 0 && init_redirection(prcs, cur->redir_list) == -1)
+		ft_error_exec_exit(prcs, strerror(errno), 1);
 	if (flag == 0)
-		set_single_redirection(prcs);
+		set_single_redirection(prcs, flag);
 	if (ft_strncmp("cd", prcs->cmd[0], 3) == 0)
 		ft_cd(prcs);
 	else if (ft_strncmp("pwd", prcs->cmd[0], 4) == 0)
@@ -59,7 +61,7 @@ int	execute_builtin(t_process *prcs, int flag)
 	else if (ft_strncmp("exit", prcs->cmd[0], 5) == 0)
 		ft_exit(prcs);
 	if (flag == 0)
-		if (dup2(prcs->std_fd[1], 1) == -1)
+		if (prcs->file.out != -1 && dup2(prcs->std_fd[1], 1) == -1)
 			ft_error_exec_exit(prcs, strerror(errno), errno);
 	return (prcs->envp->status);
 }

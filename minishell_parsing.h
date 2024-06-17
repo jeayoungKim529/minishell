@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:39:58 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/17 15:26:47 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/17 16:04:43 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include "minishell.h"
 # include "minishell_exec.h"
+
+extern int	g_sig;
 
 // minishell_parsing_utils1.c 
 int				parsing(t_command_list	*cmd_list, char *line, t_process *prcs);
