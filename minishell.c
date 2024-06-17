@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:23:07 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/17 20:50:54 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/17 21:10:24 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,10 @@ void	init_process(t_process *prcs)
 void	print_envp(t_process *prcs);
 
 
-void check_leaks()
-{
-	system("leaks minishell");
-}
+// void check_leaks()
+// {
+// 	system("leaks minishell");
+// }
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_command_list	list;
