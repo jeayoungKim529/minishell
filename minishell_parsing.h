@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:39:58 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/17 16:04:43 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/17 20:25:55 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ void			heredoc_readline(int fd, char *token, t_process *prcs, \
 int				puotes_split_count(char *s, int i, int count);
 char			**make_mini_result(char **result, char *s, int i, int idx);
 char			**mini_split(char *s);
-void			remove_quotes(char **result, t_process *prcs, int check);
-char			*get_parse_command(char *command, t_process *prcs, int check);
+void			remove_quotes(char **result, t_process *prcs, int check, t_token_node **token);
+char			*get_parse_command(char *command, t_process *prcs, int check, t_token_node **token);
 // minishell_parsing_quotes_utils.c
 char			*make_one_line(char **result, int idx, int len);
 char			**free_split(char **result);
@@ -82,8 +82,8 @@ int				get_quotes_lenght(char *str);
 int				env_split_count(char *s);
 char			**make_env_result(char **result, char *s);
 char			**env_split(char *s);
-void			env_var_transform(char **result, t_process *prcs, int i);
-void			expand_env_string(char **line, t_process *prcs);
+void			env_var_transform(char **result, t_process *prcs, int i, t_token_node **token);
+void			expand_env_string(char **line, t_process *prcs, t_token_node **token);
 char			*make_env_str(char *s, int *i);
 // minishell_parsing_command_utils.c
 int				parse_command_list(t_command_list *list, t_process *prcs);

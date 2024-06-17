@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_heredoc.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:40:07 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/17 16:51:15 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/17 21:10:14 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	set_redir(t_token_node **node, t_process *prcs)
 {
 	char	*temp;
 
-		temp = get_parse_command((*node)->token, prcs, 1);
+		temp = get_parse_command((*node)->token, prcs, 1, node);
 		if (ft_strlen(temp) == 0)
 		{
 			free(temp);
@@ -134,7 +134,7 @@ void	heredoc_readline(int fd, char *token, t_process *prcs, int check)
 
 	if (ft_strchr(token, '\"') != NULL || ft_strchr(token, '\'') != NULL)
 		check = 0;
-	end_text = get_parse_command(token, prcs, 0);
+	end_text = get_parse_command(token, prcs, 0, NULL);
 	heredoc_signal_func();
 	while (1)
 	{
