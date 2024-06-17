@@ -6,12 +6,22 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:21:13 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/14 13:55:44 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/17 14:46:49 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_exec.h"
+
+int	check_directory(t_process *prcs)
+{
+	struct stat	*buf;
+
+	buf = NULL;
+	if (lstat(prcs->cmd[0], buf) == -1)
+		ft_error_exec_exit(prcs, strerror(errno), errno);
+	return (S_ISDIR(buf->st_mode));
+}
 
 char	*make_basic_path(t_process *prcs)
 {
@@ -45,8 +55,8 @@ char	*check_path(t_process *prcs)
 
 	ch = 0;
 	i = -1;
-	if (access(prcs->cmd[0], X_OK) == 0)
-		return (prcs->cmd[0]);
+	if (!prcs->cmd || !prcs->cmd[0])
+		ft_error_exec_exit(prcs, NULL, 0);
 	while (prcs->path && prcs->path[++i] && ch == 0)
 	{
 		path_p = ft_strjoin(prcs->path[i], "/");
@@ -57,6 +67,8 @@ char	*check_path(t_process *prcs)
 	}
 	if (ch == 0)
 		path = make_basic_path(prcs);
+	if (path == NULL && access(prcs->cmd[0], X_OK) == 0)
+		return (prcs->cmd[0]);
 	if (path == NULL)
 		return (NULL);
 	return (path);

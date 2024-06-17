@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exec_builtin_func1.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:43:22 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/17 10:36:00 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/17 11:57:49 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	ft_env(t_process *prcs, int flag)
 	}
 	while (cur)
 	{
-		printf("key:%s = value:%s\n", cur->key, cur->value);
 		if (flag == 1)
 			ft_printf("declare -x ");
 		if (cur->value && ((ft_strncmp(cur->value, "\"\"", 3) == 0 \
@@ -55,9 +54,7 @@ void	ft_export(t_process *prcs, int i)
 		if ((ft_isalnum(prcs->cmd[i][0]) != 1 && prcs->cmd[i][0] != '_') || \
 			check_envp_key(prcs->cmd[i]) == 0)
 		{
-			ft_printf("minishell: export: %s: not a valid identifier\n", \
-				prcs->cmd[i]);
-			ft_error_builtin(prcs, NULL, 1);
+			ft_error_builtin(prcs, "not a valid identifier", 1);
 			flag = 1;
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:54:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/17 15:37:36 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/17 15:41:39 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "minishell_exec.h"
 
 void	execute_commands(t_process *prcs, t_command_list *list, int i);
+int		g_sig;
 
 int handle_parsing_error(t_token_list *t, t_command_list *c, t_process *prcs)
 {
@@ -58,17 +59,17 @@ void	readline_func(t_command_list *list, t_process *prcs, char *str)
 {
 	while (1)
 	{
+		g_sig = 0;
 		str = readline("prompt : ");
-		if (str)
+		if (g_sig == 1)
+			prcs->envp->status = 1;
+		if (str && parsing(list, str, prcs) == 1)
 		{
-			if (parsing(list, str, prcs) == 1)
-			{
-				free(str);
-				str = NULL;
-				continue ;
-			}
+			free(str);
+			str = NULL;
+			continue ;
 		}
-		else
+		else if (!str)
 			break ;
 		add_history(str);
 		execute_commands(prcs, list, 0);
