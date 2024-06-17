@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:21:13 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/17 15:38:40 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/17 18:39:30 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ void	is_directory(t_process *prcs)
 {
 	struct stat	path_stat;
 
+
 	if (stat(prcs->cmd[0], &path_stat) != 0)
-		ft_error_exec_exit(prcs, strerror(errno), errno);
+		ft_error_exec_exit(prcs, strerror(errno), 127);
     if (S_ISDIR(path_stat.st_mode) != 0 && ft_strchr(prcs->cmd[0], '/') != NULL)
 		ft_error_exec_exit(prcs, "is a directory", 126);
 }
@@ -65,7 +66,7 @@ char	*check_path(t_process *prcs)
 		if (access(path, X_OK) == 0)
 			ch = 1;
 	}
-	if (ch == 0)
+	if (ch == 0 && ft_envpfind(prcs->envp, "PATH") == NULL)
 		path = make_basic_path(prcs);
 	if (path == NULL && access(prcs->cmd[0], X_OK) == 0)
 		return (prcs->cmd[0]);
