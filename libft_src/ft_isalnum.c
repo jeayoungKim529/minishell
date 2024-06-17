@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 19:56:20 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/05/22 19:42:19 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/17 15:27:42 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,4 @@ int	ft_isalnum(int c)
 	else if (c >= '0' && c <= '9')
 		return (2);
 	return (0);
-}	
+}
