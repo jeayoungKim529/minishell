@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_heredoc.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:40:07 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/17 15:38:24 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/17 16:51:15 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ int	set_redir(t_token_node **node, t_process *prcs)
 {
 	char	*temp;
 
-	if (ft_strchr((*node)->token, '$'))
-	{
 		temp = get_parse_command((*node)->token, prcs, 1);
 		if (ft_strlen(temp) == 0)
 		{
@@ -41,7 +39,6 @@ int	set_redir(t_token_node **node, t_process *prcs)
 		free((*node)->token);
 		(*node)->token = temp;
 		temp = 0;
-	}
 	return (0);
 }
 

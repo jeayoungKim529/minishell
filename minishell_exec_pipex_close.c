@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:03:09 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/17 14:25:03 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/17 17:24:59 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	execute_wait(t_process *prcs, t_command_list *list, int flag)
 			exit(EXIT_FAILURE);
 		if (WIFEXITED(status))
 			prcs->envp->status = WEXITSTATUS(status);
-		if (WIFSIGNALED(status))
+		if (WIFSIGNALED(status) && WTERMSIG(status) != 13)
 			prcs->envp->status = WTERMSIG(status) + 128;
 		i++;
 	}
