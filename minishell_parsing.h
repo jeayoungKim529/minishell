@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:39:58 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/17 20:25:55 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/18 20:34:38 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ void			handle_signal_builtin(int signal);
 void			builtin_signal_func(void);
 // minishell_parsing_heredoc.c
 size_t			p_strlen(char *s);
-int				set_heredoc(t_command_node	*node, int i, int j, t_process *prcs);
+int				set_heredoc(t_command_node	*node, int i, int j, \
+t_process *prcs);
 void			set_heredoc_file(t_token_node **token_node, char *path, \
 					t_process *prcs);
 int				set_redir(t_token_node **node, t_process *prcs);
@@ -72,8 +73,10 @@ void			heredoc_readline(int fd, char *token, t_process *prcs, \
 int				puotes_split_count(char *s, int i, int count);
 char			**make_mini_result(char **result, char *s, int i, int idx);
 char			**mini_split(char *s);
-void			remove_quotes(char **result, t_process *prcs, int check, t_token_node **token);
-char			*get_parse_command(char *command, t_process *prcs, int check, t_token_node **token);
+void			remove_quotes(char **result, t_process *prcs, int check, \
+t_token_node **token);
+char			*get_cmd(char *cmd, t_process *prcs, int check, \
+t_token_node **token);
 // minishell_parsing_quotes_utils.c
 char			*make_one_line(char **result, int idx, int len);
 char			**free_split(char **result);
@@ -82,8 +85,10 @@ int				get_quotes_lenght(char *str);
 int				env_split_count(char *s);
 char			**make_env_result(char **result, char *s);
 char			**env_split(char *s);
-void			env_var_transform(char **result, t_process *prcs, int i, t_token_node **token);
-void			expand_env_string(char **line, t_process *prcs, t_token_node **token);
+void			env_var_transform(char **result, t_process *prcs, int i, \
+t_token_node **token);
+void			expand_env_string(char **line, t_process *prcs, \
+t_token_node **token);
 char			*make_env_str(char *s, int *i);
 // minishell_parsing_command_utils.c
 int				parse_command_list(t_command_list *list, t_process *prcs);
@@ -93,6 +98,8 @@ void			set_command(t_command_node	*node, t_process *prcs);
 void			clear_list(t_token_list *list);
 void			free_command_list(t_command_list *command_list);
 int				ft_error_parse(int status, char *s);
+int				handle_p_error(t_token_list *t, t_command_list *c, \
+t_process *prcs, int n);
 // void	print_command_list(t_command_list *list);
 // void print_list(t_token_list *list);
 

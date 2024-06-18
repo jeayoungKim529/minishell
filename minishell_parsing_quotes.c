@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_quotes.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 12:29:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/17 20:38:01 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/18 20:29:22 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,34 +88,34 @@ char	**mini_split(char *s)
 	return (result);
 }
 
-void	remove_quotes(char **result, t_process *prcs, int check, t_token_node **token)
+void	remove_quotes(char **str, t_process *prcs, int n, t_token_node **token)
 {
 	char	*temp;
 
-	temp = *result;
-	if (**result == '\'')
-		*result = ft_substr(temp, 1, ft_strlen(temp) - 2);
+	temp = *str;
+	if (**str == '\'')
+		*str = ft_substr(temp, 1, ft_strlen(temp) - 2);
 	else
 	{
-		if (**result == '\"')
-			*result = ft_substr(temp, 1, ft_strlen(temp) - 2);
+		if (**str == '\"')
+			*str = ft_substr(temp, 1, ft_strlen(temp) - 2);
 		else
-			*result = ft_substr(temp, 0, ft_strlen(temp));
-		if (check)
-			expand_env_string(result, prcs, token);
+			*str = ft_substr(temp, 0, ft_strlen(temp));
+		if (n)
+			expand_env_string(str, prcs, token);
 	}
 	free(temp);
 	temp = NULL;
 }
 
-char	*get_parse_command(char *command, t_process *prcs, int check, t_token_node **token)
+char	*get_cmd(char *cmd, t_process *prcs, int check, t_token_node **token)
 {
 	char	**result;
 	char	*line;
 	int		i;
 
 	i = 1;
-	result = mini_split(command);
+	result = mini_split(cmd);
 	while (i < ft_atoi(result[0]) + 1)
 	{
 		remove_quotes(&result[i], prcs, check, token);
