@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:40:07 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/18 20:31:08 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/18 20:41:34 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	set_heredoc(t_command_node	*node, int i, int j, t_process *prcs)
 	char			*name;
 
 	r_token = node->redir_list->front;
-	while (++j < node->redir_list->size)
+	while (++j < node->redir_list->size && g_sig != 2)
 	{
 		if (r_token->type == TOKEN_IN_APPEND && g_sig != 2)
 		{

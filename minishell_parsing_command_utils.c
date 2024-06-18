@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 16:55:31 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/18 20:32:44 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/18 20:41:41 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	parse_command_list(t_command_list *list, t_process *prcs)
 	while (++i < list->size)
 	{
 		set_command(node, prcs);
-		if (set_heredoc(node, i, -1, prcs) || g_sig == 2)
+		if (set_heredoc(node, i, -1, prcs))
 			return (1);
 		node = node->next;
 	}
