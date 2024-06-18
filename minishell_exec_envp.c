@@ -6,14 +6,13 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:29:00 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/19 00:22:09 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/19 00:52:31 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_exec.h"
 
-//pwd, oldpwd, home 변수를 prcs에 따로 저장해두기
 void	save_pwd(t_process *prcs)
 {
 	t_envp	*cur;
@@ -33,7 +32,7 @@ void	save_pwd(t_process *prcs)
 	if (cur)
 		prcs->senvp.home = ft_strdup(cur->value);
 	else
-		prcs->senvp.home = "/Users/jeakim";
+		prcs->senvp.home = "/Users/jimchoi";
 }
 
 int	count_envp(t_process *prcs)
@@ -87,7 +86,6 @@ void	init_status_envp(t_process *prcs)
 	prcs->envp = new;
 }
 
-//main에서 받아온 envp를 prcs에 연결리스트로 저장
 void	envp_func(t_process *prcs, char *envp[])
 {
 	int		i;
