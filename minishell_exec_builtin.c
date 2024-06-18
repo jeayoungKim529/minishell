@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:33:54 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/17 17:03:54 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/18 20:33:41 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,5 @@ int	execute_builtin(t_process *prcs, t_command_node *cur, int flag)
 	if (flag == 0)
 		if (dup2(prcs->std_fd[1], 1) == -1)
 			ft_error_exec_exit(prcs, strerror(errno), errno);
-		// if (prcs->file.out != -1 && dup2(prcs->std_fd[1], 1) == -1)
-		// 	ft_error_exec_exit(prcs, strerror(errno), errno);
 	return (prcs->envp->status);
 }
