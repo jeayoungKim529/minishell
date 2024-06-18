@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:40:07 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/18 20:41:34 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/18 23:19:19 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	set_redir(t_token_node **node, t_process *prcs)
 	char	*temp;
 
 	temp = get_cmd((*node)->token, prcs, 1, node);
-	if (ft_strlen(temp) == 0)
+	if (ft_strlen(temp) == 0 && (*node)->type == TOKEN_ENV)
 	{
 		free(temp);
 		temp = NULL;

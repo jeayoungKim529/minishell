@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:29:00 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/17 12:00:30 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/19 00:22:09 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,10 @@ void	save_pwd(t_process *prcs)
 		prcs->senvp.home = "/Users/jeakim";
 }
 
-char	**init_exec_envp(t_process *prcs)
+int	count_envp(t_process *prcs)
 {
-	t_envp	*cur;
 	int		num;
-	char	*temp;
-	char	**exec_envp;
+	t_envp	*cur;
 
 	num = 0;
 	cur = prcs->envp->next;
@@ -50,6 +48,17 @@ char	**init_exec_envp(t_process *prcs)
 		num++;
 		cur = cur->next;
 	}
+	return (num);
+}
+
+char	**init_exec_envp(t_process *prcs)
+{
+	t_envp	*cur;
+	int		num;
+	char	*temp;
+	char	**exec_envp;
+
+	num = count_envp(prcs);
 	exec_envp = (char **)ft_calloc(sizeof(char *), num + 1);
 	if (!exec_envp)
 		ft_error_exec_exit(prcs, strerror(errno), errno);
@@ -58,7 +67,10 @@ char	**init_exec_envp(t_process *prcs)
 	while (cur)
 	{
 		temp = ft_strjoin(cur->key, "=");
-		exec_envp[num++] = ft_strjoin(temp, cur->value);
+		if (cur->value == NULL || ft_strncmp(cur->value, "\"\"", 3) == 0)
+			exec_envp[num++] = ft_strdup(temp);
+		else
+			exec_envp[num++] = ft_strjoin(temp, cur->value);
 		free(temp);
 		cur = cur->next;
 	}
