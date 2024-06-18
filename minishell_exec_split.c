@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exec_split.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:33:34 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/15 13:58:11 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/18 21:15:49 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,7 @@ char	**ft_exec_split_util(char const *s, char **arr, int i, int len)
 	len = 0;
 	while (s[i + 1])
 	{
-		if (flag == 0 && (s[i + 1] == '\"' || s[i + 1] == '\''))
-			i++;
-		else
-			arr[1][len] = s[i + 1];
+		arr[1][len] = s[i + 1];
 		i++;
 		len++;
 	}
@@ -80,13 +77,14 @@ char	**ft_exec_split(char const *s, char c)
 	while (s[++i] && s[i] != '=')
 		arr[0][i] = s[i];
 	if (num == 1)
+	{
+		arr[1] = NULL;
 		return (arr);
+	}
 	if (num == 2 && (len == ft_strlen(s) - 1))
 	{
 		arr[1] = ft_strdup("\"\"");
 		return (arr);
 	}
-	if (!ft_exec_split_util(s, arr, i, len))
-		return (NULL);
-	return (arr);
+	return (ft_exec_split_util(s, arr, i, len));
 }
