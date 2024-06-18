@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:54:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/18 20:42:21 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/18 21:16:33 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,17 +66,17 @@ void	readline_func(t_command_list *list, t_process *prcs, char *str)
 	while (1)
 	{
 		g_sig = 0;
+		str = readline("prompt : ");
 		if (g_sig == 1)
 			prcs->envp->status = 1;
-		str = readline("prompt : ");
-		if (!str)
-			break ;
-		else if (str && parsing(list, str, prcs) == 1)
+		if (str && parsing(list, str, prcs) == 1)
 		{
 			free(str);
 			str = NULL;
 			continue ;
 		}
+		else if (!str)
+			break ;
 		execute_commands(prcs, list, 0);
 		if (list->front)
 			free_command_list(list);
