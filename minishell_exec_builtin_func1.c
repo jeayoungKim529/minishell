@@ -6,12 +6,33 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:43:22 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/18 23:29:10 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/19 00:16:20 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_exec.h"
+
+void	print_env(t_envp *cur, int flag)
+{
+	if (flag == 1)
+	{
+		ft_printf("declare -x ");
+		if (cur->value == NULL)
+			printf("%s\n", cur->key);
+		else if (cur->value && ft_strncmp(cur->value, "\"\"", 3) != 0)
+			printf("%s=\"%s\"\n", cur->key, cur->value);
+		else if (cur->value && ft_strncmp(cur->value, "\"\"", 3) == 0)
+			printf("%s=%s\n", cur->key, cur->value);
+	}
+	else
+	{
+		if (cur->value && ft_strncmp(cur->value, "\"\"", 3) != 0)
+			printf("%s=%s\n", cur->key, cur->value);
+		else if (cur->value && ft_strncmp(cur->value, "\"\"", 3) == 0)
+			printf("%s=\n", cur->key);
+	}
+}
 
 void	ft_env(t_process *prcs, int flag)
 {
@@ -25,23 +46,7 @@ void	ft_env(t_process *prcs, int flag)
 	}
 	while (cur)
 	{
-		if (flag == 1)
-		{
-			ft_printf("declare -x ");
-			if (cur->value == NULL)
-				printf("%s\n", cur->key);
-			else if (cur->value && ft_strncmp(cur->value, "\"\"", 3) != 0)
-				printf("%s=\"%s\"\n", cur->key, cur->value);
-			else if (cur->value && ft_strncmp(cur->value, "\"\"", 3) == 0)
-				printf("%s=%s\n", cur->key, cur->value);
-		}
-		else
-		{
-			if (cur->value && ft_strncmp(cur->value, "\"\"", 3) != 0)
-				printf("%s=%s\n", cur->key, cur->value);
-			else if (cur->value && ft_strncmp(cur->value, "\"\"", 3) == 0)
-				printf("%s=\n", cur->key);
-		}
+		print_env(cur, flag);
 		cur = cur->next;
 	}
 	prcs->envp->status = 0;
