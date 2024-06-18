@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:08:24 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/17 20:21:57 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/18 23:09:43 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,13 @@ int	set_redirection_read(t_process *prcs, t_token_node *cur)
 	{
 		tmp_fd = open(cur->token, O_RDONLY);
 		if (tmp_fd == -1)
-			return (ft_error_builtin(prcs, strerror(errno), 1));
+			return (ft_error_builtin(prcs, NULL, 1));
 	}
 	else if (cur->type == TOKEN_IN_APPEND)
 	{
 		tmp_fd = open(cur->token, O_RDONLY);
 		if (tmp_fd == -1)
-			return (ft_error_builtin(prcs, strerror(errno), 1));
+			return (ft_error_builtin(prcs, NULL, 1));
 	}
 	if (tmp_fd > -1)
 	{
@@ -97,13 +97,13 @@ int	set_redirection_write(t_process *prcs, t_token_node *cur)
 	{
 		tmp_fd = open(cur->token, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 		if (tmp_fd == -1)
-			return (ft_error_builtin(prcs, strerror(errno), 1));
+			return (ft_error_builtin(prcs, NULL, 1));
 	}
 	else if (cur->type == TOKEN_OUT_APPEND || cur->type == 5)
 	{
 		tmp_fd = open(cur->token, O_WRONLY | O_CREAT | O_APPEND, 0666);
 		if (tmp_fd == -1)
-			return (ft_error_builtin(prcs, strerror(errno), 1));
+			return (ft_error_builtin(prcs, NULL, 1));
 	}
 	if (tmp_fd > -1)
 	{
