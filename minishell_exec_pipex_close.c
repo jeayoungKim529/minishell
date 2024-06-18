@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:03:09 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/18 22:44:20 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/18 23:01:27 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,15 @@ void	execute_wait(t_process *prcs, t_command_list *list, int flag)
 {
 	int	i;
 	int	status;
+	int	w_pid;
 
 	i = 0;
 	while (flag == 0 && i < list->size)
 	{
-		if (wait(&status) == -1)
+		w_pid = wait(&status);
+		if (w_pid == -1)
 			exit(EXIT_FAILURE);
-		if (WIFEXITED(status))
+		if (WIFEXITED(status) && w_pid == prcs->pid)
 			prcs->envp->status = WEXITSTATUS(status);
 		if (WIFSIGNALED(status) && WTERMSIG(status) != 13)
 			prcs->envp->status = WTERMSIG(status) + 128;
