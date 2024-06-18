@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:54:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/18 21:18:53 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/18 23:22:00 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,7 @@ int	handle_p_error(t_token_list *t, t_command_list *c, t_process *prcs, int n)
 	clear_list(t);
 	if (c->size > 0)
 		free_command_list(c);
-	if (n == 3)
 		prcs->envp->status = 1;
-	else
-		prcs->envp->status = 2;
 	return (1);
 }
 
