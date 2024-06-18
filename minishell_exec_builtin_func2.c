@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:41:35 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/17 20:19:24 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/19 00:07:41 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,15 @@ void	ft_echo(t_process *prcs)
 			write(1, prcs->cmd[i], ft_strlen(prcs->cmd[i]));
 			write(1, "\n", 1);
 		}
-		else if (ft_strncmp(prcs->cmd[i], "", 1) != 0)
+		else
 		{
 			write(1, prcs->cmd[i], ft_strlen(prcs->cmd[i]));
 			write(1, " ", 1);
 		}
 		i++;
 	}
+	if (prcs->n_cmd == 1)
+		write(1, "\n", 1);
 	prcs->envp->status = 0;
 }
 
@@ -96,5 +98,7 @@ void	ft_exit(t_process *prcs)
 	}
 	if (prcs->cmd[1] && ft_isalnum_exit(prcs->cmd[1]) != 1)
 		ft_error_exec_exit(prcs, "numeric argument required", 255);
-	ft_error_exec_exit(prcs, "exit", ft_atoi_exit(prcs->cmd[1]));
+	if (!prcs->cmd[1])
+		ft_error_exec_exit(prcs, NULL, prcs->envp->status);
+	ft_error_exec_exit(prcs, NULL, ft_atoi_exit(prcs->cmd[1]));
 }

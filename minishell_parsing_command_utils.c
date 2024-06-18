@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_command_utils.c                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 16:55:31 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/17 21:04:18 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/18 20:41:41 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,33 +55,6 @@ char	*expand_env(char **str, int check, t_process *prcs)
 	}
 	return (*str);
 }
-// void	check_env_string(char **str)
-// {
-// 	int		i;
-// 	int		j;
-// 	char	*temp;
-
-// 	i = 0;
-// 	j = 0;
-// 	temp = ft_calloc(1, ft_strlen(*str) + 1);
-// 	printf("check_env_string\n");
-
-// 	while(*str[i])
-// 	{
-// 			printf("%c", temp[j]);
-// 		if (*str[i] == '\'' || *str[i] == '\'')
-// 		{
-			
-// 			temp[j] = *str[i];
-// 			// printf("%c", temp[j]);
-// 			i++;
-// 		}
-// 			j++;
-// 	}
-// 	printf("\n");
-// 	free(*str);
-// 	*str = temp;
-// }
 
 void	set_command(t_command_node	*node, t_process *prcs)
 {
@@ -97,7 +70,7 @@ void	set_command(t_command_node	*node, t_process *prcs)
 			token, '\'') != 0 || ft_strchr(c_token->token, '\"') != 0)
 		{
 			temp = c_token->token;
-			c_token->token = get_parse_command(temp, prcs, 1, &c_token);
+			c_token->token = get_cmd(temp, prcs, 1, &c_token);
 			free(temp);
 			temp = NULL;
 		}
@@ -105,28 +78,14 @@ void	set_command(t_command_node	*node, t_process *prcs)
 	}
 }
 
-// void	set_command(t_command_node	*node, t_process *prcs)
-// {
-// 	t_token_node	*c_token;
-// 	char			*temp;
-// 	char			*command;
-// 	int				i;
+size_t	p_strlen(char *s)
+{
+	unsigned int	len;
 
-// 	i = -1;
-// 	c_token = node->cmd_list->front;
-// 	while (++i < node->cmd_list->size)
-// 	{
-// 		if (c_token->type == TOKEN_COMMAND)
-// 		{
-// 			if (ft_strchr(c_token->token, '$') != 0 || ft_strchr(c_token->\
-// 				token, '\'') != 0 || ft_strchr(c_token->token, '\"') != 0)
-// 			{
-// 				temp = c_token->token;
-// 				c_token->token = get_parse_command(temp, prcs, 1);
-// 				free(temp);
-// 				temp = NULL;
-// 			}
-// 		}
-// 		c_token = c_token->next;
-// 	}
-// }
+	len = 0;
+	if (s == NULL)
+		return (0);
+	while (*s++ && *s != '\n')
+		len++;
+	return (len + 1);
+}

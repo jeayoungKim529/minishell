@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_command.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:48:40 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/17 15:29:04 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/18 20:17:58 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

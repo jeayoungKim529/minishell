@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_heredoc.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:40:07 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/17 21:10:14 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/18 20:41:34 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,20 @@
 #include "minishell_exec.h"
 #include "minishell_parsing.h"
 
-size_t	p_strlen(char *s)
-{
-	unsigned int	len;
-
-	len = 0;
-	if (s == NULL)
-		return (0);
-	while (*s++ && *s != '\n')
-		len++;
-	return (len + 1);
-}
 int	set_redir(t_token_node **node, t_process *prcs)
 {
 	char	*temp;
 
-		temp = get_parse_command((*node)->token, prcs, 1, node);
-		if (ft_strlen(temp) == 0)
-		{
-			free(temp);
-			temp = NULL;
-			return (1);
-		}
-		free((*node)->token);
-		(*node)->token = temp;
-		temp = 0;
+	temp = get_cmd((*node)->token, prcs, 1, node);
+	if (ft_strlen(temp) == 0)
+	{
+		free(temp);
+		temp = NULL;
+		return (1);
+	}
+	free((*node)->token);
+	(*node)->token = temp;
+	temp = 0;
 	return (0);
 }
 
@@ -50,9 +39,9 @@ int	set_heredoc(t_command_node	*node, int i, int j, t_process *prcs)
 	char			*name;
 
 	r_token = node->redir_list->front;
-	while (++j < node->redir_list->size)
+	while (++j < node->redir_list->size && g_sig != 2)
 	{
-		if (r_token->type == TOKEN_IN_APPEND)
+		if (r_token->type == TOKEN_IN_APPEND && g_sig != 2)
 		{
 			num = ft_itoa(i);
 			name = ft_strjoin(num, "-");
@@ -118,10 +107,9 @@ void	set_heredoc_file(t_token_node **token_node, char *path, t_process *prcs)
 		heredoc_readline(fd, node->token, prcs, 1);
 	wait(&status);
 	builtin_signal_func();
-	if (WIFEXITED(status))
-		prcs->envp->status = WEXITSTATUS(status);
-	if (WIFSIGNALED(status))
-		prcs->envp->status = WIFSIGNALED(status) + 128;
+	if (WSTOPSIG(status))
+		g_sig = 2;
+	prcs->envp->status = WSTOPSIG(status);
 	free (node->token);
 	node->token = path;
 	close(fd);
@@ -134,7 +122,7 @@ void	heredoc_readline(int fd, char *token, t_process *prcs, int check)
 
 	if (ft_strchr(token, '\"') != NULL || ft_strchr(token, '\'') != NULL)
 		check = 0;
-	end_text = get_parse_command(token, prcs, 0, NULL);
+	end_text = get_cmd(token, prcs, 0, NULL);
 	heredoc_signal_func();
 	while (1)
 	{

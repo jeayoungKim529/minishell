@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:21:13 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/17 20:45:28 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/18 21:27:22 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ void	is_directory(t_process *prcs)
 {
 	struct stat	path_stat;
 
-
 	if (stat(prcs->cmd[0], &path_stat) != 0)
 		ft_error_exec_exit(prcs, strerror(errno), 127);
-    if (S_ISDIR(path_stat.st_mode) != 0 && ft_strchr(prcs->cmd[0], '/') != NULL)
+	if (S_ISDIR(path_stat.st_mode) != 0 && ft_strchr(prcs->cmd[0], '/') \
+		!= NULL)
 		ft_error_exec_exit(prcs, "is a directory", 126);
 }
 
@@ -58,7 +58,9 @@ char	*check_path(t_process *prcs)
 
 	ch = 0;
 	i = -1;
-	if (!prcs->cmd || !prcs->cmd[0] || ft_envpfind(prcs->envp, "PATH") == NULL)
+	if (!prcs->cmd || !prcs->cmd[0])
+		ft_error_exec_exit(prcs, NULL, 0);
+	if (ft_envpfind(prcs->envp, "PATH") == NULL)
 		ft_error_exec_exit(prcs, "No such file or directory", 127);
 	while (prcs->path && prcs->path[++i] && ch == 0)
 	{
@@ -70,9 +72,7 @@ char	*check_path(t_process *prcs)
 	}
 	if (ch == 0 && ft_envpfind(prcs->envp, "PATH") == NULL)
 		path = make_basic_path(prcs);
-	if (path == NULL && access(prcs->cmd[0], X_OK) == 0)
+	if (ch == 0 && access(prcs->cmd[0], X_OK) == 0)
 		return (prcs->cmd[0]);
-	if (path == NULL)
-		return (NULL);
 	return (path);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_env.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 20:42:03 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/17 20:27:28 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/18 20:32:19 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,31 +32,31 @@ char	**env_split(char *s)
 	return (result);
 }
 
-void	env_var_transform(char **result, t_process *prcs, int i, t_token_node **token)
+void	env_var_transform(char **re, t_process *prcs, int i, t_token_node **t)
 {
 	t_envp	*node;
 	char	*temp;
 
-	temp = ft_strdup(result[i]);
-	free(result[i]);
+	temp = ft_strdup(re[i]);
+	free(re[i]);
 	node = ft_envpfind(prcs->envp, (temp + 1));
 	if (ft_strncmp(temp, "$?", 3) == 0)
-		result[i] = ft_itoa(prcs->envp->status);
+		re[i] = ft_itoa(prcs->envp->status);
 	else if (node != NULL)
-		result[i] = ft_strdup(node->value);
+		re[i] = ft_strdup(node->value);
 	else if (ft_strncmp(temp, "$PWD", 5) == 0)
-		result[i] = ft_strdup(prcs->senvp.pwd);
+		re[i] = ft_strdup(prcs->senvp.pwd);
 	else if (ft_strncmp(temp, "$OLDPWD", 7) == 0)
-		result[i] = ft_strdup(prcs->senvp.oldpwd);
+		re[i] = ft_strdup(prcs->senvp.oldpwd);
 	else if (ft_strncmp(temp, "$HOME", 6) == 0)
-		result[i] = ft_strdup(prcs->senvp.home);
+		re[i] = ft_strdup(prcs->senvp.home);
 	else if (ft_strncmp(temp, "$", 2) == 0)
-		result[i] = ft_strdup("$");
+		re[i] = ft_strdup("$");
 	else
 	{
-		if (token)
-			(*token)->type = TOKEN_ENV;
-		result[i] = ft_strdup("");
+		if (t)
+			(*t)->type = TOKEN_ENV;
+		re[i] = ft_strdup("");
 	}
 	free(temp);
 }
