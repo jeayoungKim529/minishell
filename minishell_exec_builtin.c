@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:33:54 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/18 20:33:41 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/18 23:10:28 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 int	ft_error_builtin(t_process *prcs, char *s, int n)
 {
 	ft_putstr_fd(s, 2);
-	ft_putstr_fd("\n", 2);
+	if (s)
+		ft_putstr_fd("\n", 2);
 	prcs->envp->status = n;
 	return (-1);
 }
