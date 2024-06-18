@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:43:22 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/18 21:15:37 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/18 23:29:10 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	ft_export(t_process *prcs, int i)
 		{
 			ft_error_builtin(prcs, "not a valid identifier", 1);
 			flag = 1;
+			return ;
 		}
 	}
 	ft_export_second(prcs);
