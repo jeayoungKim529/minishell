@@ -6,11 +6,10 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:23:07 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/18 20:21:42 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/19 00:21:02 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "minishell.h"
 #include "minishell_parsing.h"
 #include "minishell_exec.h"
 
@@ -73,13 +72,7 @@ void	init_process(t_process *prcs)
 	prcs->file.in = -1;
 	prcs->file.out = -1;
 }
-void	print_envp(t_process *prcs);
 
-
-// void check_leaks()
-// {
-// 	system("leaks minishell");
-// }
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_command_list	list;
@@ -96,6 +89,5 @@ int	main(int argc, char *argv[], char *envp[])
 	readline_func(&list, &prcs, str);
 	free_envp(&prcs);
 	revert_signal();
-	// atexit(check_leaks);
 	exit(0);
 }
