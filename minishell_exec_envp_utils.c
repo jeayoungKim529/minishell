@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:17:36 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/17 11:12:25 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/18 21:15:01 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,31 +27,49 @@
 // 	}
 // }
 
+void	ft_del(t_envp *node)
+{
+	free(node->key);
+	node->key = NULL;
+	free(node->value);
+	node->value = NULL;
+	free(node);
+	node = NULL;
+}
+
+
 void	ft_envpdel(t_envp *env, char *key)
 {
 	t_envp	*before;
-	t_envp	*node;
+	t_envp	*cur;
 
 	if (!env)
 		return ;
-	node = env->next;
-	before = env;
-	while (node)
+	cur = env->next;
+	if (ft_strncmp(cur->key, key, ft_strlen(key) + 1) == 0)
 	{
-		if (ft_strncmp(node->key, key, ft_strlen(key) + 1) == 0)
-			break ;
-		before = node;
-		node = node->next;
-	}
-	if (!node)
+		if (cur->next == NULL)
+			env->next = NULL;
+		else
+			env->next = cur->next;
+		ft_del(cur);
 		return ;
-	if (before == env)
-		env = node->next;
-	else
-		before->next = node->next;
-	free(node->key);
-	free(node->value);
-	free(node);
+	}
+	before = env->next;
+	while (cur)
+	{
+		if (ft_strncmp(cur->key, key, ft_strlen(key) + 1) == 0)
+		{
+			if (cur->next == NULL)
+				before->next = NULL;
+			else
+				before->next = cur->next;
+			ft_del(cur);
+			return ;
+		}
+		before = cur;
+		cur = cur->next;
+	}
 }
 
 void	ft_envpadd(t_envp *env, t_envp *new)
@@ -73,7 +91,7 @@ t_envp	*ft_envpnew(char *key, char *value)
 {
 	t_envp	*node;
 
-	node = (t_envp *)malloc(sizeof(t_envp));
+	node = (t_envp *)ft_calloc(sizeof(t_envp), 1);
 	if (!node)
 		return (NULL);
 	node->key = ft_strdup(key);

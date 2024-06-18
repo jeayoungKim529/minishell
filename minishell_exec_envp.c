@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:29:00 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/17 12:00:30 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/18 20:32:23 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,10 @@ char	**init_exec_envp(t_process *prcs)
 	while (cur)
 	{
 		temp = ft_strjoin(cur->key, "=");
-		exec_envp[num++] = ft_strjoin(temp, cur->value);
+		if (cur->value == NULL || ft_strncmp(cur->value, "\"\"", 3) == 0)
+			exec_envp[num++] = ft_strdup(temp);
+		else
+			exec_envp[num++] = ft_strjoin(temp, cur->value);
 		free(temp);
 		cur = cur->next;
 	}
