@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:33:35 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/21 15:51:12 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/21 16:11:28 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,14 @@ int	ft_isalnum_exit(char *s)
 			return (0);
 		i++;
 	}
+	if (-2147483648 > ft_atoi(s) || ft_atoi(s) > 2147483647)
+		return (0);
 	return (1);
 }
 
 int	ft_atoi_exit(char *s)
 {
-	int	n;
+	long long	n;
 
 	if (!s)
 		return (0);
