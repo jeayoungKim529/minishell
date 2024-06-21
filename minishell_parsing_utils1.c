@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:54:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/21 15:49:38 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/21 18:04:32 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 #include "minishell_parsing.h"
 #include "minishell_exec.h"
 
-void	execute_commands(t_process *prcs, t_command_list *list, int i);
 int		g_sig;
+void	execute_commands(t_process *prcs, t_command_list *list, int i);
 
 int	handle_p_error(t_token_list *t, t_command_list *c, t_process *prcs, int n)
 {
@@ -52,6 +52,7 @@ int	parsing(t_command_list	*cmd_list, char *line, t_process *prcs)
 		return (handle_p_error(&token_list, cmd_list, prcs, 1));
 	if (parse_command_list(cmd_list, prcs) == 1)
 	{
+		ft_unlink(prcs, cmd_list);
 		if (g_sig == 2)
 			return (handle_p_error(&token_list, cmd_list, prcs, 3));
 		return (handle_p_error(&token_list, cmd_list, prcs, 2));
@@ -76,7 +77,7 @@ void	readline_func(t_command_list *list, t_process *prcs, char *str)
 			str = NULL;
 			continue ;
 		}
-		else
+		else if (g_sig != 2)
 			execute_commands(prcs, list, 0);
 		if (list->front)
 			free_command_list(list);

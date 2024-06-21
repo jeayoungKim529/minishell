@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:40:07 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/18 23:19:19 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/21 18:06:14 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,10 @@ int	set_heredoc(t_command_node	*node, int i, int j, t_process *prcs)
 				ft_error_parse(2, "heredoc path error");
 			set_heredoc_file(&r_token, path, prcs);
 		}
-		else
-		{
-			if (set_redir(&r_token, prcs) == 1)
-				return (1);
-		}
+		else if (set_redir(&r_token, prcs) == 1)
+			return (1);
+		if (g_sig == 2)
+			return (1);
 		r_token = r_token->next;
 	}
 	return (0);
@@ -106,9 +105,9 @@ void	set_heredoc_file(t_token_node **token_node, char *path, t_process *prcs)
 	if (heredoc_fd == 0)
 		heredoc_readline(fd, node->token, prcs, 1);
 	wait(&status);
-	builtin_signal_func();
 	if (WSTOPSIG(status))
 		g_sig = 2;
+	builtin_signal_func();
 	prcs->envp->status = WSTOPSIG(status);
 	free (node->token);
 	node->token = path;

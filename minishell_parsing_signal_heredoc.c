@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 22:23:43 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/18 16:36:28 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/21 17:59:16 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 void	handle_signal_heredoc(int signal)
 {
-	g_sig = 2;
 	(void)signal;
 	exit(1);
 }
