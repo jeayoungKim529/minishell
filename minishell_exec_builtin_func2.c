@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:41:35 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/21 15:50:52 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/21 16:30:32 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,15 +95,15 @@ void	ft_echo(t_process *prcs)
 void	ft_exit(t_process *prcs)
 {
 	if (prcs->cmd[1] && ft_isalnum_exit(prcs->cmd[1]) != 1)
-		ft_error_exec_exit(prcs, "numeric argument required", 255);
+		ft_error_exec_exit(prcs, "exit\nnumeric argument required", 255);
 	if (prcs->n_cmd > 2)
 	{
 		ft_error_exec(prcs, "exit\nminishell: exit: too many arguments", 1);
 		return ;
 	}
 	if (prcs->cmd[1] && ft_isalnum_exit(prcs->cmd[1]) != 1)
-		ft_error_exec_exit(prcs, "numeric argument required", 255);
+		ft_error_exec_exit(prcs, "exit\nnumeric argument required", 255);
 	if (!prcs->cmd[1])
 		ft_error_exec_exit(prcs, NULL, prcs->envp->status);
-	ft_error_exec_exit(prcs, NULL, ft_atoi_exit(prcs->cmd[1]));
+	ft_error_exec_exit(prcs, "exit", ft_atoi_exit(prcs->cmd[1]));
 }
