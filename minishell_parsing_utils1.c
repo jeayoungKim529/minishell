@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_utils1.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:54:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/19 00:43:56 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/21 15:49:38 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int	parsing(t_command_list	*cmd_list, char *line, t_process *prcs)
 {
 	t_token_list	token_list;
 
+	if (ft_strlen(line) == 0)
+		return (1);
 	token_list.size = 0;
 	cmd_list->size = 0;
 	if (ft_strlen(line) > 0)
@@ -66,15 +68,16 @@ void	readline_func(t_command_list *list, t_process *prcs, char *str)
 		str = readline("prompt : ");
 		if (g_sig == 1)
 			prcs->envp->status = 1;
-		if (str && parsing(list, str, prcs) == 1)
+		if (!str)
+			break ;
+		else if (parsing(list, str, prcs) == 1 || ft_strlen(str) == 0)
 		{
 			free(str);
 			str = NULL;
 			continue ;
 		}
-		else if (!str)
-			break ;
-		execute_commands(prcs, list, 0);
+		else
+			execute_commands(prcs, list, 0);
 		if (list->front)
 			free_command_list(list);
 		free(str);
