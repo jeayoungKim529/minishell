@@ -6,7 +6,7 @@
 #    By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/17 12:35:23 by jeakim            #+#    #+#              #
-#    Updated: 2024/06/15 16:14:06 by jimchoi          ###   ########.fr        #
+#    Updated: 2024/06/21 15:09:38 by jimchoi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,10 +14,6 @@ CC = cc
 
 CFLAGS = -Wall -Werror -Wextra
 NAME = minishell
-LINKING_FLAGS =
-#  -lreadline -L${HOME}/.brew/opt/readline/lib
-COMFILE_FLAGS = 
-# -I${HOME}/.brew/opt/readline/include
 LIBFT_DIR = ./libft_src/
 LIBFT = -L$(LIBFT_DIR) -lft -I./libft_src
 
@@ -63,12 +59,12 @@ OBJS = $(SRCS:.c=.o)
 all: $(NAME)
 
 %.o: %.c
-	$(CC) $(CFLAGS) $(COMFILE_FLAGS) -c $< -o $@ -I./libft_src
+	$(CC) $(CFLAGS)  -c $< -o $@ -I./libft_src
 
 $(NAME): $(OBJS)
 	make -C $(LIBFT_DIR)
 
-	$(CC) -o $@ $(OBJS) $(LIBFT) $(COMFILE_FLAGS) $(LINKING_FLAGS) -lreadline
+	$(CC) -o $@ $(OBJS) $(LIBFT) -lreadline
 
 
 clean:
