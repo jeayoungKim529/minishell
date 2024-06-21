@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exec_pipex_path.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:21:13 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/18 21:27:22 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/21 21:21:23 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ char	*make_basic_path(t_process *prcs)
 		free(path_p);
 		if (access(path, X_OK) == 0)
 			ch = 1;
+		else
+			free(path);
 		i++;
 	}
 	if (ch == 0)
@@ -69,6 +71,8 @@ char	*check_path(t_process *prcs)
 		free(path_p);
 		if (access(path, X_OK) == 0)
 			ch = 1;
+		else
+			free(path);
 	}
 	if (ch == 0 && ft_envpfind(prcs->envp, "PATH") == NULL)
 		path = make_basic_path(prcs);

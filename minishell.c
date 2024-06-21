@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:23:07 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/21 18:08:30 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/21 22:58:24 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void check_leaks(void)
 }
 int	main(int argc, char *argv[], char *envp[])
 {
-    // atexit(check_leaks);
+    atexit(check_leaks);
 	t_command_list	list;
 	t_process		prcs;
 	char			*str;

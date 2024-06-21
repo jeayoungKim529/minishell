@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exec_builtin_func2.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:41:35 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/21 16:30:32 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/21 20:47:50 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,13 @@ void	ft_cd(t_process *prcs)
 	old_pwd = getcwd(NULL, 0);
 	if (prcs->n_cmd == 1 || access(prcs->cmd[1], X_OK) == -1)
 	{
-		free(old_pwd);
 		if (prcs->n_cmd != 1)
 			ft_error_builtin(prcs, strerror(errno), 1);
-		if (chdir(prcs->senvp.home) == -1)
-			ft_error_builtin(prcs, strerror(errno), errno);
+		else if (chdir(prcs->senvp.home) == -1)
+			ft_error_builtin(prcs, strerror(errno), 1);
+		change_pwd(prcs, "OLDPWD", old_pwd);
+		change_pwd(prcs, "PWD", getcwd(NULL, 0));
+		prcs->envp->status = 0;
 		return ;
 	}
 	else if (prcs->n_cmd > 1 && chdir(prcs->cmd[1]) == -1)
