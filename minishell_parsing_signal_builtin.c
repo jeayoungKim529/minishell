@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_signal_builtin.c                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 22:24:16 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/17 11:24:29 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/21 16:18:44 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

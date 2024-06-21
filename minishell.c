@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:23:07 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/21 16:26:20 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/21 18:08:30 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,13 @@ void	init_process(t_process *prcs)
 	prcs->file.in = -1;
 	prcs->file.out = -1;
 }
-
+void check_leaks(void)
+{
+	system ("leaks minishell");
+}
 int	main(int argc, char *argv[], char *envp[])
 {
+    // atexit(check_leaks);
 	t_command_list	list;
 	t_process		prcs;
 	char			*str;

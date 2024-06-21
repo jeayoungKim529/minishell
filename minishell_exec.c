@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:29:20 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/21 15:51:49 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/21 17:59:43 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	execute_commands(t_process *prcs, t_command_list *list, int i)
 	prcs->prevfd = dup(prcs->std_fd[0]);
 	flag = 0;
 	prcs->t_cmd = list->size;
-	while (cur && list->size > 0 && ++i >= 0)
+	while (cur && list->size > 0 && ++i >= 0 && g_sig != 2)
 	{
 		if (init_prcs(prcs, list, cur) == -1)
 			return (free_command(prcs));
