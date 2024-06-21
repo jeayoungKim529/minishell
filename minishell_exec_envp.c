@@ -6,8 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:29:00 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/19 00:22:09 by jeakim           ###   ########.fr       */
-
+/*   Updated: 2024/06/21 15:54:17 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +32,7 @@ void	save_pwd(t_process *prcs)
 	if (cur)
 		prcs->senvp.home = ft_strdup(cur->value);
 	else
-		prcs->senvp.home = "/Users/jimchoi";
+		prcs->senvp.home = getcwd(NULL, 0);
 }
 
 int	count_envp(t_process *prcs)
