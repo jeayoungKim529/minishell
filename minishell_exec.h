@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:29:17 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/17 16:13:35 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/21 22:07:20 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ typedef struct s_process{
 	char			**exec_envp;
 	char			**path;
 	char			**path_x;
-	int				prevfd;
 	pid_t			pid;
+	int				prevfd;
 	int				fd[2];
 	int				std_fd[2];
 	t_inout			file;

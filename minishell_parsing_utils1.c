@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_utils1.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:54:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/21 18:04:32 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/21 21:44:52 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ void	readline_func(t_command_list *list, t_process *prcs, char *str)
 			str = NULL;
 			continue ;
 		}
-		else if (g_sig != 2)
-			execute_commands(prcs, list, 0);
+		// else if (g_sig != 2)
+		// 	execute_commands(prcs, list, 0);
 		if (list->front)
 			free_command_list(list);
 		free(str);
