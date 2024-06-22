@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:08:24 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/21 20:40:32 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/22 11:01:57 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,12 @@ int	set_single_redirection(t_process *prcs, int flag)
 			return (ft_error_builtin(prcs, strerror(errno), 1));
 		close(prcs->file.in);
 	}
-	// else
-	// 	if (dup2(prcs->std_fd[0], 0) == -1)
-	// 		return (ft_error_builtin(prcs, strerror(errno), 1));
 	if (prcs->file.out != -1)
 	{
 		if (dup2(prcs->file.out, 1) == -1)
 			return (ft_error_builtin(prcs, strerror(errno), 1));
 		close(prcs->file.out);
 	}
-	// else
-	// 	if (dup2(prcs->std_fd[1], 1) == -1)
-	// 		return (ft_error_builtin(prcs, strerror(errno), 1));
 	return (1);
 }
 

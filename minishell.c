@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:23:07 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/21 22:00:21 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/22 11:06:55 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ void	init_process(t_process *prcs)
 	prcs->path_x = NULL;
 	prcs->fd[0] = 0;
 	prcs->fd[1] = 1;
-	// prcs->std_fd[0] = dup(0);
-	// prcs->std_fd[1] = dup(1);
 	prcs->std_fd[0] = 0;
 	prcs->std_fd[1] = 1;
 	prcs->file.in = -1;
@@ -84,9 +82,9 @@ void check_leaks(void)
 
 int	main(int argc, char *argv[], char *envp[])
 {
-    atexit(check_leaks);
+    // atexit(check_leaks);
 	t_command_list	list;
-	t_process		prcs; // vil
+	t_process		prcs;
 	char			*str;
 
 	(void)argc;

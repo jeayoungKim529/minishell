@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 19:14:44 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/21 22:11:16 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/22 11:00:52 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	free_envp(t_process *prcs)
 
 	if (!prcs->envp)
 		return ;
-	
 	cur = prcs->envp->next;
 	while (cur)
 	{
