@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:40:07 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/22 10:25:08 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/22 11:41:39 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,16 +93,16 @@ void	set_heredoc_file(t_token_node **token_node, char *path, t_process *prcs)
 	t_token_node	*node;
 	int				fd;
 	int				status;
-	int				heredoc_fd;
+	int				heredoc_pid;
 
 	node = *token_node;
 	fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	if (fd == -1)
 		ft_error_parse(2, "heredoc error");
-	heredoc_fd = fork();
-	if (heredoc_fd != 0)
+	heredoc_pid = fork();
+	if (heredoc_pid != 0)
 		signal_off();
-	if (heredoc_fd == 0)
+	if (heredoc_pid == 0)
 		heredoc_readline(fd, node->token, prcs, 1);
 	wait(&status);
 	if (WSTOPSIG(status))

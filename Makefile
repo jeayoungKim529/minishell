@@ -91,7 +91,6 @@
 # **************************************************************************** #
 
 CC = cc
-
 CFLAGS = -Wall -Werror -Wextra
 NAME = minishell
 LIBFT_DIR = ./libft_src/
