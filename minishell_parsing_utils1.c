@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:54:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/22 11:14:11 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/22 11:39:56 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	parsing(t_command_list	*cmd_list, char *line, t_process *prcs)
 	return (0);
 }
 
-void	 readline_func(t_command_list *list, t_process *prcs, char *str)
+void	readline_func(t_command_list *list, t_process *prcs, char *str)
 {
 	while (1)
 	{
