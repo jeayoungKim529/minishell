@@ -1,6 +1,18 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/06/22 10:41:25 by jimchoi           #+#    #+#              #
+#    Updated: 2024/06/22 10:41:39 by jimchoi          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = libft.a
 CC = cc
-CFLAGS = #-Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 AR = ar
 ARFLAGS = rcs
 SRCS = ft_atoi.c \
@@ -43,15 +55,6 @@ get_next_line_utils_bonus.c \
 ft_printf.c\
 ft_printf_utils_nbr.c\
 ft_printf_libft.c\
-ft_lstnew_bonus.c \
-ft_lstsize_bonus.c \
-ft_lstlast_bonus.c \
-ft_lstadd_back_bonus.c \
-ft_lstdelone_bonus.c \
-ft_lstadd_front_bonus.c \
-ft_lstclear_bonus.c \
-ft_lstiter_bonus.c \
-ft_lstmap_bonus.c 
 
 BNS_SRCS=ft_lstnew_bonus.c \
 ft_lstsize_bonus.c \
@@ -69,20 +72,20 @@ BNS_OBJS = $(BNS_SRCS:.c=.o)
 all		:	$(NAME)
 
 $(NAME)	:	$(OBJS)
-	$(AR) $(ARFLAGS) $@ $^
+	@$(AR) $(ARFLAGS) $@ $^
 
 $(BNS_OBJS)	: 
-	$(CC) $(CFLAGS) -c $(BNS_SRCS)
-	$(AR) $(ARFLAGS) $(NAME) $(BNS_OBJS)
+	@$(CC) $(CFLAGS) -c $(BNS_SRCS) $(SRCS)
+	@$(AR) $(ARFLAGS) $(NAME) $(BNS_OBJS) $(OBJS)
 
 $(OBJS)	:	$(SRCS)
-	$(CC) $(CFLAGS) -c $^
+	@$(CC) $(CFLAGS) -c $^
 
 clean	:
-	rm -f $(OBJS) $(BNS_OBJS)
+	@rm -f $(OBJS) $(BNS_OBJS)
 
 fclean	:	clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 bonus	:	$(BNS_OBJS)
 

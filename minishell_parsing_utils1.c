@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:54:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/22 10:52:14 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/22 11:08:24 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ int	parsing(t_command_list	*cmd_list, char *line, t_process *prcs)
 {
 	t_token_list	token_list;
 
-	if (ft_strlen(line) == 0)
-		return (1);
 	token_list.size = 0;
 	cmd_list->size = 0;
-	if (ft_strlen(line) > 0)
+	if (ft_strlen(line) == 0)
+		return (1);
+	else
 		add_history(line);
 	if (token_split(line, &token_list, 0) \
 	|| (token_list.front->type == TOKEN_PIPE))
