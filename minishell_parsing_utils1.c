@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_utils1.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:54:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/21 21:44:52 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/22 10:12:03 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ int	parsing(t_command_list	*cmd_list, char *line, t_process *prcs)
 {
 	t_token_list	token_list;
 
-	if (ft_strlen(line) == 0)
-		return (1);
 	token_list.size = 0;
 	cmd_list->size = 0;
-	if (ft_strlen(line) > 0)
+	if (ft_strlen(line) == 0)
+		return (1);
+	else
 		add_history(line);
 	if (token_split(line, &token_list, 0) \
 	|| (token_list.front->type == TOKEN_PIPE))
@@ -77,8 +77,8 @@ void	readline_func(t_command_list *list, t_process *prcs, char *str)
 			str = NULL;
 			continue ;
 		}
-		// else if (g_sig != 2)
-		// 	execute_commands(prcs, list, 0);
+		else if (g_sig != 2)
+			execute_commands(prcs, list, 0);
 		if (list->front)
 			free_command_list(list);
 		free(str);

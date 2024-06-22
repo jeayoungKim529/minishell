@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_heredoc.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:40:07 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/21 21:59:35 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/22 10:25:08 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,9 +139,5 @@ void	heredoc_readline(int fd, char *token, t_process *prcs, int check)
 	if (end_text)
 		free (end_text);
 	end_text = NULL;
-	// free_envp(prcs);
-	// free_path(prcs);
-	// free_command(prcs);
-	// free_exec_envp(prcs);
 	exit(0);
 }

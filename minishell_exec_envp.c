@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exec_envp.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:29:00 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/21 22:11:54 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/22 10:06:35 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,19 +96,9 @@ void	envp_func(t_process *prcs, char *envp[])
 	prcs->envp = NULL;
 	prcs->cmd = NULL;
 	init_status_envp(prcs);
-	if (!envp)
-		printf("no env\n");
-	else
-		printf(" env\n");
-	if (!*envp)
-		printf("no env\n");
-	else
-		printf("env!!!\n");
-	if (*envp)
-	{
-
 	while (envp && envp[i])
 	{
+		printf("in \n");
 		p = ft_exec_split(envp[i], '=');
 		if (!p)
 			continue ;
@@ -118,7 +108,6 @@ void	envp_func(t_process *prcs, char *envp[])
 		ft_envpadd(prcs->envp, new);
 		free_second_char(p);
 		i++;
-	}
 	}
 	save_pwd(prcs);
 }
