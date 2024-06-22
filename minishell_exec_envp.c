@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:29:00 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/22 10:06:35 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/22 10:30:42 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ void	envp_func(t_process *prcs, char *envp[])
 	init_status_envp(prcs);
 	while (envp && envp[i])
 	{
-		printf("in \n");
 		p = ft_exec_split(envp[i], '=');
 		if (!p)
 			continue ;
