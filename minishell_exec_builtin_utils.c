@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:33:35 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/15 14:22:35 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/21 22:11:16 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	change_pwd(t_process *prcs, char *key, char *value)
 	{
 		free(cur->value);
 		cur->value = NULL;
-		cur->value = value;
+		cur->value = ft_strdup(value);
 	}
 	if (ft_strncmp(key, "OLDPWD", 7) == 0)
 	{
@@ -58,6 +58,7 @@ void	change_pwd(t_process *prcs, char *key, char *value)
 		prcs->senvp.pwd = NULL;
 		prcs->senvp.pwd = ft_strdup(value);
 	}
+	free(value);
 }
 
 int	check_envp_key(char *s)
@@ -93,12 +94,14 @@ int	ft_isalnum_exit(char *s)
 			return (0);
 		i++;
 	}
+	if (-2147483648 > ft_atoi(s) || ft_atoi(s) > 2147483647)
+		return (0);
 	return (1);
 }
 
 int	ft_atoi_exit(char *s)
 {
-	int	n;
+	long long	n;
 
 	if (!s)
 		return (0);

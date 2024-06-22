@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing_utils1.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:54:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/18 23:22:00 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/22 11:39:56 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 #include "minishell_parsing.h"
 #include "minishell_exec.h"
 
-void	execute_commands(t_process *prcs, t_command_list *list, int i);
 int		g_sig;
+void	execute_commands(t_process *prcs, t_command_list *list, int i);
 
 int	handle_p_error(t_token_list *t, t_command_list *c, t_process *prcs, int n)
 {
@@ -41,7 +41,9 @@ int	parsing(t_command_list	*cmd_list, char *line, t_process *prcs)
 
 	token_list.size = 0;
 	cmd_list->size = 0;
-	if (ft_strlen(line) > 0)
+	if (ft_strlen(line) == 0)
+		return (1);
+	else
 		add_history(line);
 	if (token_split(line, &token_list, 0) \
 	|| (token_list.front->type == TOKEN_PIPE))
@@ -50,6 +52,7 @@ int	parsing(t_command_list	*cmd_list, char *line, t_process *prcs)
 		return (handle_p_error(&token_list, cmd_list, prcs, 1));
 	if (parse_command_list(cmd_list, prcs) == 1)
 	{
+		ft_unlink(prcs, cmd_list);
 		if (g_sig == 2)
 			return (handle_p_error(&token_list, cmd_list, prcs, 3));
 		return (handle_p_error(&token_list, cmd_list, prcs, 2));
@@ -66,15 +69,16 @@ void	readline_func(t_command_list *list, t_process *prcs, char *str)
 		str = readline("prompt : ");
 		if (g_sig == 1)
 			prcs->envp->status = 1;
-		if (str && parsing(list, str, prcs) == 1)
+		if (!str)
+			break ;
+		else if (parsing(list, str, prcs) == 1 || ft_strlen(str) == 0)
 		{
 			free(str);
 			str = NULL;
 			continue ;
 		}
-		else if (!str)
-			break ;
-		execute_commands(prcs, list, 0);
+		else if (g_sig != 2)
+			execute_commands(prcs, list, 0);
 		if (list->front)
 			free_command_list(list);
 		free(str);

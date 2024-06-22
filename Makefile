@@ -5,13 +5,12 @@
 #                                                     +:+ +:+         +:+      #
 #    By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/05/17 12:35:23 by jeakim            #+#    #+#              #
-#    Updated: 2024/06/21 15:09:38 by jimchoi          ###   ########.fr        #
+#    Created: 2024/06/22 11:45:19 by jimchoi           #+#    #+#              #
+#    Updated: 2024/06/22 11:45:21 by jimchoi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-
 CFLAGS = -Wall -Werror -Wextra
 NAME = minishell
 LIBFT_DIR = ./libft_src/
@@ -60,12 +59,11 @@ all: $(NAME)
 
 %.o: %.c
 	$(CC) $(CFLAGS)  -c $< -o $@ -I./libft_src
+	@$(CC) $(CFLAGS) -c $< -o $@ -I./libft_src
 
 $(NAME): $(OBJS)
-	make -C $(LIBFT_DIR)
-
+	@make bonus -C $(LIBFT_DIR)
 	$(CC) -o $@ $(OBJS) $(LIBFT) -lreadline
-
 
 clean:
 	@rm -rf $(OBJS)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exec_envp.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:29:00 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/19 00:52:31 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/22 11:46:08 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	save_pwd(t_process *prcs)
 	if (cur)
 		prcs->senvp.home = ft_strdup(cur->value);
 	else
-		prcs->senvp.home = "/Users/jimchoi";
+		prcs->senvp.home = getcwd(NULL, 0);
 }
 
 int	count_envp(t_process *prcs)

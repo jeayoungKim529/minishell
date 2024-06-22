@@ -6,23 +6,21 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 19:05:20 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/17 21:13:00 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/22 11:26:53 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_exec.h"
 
-void	run_process(t_process *prcs)
+void	run_process(t_process *prcs, char *path, char **tmp_envp)
 {
-	char	*path;
-
 	if (check_builtin_command(prcs->cmd) == 1)
 	{
 		execute_builtin(prcs, NULL, 1);
 		exit(prcs->envp->status);
 	}
-	path = check_path(prcs);
+	path = check_path(prcs, 0);
 	if (path == NULL && ft_strchr(prcs->cmd[0], '/') == NULL)
 		ft_error_exec_exit(prcs, "command not found", 127);
 	if (path == NULL && ft_strchr(prcs->cmd[0], '/') != NULL)
@@ -32,7 +30,8 @@ void	run_process(t_process *prcs)
 	if (ft_strncmp(prcs->cmd[0], "./minishell", ft_strlen(prcs->cmd[0]) + 1) \
 		== 0)
 		path = "./minishell";
-	if (execve(path, prcs->cmd, init_exec_envp(prcs)) == -1)
+	tmp_envp = init_exec_envp(prcs);
+	if (execve(path, prcs->cmd, tmp_envp) == -1)
 	{
 		if (ft_strchr(prcs->cmd[0], '/') == NULL)
 			ft_error_exec_exit(prcs, "command not found", 127);

@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:41:35 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/19 00:19:55 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/21 22:11:16 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ void	ft_cd(t_process *prcs)
 		if (prcs->n_cmd != 1)
 			ft_error_builtin(prcs, strerror(errno), 1);
 		if (chdir(prcs->senvp.home) == -1)
-		{
 			ft_error_builtin(prcs, strerror(errno), errno);
-			return ;
-		}
+		change_pwd(prcs, "OLDPWD", old_pwd);
+		change_pwd(prcs, "PWD", getcwd(NULL, 0));
+		return ;
 	}
 	else if (prcs->n_cmd > 1 && chdir(prcs->cmd[1]) == -1)
 	{
@@ -96,15 +96,15 @@ void	ft_echo(t_process *prcs)
 void	ft_exit(t_process *prcs)
 {
 	if (prcs->cmd[1] && ft_isalnum_exit(prcs->cmd[1]) != 1)
-		ft_error_exec_exit(prcs, "numeric argument required", 255);
+		ft_error_exec_exit(prcs, "exit\nnumeric argument required", 255);
 	if (prcs->n_cmd > 2)
 	{
 		ft_error_exec(prcs, "exit\nminishell: exit: too many arguments", 1);
 		return ;
 	}
 	if (prcs->cmd[1] && ft_isalnum_exit(prcs->cmd[1]) != 1)
-		ft_error_exec_exit(prcs, "numeric argument required", 255);
+		ft_error_exec_exit(prcs, "exit\nnumeric argument required", 255);
 	if (!prcs->cmd[1])
 		ft_error_exec_exit(prcs, NULL, prcs->envp->status);
-	ft_error_exec_exit(prcs, NULL, ft_atoi_exit(prcs->cmd[1]));
+	ft_error_exec_exit(prcs, "exit", ft_atoi_exit(prcs->cmd[1]));
 }

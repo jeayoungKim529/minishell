@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 12:29:17 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/17 16:13:35 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/22 11:27:22 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ typedef struct s_process{
 	char			**exec_envp;
 	char			**path;
 	char			**path_x;
-	int				prevfd;
 	pid_t			pid;
+	int				prevfd;
 	int				fd[2];
 	int				std_fd[2];
 	t_inout			file;
@@ -111,9 +111,9 @@ int		check_envp_key(char *s);
 void	change_pwd(t_process *prcs, char *key, char *value);
 int		check_option(char *s);
 //minishell_exec_pipex_open.c
-void	run_process(t_process *prcs);
+void	run_process(t_process *prcs, char *path, char **tmp_envp);
 //minishell_exec_pipex_path.c
-char	*check_path(t_process *prcs);
+char	*check_path(t_process *prcs, int ch);
 char	*make_basic_path(t_process *prcs);
 void	is_directory(t_process *prcs);
 //minishell_exec_pipex_close.c

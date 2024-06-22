@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:03:09 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/19 00:06:00 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/21 20:52:08 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ void	ft_unlink(t_process *prcs, t_command_list *list)
 		cur_t = cur_l->redir_list->front;
 		while (cur_t)
 		{
-			if (cur_t->type == TOKEN_IN_APPEND)
+			if (cur_t->type == TOKEN_IN_APPEND \
+			&& access(cur_t->token, F_OK) != -1)
 				unlink(cur_t->token);
 			cur_t = cur_t->next;
 		}
@@ -62,6 +63,10 @@ void	ft_unlink(t_process *prcs, t_command_list *list)
 
 void	finish_commands(t_process *prcs, t_command_list *list, int flag)
 {
+	if (read(prcs->fd[0], NULL, 0) != -1 && prcs->fd[0] != 0)
+		close (prcs->fd[0]);
+	if (write(prcs->fd[1], NULL, 0) != -1 && prcs->fd[1] != 1)
+		close (prcs->fd[1]);
 	if (list->front->cmd_list->size > 1)
 		close(prcs->prevfd);
 	if (prcs->file.in != -1)
@@ -75,7 +80,7 @@ void	finish_commands(t_process *prcs, t_command_list *list, int flag)
 		prcs->file.out = -1;
 	}
 	execute_wait(prcs, list, flag);
-	free_path(prcs);
 	ft_unlink(prcs, list);
+	free_path(prcs);
 	builtin_signal_func();
 }
