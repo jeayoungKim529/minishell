@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:21:13 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/18 21:27:22 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/22 11:25:54 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ char	*make_basic_path(t_process *prcs)
 		free(path_p);
 		if (access(path, X_OK) == 0)
 			ch = 1;
+		else
+			free(path);
 		i++;
 	}
 	if (ch == 0)
@@ -49,14 +51,12 @@ char	*make_basic_path(t_process *prcs)
 	return (path);
 }
 
-char	*check_path(t_process *prcs)
+char	*check_path(t_process *prcs, int ch)
 {
 	int		i;
 	char	*path_p;
 	char	*path;
-	int		ch;
 
-	ch = 0;
 	i = -1;
 	if (!prcs->cmd || !prcs->cmd[0])
 		ft_error_exec_exit(prcs, NULL, 0);
@@ -69,6 +69,8 @@ char	*check_path(t_process *prcs)
 		free(path_p);
 		if (access(path, X_OK) == 0)
 			ch = 1;
+		else
+			free(path);
 	}
 	if (ch == 0 && ft_envpfind(prcs->envp, "PATH") == NULL)
 		path = make_basic_path(prcs);

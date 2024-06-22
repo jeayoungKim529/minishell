@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:29:20 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/22 10:59:52 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/22 11:27:09 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	execute_single(t_process *prcs, t_command_node *cur)
 		}
 		set_single_redirection(prcs, 1);
 		exec_signal_func();
-		run_process(prcs);
+		run_process(prcs, NULL, NULL);
 	}
 }
 
@@ -55,7 +55,7 @@ void	execute_multi(t_process *prcs, t_command_node *cur, int i)
 		close(prcs->fd[0]);
 		close(prcs->fd[1]);
 		close(prcs->prevfd);
-		run_process(prcs);
+		run_process(prcs, NULL, NULL);
 	}
 	close(prcs->fd[1]);
 	close(prcs->prevfd);

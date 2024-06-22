@@ -6,7 +6,7 @@
 /*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:23:07 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/22 11:14:05 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/22 11:19:36 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void check_leaks(void)
 
 int	main(int argc, char *argv[], char *envp[])
 {
-    // atexit(check_leaks);
+    atexit(check_leaks);
 	t_command_list	list;
 	t_process		prcs;
 	char			*str;
