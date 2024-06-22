@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exec.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:29:20 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/21 17:59:43 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/22 11:27:09 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,7 @@ void	execute_single(t_process *prcs, t_command_node *cur)
 		}
 		set_single_redirection(prcs, 1);
 		exec_signal_func();
-		run_process(prcs);
-		if (dup2(1, prcs->prevfd) == -1)
-			ft_error_exec(prcs, strerror(errno), errno);
+		run_process(prcs, NULL, NULL);
 	}
 }
 
@@ -57,7 +55,7 @@ void	execute_multi(t_process *prcs, t_command_node *cur, int i)
 		close(prcs->fd[0]);
 		close(prcs->fd[1]);
 		close(prcs->prevfd);
-		run_process(prcs);
+		run_process(prcs, NULL, NULL);
 	}
 	close(prcs->fd[1]);
 	close(prcs->prevfd);
@@ -73,7 +71,7 @@ void	execute_commands(t_process *prcs, t_command_list *list, int i)
 	prcs->prevfd = dup(prcs->std_fd[0]);
 	flag = 0;
 	prcs->t_cmd = list->size;
-	while (cur && list->size > 0 && ++i >= 0 && g_sig != 2)
+	while (cur && list->size > 0 && ++i >= 0 && g_sig != SIGINT)
 	{
 		if (init_prcs(prcs, list, cur) == -1)
 			return (free_command(prcs));

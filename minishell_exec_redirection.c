@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exec_redirection.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:08:24 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/21 17:20:37 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/22 11:01:57 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,14 @@ int	set_single_redirection(t_process *prcs, int flag)
 	{
 		if (dup2(prcs->file.in, 0) == -1)
 			return (ft_error_builtin(prcs, strerror(errno), 1));
+		close(prcs->file.in);
 	}
-	else
-		if (dup2(prcs->std_fd[0], 0) == -1)
-			return (ft_error_builtin(prcs, strerror(errno), 1));
 	if (prcs->file.out != -1)
 	{
 		if (dup2(prcs->file.out, 1) == -1)
 			return (ft_error_builtin(prcs, strerror(errno), 1));
 		close(prcs->file.out);
 	}
-	else
-		if (dup2(prcs->std_fd[1], 1) == -1)
-			return (ft_error_builtin(prcs, strerror(errno), 1));
 	return (1);
 }
 
@@ -82,7 +77,8 @@ int	set_redirection_read(t_process *prcs, t_token_node *cur)
 	}
 	if (tmp_fd > -1)
 	{
-		close(prcs->file.in);
+		if (prcs->file.in != -1)
+			close(prcs->file.in);
 		prcs->file.in = tmp_fd;
 	}
 	return (1);
@@ -107,7 +103,8 @@ int	set_redirection_write(t_process *prcs, t_token_node *cur)
 	}
 	if (tmp_fd > -1)
 	{
-		close(prcs->file.out);
+		if (prcs->file.out)
+			close(prcs->file.out);
 		prcs->file.out = tmp_fd;
 	}
 	return (1);

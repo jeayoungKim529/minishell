@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exec_pipex_close.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:03:09 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/21 18:04:02 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/21 20:52:08 by jeakim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,10 @@ void	ft_unlink(t_process *prcs, t_command_list *list)
 
 void	finish_commands(t_process *prcs, t_command_list *list, int flag)
 {
+	if (read(prcs->fd[0], NULL, 0) != -1 && prcs->fd[0] != 0)
+		close (prcs->fd[0]);
+	if (write(prcs->fd[1], NULL, 0) != -1 && prcs->fd[1] != 1)
+		close (prcs->fd[1]);
 	if (list->front->cmd_list->size > 1)
 		close(prcs->prevfd);
 	if (prcs->file.in != -1)

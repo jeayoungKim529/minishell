@@ -6,7 +6,7 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:48:40 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/18 20:17:58 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/22 10:15:12 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,42 +83,3 @@ int	make_command_list(t_token_list *t_list, t_command_list *str, int i, int j)
 	}
 	return (0);
 }
-/*
-
-int	make_command_list2(t_token_list *token_list, t_command_list *cmdline)
-{
-	t_command_node	*cmd_node;
-	t_token_node	*node;
-	int				i;
-	int	count;
-	i = 0;
-	count = 0;
-	node = token_list->front;
-	if (token_list->size == 1 && node->type == TOKEN_PIPE)
-		return (ft_error_parse(1, "syntax error near unexpected token"));
-	add_cmd_list(cmdline);
-	cmd_node = cmdline->rear;
-	while (i < token_list->size)
-	{
-		if (node->type == TOKEN_PIPE)
-		{
-			count = set_pipe(node, &cmd_node, cmdline);
-			if (count == -1)
-				return (1);
-			i += count;
-		}
-		else if (node->token[0] == '>' || node->token[0] == '<')
-		{
-			count = set_rlist(node, cmd_node);
-			if (count == -1)
-				return (1);
-			i += count;
-			node = node->next;
-		}
-		else
-			i += add_token_list(cmd_node->cmd_list, node->token, node->type);
-		node = node->next;
-	}
-	return (0);
-}
-*/
