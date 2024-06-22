@@ -3,29 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exec_envp_utils.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeakim <jeakim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:17:36 by jeakim            #+#    #+#             */
-/*   Updated: 2024/06/19 00:31:18 by jeakim           ###   ########.fr       */
+/*   Updated: 2024/06/22 11:50:29 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_exec.h"
-
-// void	print_envp(t_process *prcs)
-// {
-// 	t_envp	*cur;
-
-// 	printf("envp\n");
-// 	cur = prcs->envp;
-// 	printf("%s=%s\n", cur->key, cur->value);
-// 	while (cur)
-// 	{
-// 		printf("%s=%s\n", cur->key, cur->value);
-// 		cur = cur->next;
-// 	}
-// }
 
 void	ft_del(t_envp *node)
 {

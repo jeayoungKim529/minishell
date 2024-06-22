@@ -6,14 +6,13 @@
 /*   By: jimchoi <jimchoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 22:24:36 by jimchoi           #+#    #+#             */
-/*   Updated: 2024/06/15 12:25:45 by jimchoi          ###   ########.fr       */
+/*   Updated: 2024/06/22 11:50:34 by jimchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_parsing.h"
 
-// execve 함수를 실행할 때
 void	handle_sigquit_exec(int signal)
 {
 	(void)signal;
